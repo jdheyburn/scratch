@@ -1,0 +1,52 @@
+[project]
+name = "musiclib"
+version = "0.1.0"
+description = "Music library tooling — vinyl rips from Audacity export to a verified beets import"
+requires-python = ">=3.12"
+dependencies = [
+    "typer>=0.12",
+    "ruamel.yaml>=0.18",
+    "requests>=2.31",
+    "mutagen>=1.47",
+    "pillow>=10.0",
+    "rich>=13.0",
+]
+
+[project.scripts]
+musiclib = "musiclib.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/musiclib"]
+
+[dependency-groups]
+dev = ["pytest>=8.0", "ruff>=0.6", "mediafile>=0.12"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E", "W",   # pycodestyle
+    "F",        # pyflakes
+    "I",        # import sorting
+    "UP",       # pyupgrade
+    "B",        # bugbear
+    "SIM",      # simplify
+    "RUF",      # ruff-specific
+]
+
+[tool.ruff.lint.flake8-bugbear]
+# Typer declares CLI metadata as call-valued defaults; that's its documented API.
+extend-immutable-calls = ["typer.Option", "typer.Argument"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B008"]
