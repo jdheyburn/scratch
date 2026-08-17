@@ -1,0 +1,16 @@
+# Git hooks for this repo, run by prek — https://github.com/j178/prek
+# prek reads this in place of .pre-commit-config.yaml.
+#
+# Scoped to musiclib/ deliberately: it is the only project here with a ruff
+# config
+
+[[repos]]
+repo = "https://github.com/astral-sh/ruff-pre-commit"
+rev = "v0.16.3" # Ruff version. Matches musiclib's dev group.
+hooks = [
+  # Lint first. With --fix this rewrites code, so the formatter has to run
+  # after it to have the last word on layout.
+  { id = "ruff-check", args = ["--fix"], types_or = ["python", "pyi"], files = "^musiclib/" },
+
+  { id = "ruff-format", types_or = ["python", "pyi"], files = "^musiclib/" },
+]
