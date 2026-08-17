@@ -54,6 +54,23 @@ def beet_import_command(destinations: list[str]) -> list[str]:
     ]
 
 
+def pending_listing_command(directory: str = REMOTE_PENDING) -> str:
+    """List what's sitting in pending/, one `name|discogs_id|flac_count` per line."""
+    return (
+        f"cd {shlex.quote(directory)} 2>/dev/null || exit 0;"
+        # `for d in */` and `ls "$d"/*.flac` read naturally, but dee's login
+        # shell is zsh, where a glob matching nothing is a hard error rather
+        # than an empty loop — so an emptied pending/ crashed this command
+        # instead of reporting nothing to do. find loops zero times, and
+        # handles the spaces and parens every destination name carries.
+        ' find . -mindepth 1 -maxdepth 1 -type d ! -name ".*" | sort |'
+        ' while IFS= read -r d; do d="${d#./}";'
+        ' id=$(sed -n "s/^discogs_id: *//p" "$d/album.yaml" 2>/dev/null);'
+        ' n=$(find "$d" -maxdepth 1 -type f -name "*.flac" | wc -l | tr -d " ");'
+        ' echo "$d|$id|$n"; done'
+    )
+
+
 def archive_command(destination: str) -> str:
     """Move one imported album out of pending/ and into the archive."""
     return (

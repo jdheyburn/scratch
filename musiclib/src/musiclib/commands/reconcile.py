@@ -2,24 +2,16 @@
 
 from __future__ import annotations
 
-import shlex
-
 import typer
 
 from musiclib.console import console
 from musiclib.library import album_count
-from musiclib.remote import REMOTE_PENDING, archive_command, run_remote
+from musiclib.remote import archive_command, pending_listing_command, run_remote
 
 
 def reconcile(dry_run: bool = typer.Option(False)) -> None:
     """Archive pending directories already in the library; list the rest."""
-    listing = run_remote(
-        f"cd {shlex.quote(REMOTE_PENDING)} 2>/dev/null || exit 0;"
-        'for d in */; do d="${d%/}";'
-        ' id=$(sed -n "s/^discogs_id: *//p" "$d/album.yaml" 2>/dev/null);'
-        ' n=$(ls "$d"/*.flac 2>/dev/null | wc -l);'
-        ' echo "$d|$id|$n"; done'
-    )
+    listing = run_remote(pending_listing_command())
 
     unidentified = []
     for line in filter(None, listing.splitlines()):
