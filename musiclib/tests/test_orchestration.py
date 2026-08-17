@@ -50,6 +50,7 @@ def test_counts_what_is_actually_on_disk(on_disk, make_release):
 
 def test_measures_a_cover_that_is_present(on_disk, make_image, make_release):
     candidate = observe(on_disk(cover=make_image("JPEG", size=(1200, 1200))), make_release())
+    assert candidate.cover is not None
     assert candidate.cover.width == 1200
 
 

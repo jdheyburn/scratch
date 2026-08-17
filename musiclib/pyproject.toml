@@ -23,7 +23,7 @@ build-backend = "hatchling.build"
 packages = ["src/musiclib"]
 
 [dependency-groups]
-dev = ["pytest>=8.0", "ruff>=0.6", "mediafile>=0.12"]
+dev = ["pytest>=8.0", "ruff>=0.6", "mediafile>=0.12", "ty>=0.0.72"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

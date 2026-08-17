@@ -26,8 +26,14 @@ PACKAGE_DIR = Path(musiclib.__file__).parent
 
 def vinyl_commands():
     [group] = app.registered_groups
+    vinyl = group.typer_instance
+    assert vinyl is not None
+    # Typer derives an unnamed command's name from its function, and types
+    # callbacks as plain Callable — which need not carry a __name__.
     return {
-        c.name or c.callback.__name__: c.callback for c in group.typer_instance.registered_commands
+        c.name or getattr(c.callback, "__name__", ""): c.callback
+        for c in vinyl.registered_commands
+        if c.callback is not None
     }
 
 

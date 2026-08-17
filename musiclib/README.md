@@ -223,7 +223,13 @@ reject anything else; the Discogs API gets a descriptive one because Discogs ask
 uv run --group dev pytest -q      # tests
 uv run --group dev ruff check .   # lint
 uv run --group dev ruff format .  # format
+uv run --group dev ty check       # types
 ```
+
+All three run on commit via [prek](https://github.com/j178/prek), configured in
+`prek.toml`. The repo root is a prek workspace, so these hooks run from this directory
+rather than from the repo root — which is what lets `ty` resolve dependencies from this
+`pyproject.toml`. After cloning, `prek install` writes the git hook.
 
 Tests use a real 9.5 KB FLAC fixture rather than mocks, and the tagging tests read back with
 `mediafile` — beets' own tag layer — so field names are verified against what consumes them.

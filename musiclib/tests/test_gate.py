@@ -28,7 +28,9 @@ def test_a_library_entry_whose_file_vanished_is_refused():
 
 
 def test_counts_how_many_files_are_missing():
-    assert "2" in gate_verdict(albums=1, files=["OK", "MISS", "MISS"], expected=3)
+    verdict = gate_verdict(albums=1, files=["OK", "MISS", "MISS"], expected=3)
+    assert verdict is not None
+    assert "2" in verdict
 
 
 def test_an_album_with_nothing_expected_is_refused():

@@ -51,7 +51,8 @@ def _strip_suffix(name: str | None) -> str | None:
 
 def parse_release(payload: dict) -> Release:
     """Turn a Discogs API release payload into the fields we validate against."""
-    names = [_strip_suffix(a["name"]) for a in payload.get("artists", [])]
+    # Skip anonymous entries rather than joining a None into the artist string.
+    names = [n for a in payload.get("artists", []) if (n := _strip_suffix(a.get("name")))]
     positions = [
         t.get("position", "") for t in payload.get("tracklist", []) if t.get("type_") == "track"
     ]

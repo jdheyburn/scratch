@@ -44,7 +44,7 @@ def release_snapshot(release: Release) -> CommentedMap:
 def new_album_doc(
     discogs_id: int | None,
     discogs_url: str | None,
-    cover_url: str,
+    cover_url: str | None,
     release: Release | None,
 ) -> CommentedMap:
     """Build the document written after a successful capture."""

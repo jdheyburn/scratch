@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
 
 from musiclib.albumfile import load_album, new_album_doc, release_snapshot, save_album
@@ -16,9 +17,12 @@ SKIP_WORDS = {"skip", "none", "n/a"}
 def capture(
     directory: Path,
     token: str,
+    *,
+    # Required, not defaulted to None: this function is nothing but a
+    # conversation, and there is no sane default for how to hold one.
+    ask: Callable[..., str],
+    confirm: Callable[..., bool],
     get=http_get,
-    ask=None,
-    confirm=None,
     echo=print,
 ) -> bool:
     """Prompt for the release and the cover, then write album.yaml and cover.jpg.

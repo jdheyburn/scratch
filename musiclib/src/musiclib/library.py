@@ -24,7 +24,7 @@ class LibraryAlbum:
     items: int
 
 
-def gate_verdict(albums: int, files: list[str], expected: int) -> str | None:
+def gate_verdict(albums: int, files: list[str], expected: int | None) -> str | None:
     """None when an album is safely in the library; otherwise why it isn't."""
     if albums == 0:
         return "not in the library"

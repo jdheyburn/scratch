@@ -24,7 +24,12 @@ def album_dir(tmp_path):
 
 
 def read_tags(path):
-    return {k.upper(): v[0] for k, v in (mutagen.flac.FLAC(path).tags or {}).items()}
+    # mutagen types `.tags` as a union covering every metadata block it can
+    # return; for a FLAC it is always the Vorbis comment mapping.
+    return {
+        k.upper(): v[0]
+        for k, v in (mutagen.flac.FLAC(path).tags or {}).items()  # ty: ignore[unresolved-attribute]
+    }
 
 
 def test_writes_the_release_id_to_every_track(album_dir):
@@ -71,8 +76,7 @@ def test_a_corrected_id_replaces_the_old_one_rather_than_appending(album_dir):
     d = album_dir(count=1)
     tag_album(d, discogs_id=111)
     tag_album(d, discogs_id=222)
-    tags = mutagen.flac.FLAC(d / "1.flac").tags
-    assert tags["musicbrainz_albumid"] == ["222"]
+    assert read_tags(d / "1.flac")["MUSICBRAINZ_ALBUMID"] == "222"
 
 
 def test_ignores_files_that_are_not_numbered_tracks(album_dir):

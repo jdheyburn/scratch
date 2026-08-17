@@ -6,6 +6,7 @@ can't do.
 """
 
 import io
+from dataclasses import replace
 
 import pytest
 from PIL import Image
@@ -76,14 +77,14 @@ def make_release(make_payload, make_tracklist):
 @pytest.fixture
 def make_candidate(make_release):
     def _make(**overrides):
-        base = dict(
+        base = Candidate(
             slug="daphni",
             flac_count=9,
             aup3_count=4,
             release=make_release(),
             cover=Cover(width=1200, height=1200),
         )
-        return Candidate(**{**base, **overrides})
+        return replace(base, **overrides)
 
     return _make
 
