@@ -7,6 +7,7 @@ dependencies = [
     "typer>=0.12",
     "requests>=2.31",
     "rich>=13.0",
+    "musiclib",
 ]
 
 [project.scripts]
@@ -15,6 +16,9 @@ musictrack = "musictrack.cli:main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.uv.sources]
+musiclib = { workspace = true }
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/musictrack"]
