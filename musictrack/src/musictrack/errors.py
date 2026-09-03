@@ -10,3 +10,19 @@ class MissingToken(Exception):
 
 class RaindropError(Exception):
     """The Raindrop API refused a request."""
+
+
+class SourceError(Exception):
+    """A source this tool reads would not answer."""
+
+
+class BandcampError(SourceError):
+    """Bandcamp refused a request, or answered as a logged-out visitor."""
+
+
+class SpotifyError(SourceError):
+    """Spotify refused a request, or the playlist is not where it should be."""
+
+
+class LibraryError(SourceError):
+    """The beets library on dee could not be read."""
