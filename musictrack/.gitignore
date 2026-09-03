@@ -16,7 +16,6 @@ build/
 dist/
 *.egg-info/
 .eggs/
-uv.lock
 
 # Coverage
 .coverage
@@ -29,6 +28,7 @@ coverage.xml
 .vscode/
 .DS_Store
 
-# Secrets — the Discogs token is read from ~/.config/beets, never committed
+# Secrets — the Raindrop token is read from ~/.config/raindrop/token, never committed
 .env
-*.token.json
+*.token
+token

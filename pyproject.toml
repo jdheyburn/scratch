@@ -1,0 +1,4 @@
+# Workspace root. Not a package itself — it exists so uv resolves musiclib and
+# musictrack together, and so musictrack can path-depend on musiclib later.
+[tool.uv.workspace]
+members = ["musiclib", "musictrack"]
