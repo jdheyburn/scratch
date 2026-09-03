@@ -1,0 +1,21 @@
+# Hooks for musictrack. prek treats any directory with a config of its own as a
+# project and runs its hooks from that directory — which is what ty needs, so
+# it can find this pyproject.toml and resolve typer, rich and the rest.
+
+[[repos]]
+repo = "https://github.com/astral-sh/ruff-pre-commit"
+rev = "v0.16.3" # Ruff version. Matches the dev group.
+hooks = [
+  # Lint first. With --fix this rewrites code, so the formatter has to run
+  # after it to have the last word on layout.
+  { id = "ruff-check", args = ["--fix"], types_or = ["python", "pyi"] },
+
+  { id = "ruff-format", types_or = ["python", "pyi"] },
+]
+
+[[repos]]
+repo = "https://github.com/astral-sh/ty-pre-commit"
+rev = "v0.0.72" # ty version. Matches the dev group.
+hooks = [
+  { id = "ty" },
+]
