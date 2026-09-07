@@ -18,7 +18,10 @@ MAX_MODULE_LINES = 200
 
 PACKAGE_DIR = Path(musictrack.__file__).parent
 
-COMMANDS = ["dedupe"]
+# Commands under the `raindrop` group, and commands registered on the app itself.
+GROUPED_COMMANDS = ["dedupe"]
+TOP_LEVEL_COMMANDS = ["reconcile"]
+COMMANDS = GROUPED_COMMANDS + TOP_LEVEL_COMMANDS
 
 
 def test_no_module_has_grown_into_a_god_file():
@@ -54,16 +57,18 @@ def test_every_module_can_be_imported_first():
 
 
 def raindrop_commands():
-    [group] = app.registered_groups
-    raindrop = group.typer_instance
-    assert raindrop is not None
-    # Typer derives an unnamed command's name from its function, and types
-    # callbacks as plain Callable — which need not carry a __name__.
-    return {
-        c.name or getattr(c.callback, "__name__", ""): c.callback
-        for c in raindrop.registered_commands
-        if c.callback is not None
-    }
+    """Every command the CLI exposes, grouped or not, by name."""
+    found = {}
+    for group in app.registered_groups:
+        typer_instance = group.typer_instance
+        assert typer_instance is not None
+        for command in typer_instance.registered_commands:
+            if command.callback is not None:
+                found[command.name or getattr(command.callback, "__name__", "")] = command.callback
+    for command in app.registered_commands:
+        if command.callback is not None:
+            found[command.name or getattr(command.callback, "__name__", "")] = command.callback
+    return found
 
 
 @pytest.mark.parametrize("name", COMMANDS)

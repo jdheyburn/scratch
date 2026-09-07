@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import typer
 
-from musictrack.commands import dedupe
+from musictrack.commands import dedupe, reconcile
 
 app = typer.Typer(
     no_args_is_help=True,
@@ -20,6 +20,7 @@ raindrop = typer.Typer(no_args_is_help=True, help="Raindrop.io bookmarks.")
 app.add_typer(raindrop, name="raindrop")
 
 raindrop.command()(dedupe.dedupe)
+app.command()(reconcile.reconcile)
 
 
 def main() -> None:
