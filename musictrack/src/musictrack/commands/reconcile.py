@@ -60,52 +60,88 @@ def classify(
     return report
 
 
-def _table(title: str, rows: list[Row], show_library: bool) -> Table:
+Dismissed = dict[tuple[str, str], str]
+
+
+def _table(
+    title: str,
+    rows: list[Row],
+    show_library: bool,
+    show_tier: bool = False,
+    dismissed: Dismissed | None = None,
+) -> Table:
     table = Table(title=title)
     table.add_column("id", style="dim")
     table.add_column("artist")
     table.add_column("release")
     if show_library:
         table.add_column("in the library as")
+    if show_tier:
+        table.add_column("tier")
+    if dismissed is not None:
+        table.add_column("dismissed")
     for candidate, match in rows:
         cells = [f"{candidate.source}:{candidate.ref}", candidate.artist, candidate.album]
         if show_library:
             found = match.library
             cells.append(f"{found.artist} / {found.album}" if found else "")
+        if show_tier:
+            cells.append(match.tier)
+        if dismissed is not None:
+            reason = dismissed.get((candidate.source, candidate.ref))
+            cells.append(f"dismissed: {reason}" if reason else "")
         table.add_row(*cells)
     return table
 
 
-def wants_table(report: Report) -> Table:
-    return _table("wants you already have", report.owned, show_library=True)
+def wants_table(report: Report, dismissed: Dismissed | None = None) -> Table:
+    return _table("wants you already have", report.owned, show_library=True, dismissed=dismissed)
 
 
-def possible_table(report: Report) -> Table:
-    return _table("worth a look: title matched, artist did not", report.possible, True)
+def possible_table(report: Report, dismissed: Dismissed | None = None) -> Table:
+    return _table(
+        "worth a look: title matched, artist did not",
+        report.possible,
+        True,
+        show_tier=True,
+        dismissed=dismissed,
+    )
 
 
-def backlog_table(report: Report) -> Table:
-    return _table("bought, not found in the library (check before importing)", report.absent, False)
+def backlog_table(report: Report, dismissed: Dismissed | None = None) -> Table:
+    return _table(
+        "bought, not found in the library (check before importing)",
+        report.absent,
+        False,
+        dismissed=dismissed,
+    )
 
 
 def reconcile(
     wants: bool = typer.Option(False, "--wants", help="Only the wants report."),
     backlog: bool = typer.Option(False, "--backlog", help="Only the backlog report."),
     include_dismissed: bool = typer.Option(
-        False, "--include-dismissed", help="Show rows you have dismissed."
+        False,
+        "--include-dismissed",
+        help="Show dismissed rows too, marked with their reason.",
     ),
 ) -> None:
     """Compare Bandcamp and Spotify against the beets library."""
     show_wants = wants or not backlog
     show_backlog = backlog or not wants
-    hidden = {} if include_dismissed else Dismissals().hidden()
+    dismissals = Dismissals().hidden()
+    # Hiding and marking are opposites of the same lookup: the default run
+    # filters candidates out before they are classified, --include-dismissed
+    # classifies everything and marks the dismissed ones instead.
+    hide = {} if include_dismissed else dismissals
+    mark = dismissals if include_dismissed else None
 
     try:
         with console.status("reading the library"):
             index = LibraryIndex(albums=beets.album_refs(), tracks=beets.track_refs())
         bandcamp = BandcampClient(load_bandcamp_cookie())
         with console.status("reading Bandcamp"):
-            wishlist = bandcamp.wishlist()
+            wishlist = bandcamp.wishlist() if show_wants else []
             collection = bandcamp.collection() if show_backlog else []
         listening: list[AlbumRef] = []
         if show_wants:
@@ -119,15 +155,15 @@ def reconcile(
         raise typer.Exit(1) from problem
 
     if show_wants:
-        report = classify([*wishlist, *listening], index, hidden)
+        report = classify([*wishlist, *listening], index, hide)
         console.print(f"[dim]{len(wishlist) + len(listening)} wants read[/]")
-        console.print(wants_table(report))
-        console.print(possible_table(report))
+        console.print(wants_table(report, mark))
+        console.print(possible_table(report, mark))
 
     if show_backlog:
-        report = classify(collection, index, hidden)
+        report = classify(collection, index, hide)
         console.print(f"[dim]{len(collection)} purchases read[/]")
-        console.print(backlog_table(report))
+        console.print(backlog_table(report, mark))
         console.print(
             "[dim]a row here means no title matched, which is usually a naming "
             "difference rather than a missing record[/]"
