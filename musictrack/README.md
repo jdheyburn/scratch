@@ -35,6 +35,8 @@ chmod 600 ~/.config/raindrop/token
 
 ```text
 musictrack raindrop dedupe [--dry-run]   remove duplicate music bookmarks, file the strays
+musictrack reconcile [--wants|--backlog] what you want against what you already have
+musictrack dismiss <source>:<ref>        stop reporting one row
 ```
 
 ### dedupe
@@ -85,6 +87,47 @@ they are never copied from one bookmark onto another.
 **Deletes go to Trash**, not permanent removal, so a run you regret is
 recoverable in the Raindrop UI.
 
+### reconcile
+
+Reads the Bandcamp wishlist, the Spotify "To Listen" playlist, and the beets
+library, then prints what you want that you already own and what you bought
+that never made it into the library. Nothing is written. `--wants` and
+`--backlog` each print one half of the report on their own; with neither, both
+print.
+
+Two credentials, since this reads two accounts beyond Raindrop:
+
+- A Bandcamp cookie jar at `~/.config/bandcamp/cookie`, mode 600. Log in at
+  bandcamp.com in Firefox, then copy the whole jar; the `identity` cookie on
+  its own answers as a logged-out visitor. The tool prints the exact command
+  the first time it can't find one.
+- A Spotify client id and secret, at `~/.config/spotify/client_id` and
+  `~/.config/spotify/client_secret`, both mode 600, from an app registered at
+  the [Spotify developer dashboard](https://developer.spotify.com/dashboard)
+  with redirect URI `http://127.0.0.1:8888/callback`.
+
+The two reports carry different weight. Owned rows are statements: an exact
+title with an agreeing artist was right in essentially every one of 338
+measured matches. Absent rows are questions: "not found" was wrong nine times
+in ten, because a shop and a tagger name the same record differently and every
+naming difference reads as absence. A "worth a look" row sits between the two:
+not a certain match, and the tier column names the rule that produced it.
+
+Measured 2026-09-03 against the live accounts and library:
+
+```text
+source                n     owned   worth a look   absent
+Bandcamp wishlist      845      6             19       820
+Spotify "To Listen"    675     19             15       641
+Bandcamp collection    377    338             29        10
+```
+
+Of the 10 absent collection items, five were genuinely missing from the
+library and five were sitting under a different title. `musictrack dismiss
+<source>:<ref> [--reason]` files a false absence away for good, using the id
+from the report's first column. `reconcile --include-dismissed` shows those
+rows again, marked with their reason.
+
 ## Development
 
 ```sh
@@ -105,18 +148,27 @@ the network. `tests/fixtures/raindrops.json` is a trimmed snapshot of the real
 account, and `test_dedupe.py` asserts the plan it produces, so a rule change
 that moves the numbers has to be deliberate.
 
+`test_snapshot.py` does the same for `reconcile`, against fixtures built from
+the wishlist, the collection, the playlist, and the whole beets library. Those
+four counts are the evidence table above; a rule change that moves them has to
+be argued for there too.
+
 ### Layout
 
 ```text
 src/musictrack/
   cli.py         the Typer app; registers each command
   commands/      one module per command
-  config.py      where the token lives
-  models.py      one bookmark, as much of it as this tool needs
+  config.py      where the credentials live
+  models.py      one bookmark or release, as much of it as this tool needs
   identity.py    what makes two bookmarks the same bookmark
   tags.py        which tags mean something, and what a survivor inherits
   plan.py        what the tool intends to do, before it does any of it
   raindrop.py    the only module that talks to Raindrop
+  albumkey.py    what makes two releases the same release
+  match.py       which library record a candidate is, if any
+  store.py       decisions that outlive a run
+  sources/       one module per place music is tracked
   errors.py      every way this tool gives up, in one place
   console.py     the one console every command prints through
 ```

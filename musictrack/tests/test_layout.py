@@ -18,7 +18,10 @@ MAX_MODULE_LINES = 200
 
 PACKAGE_DIR = Path(musictrack.__file__).parent
 
-COMMANDS = ["dedupe"]
+# Commands under the `raindrop` group, and commands registered on the app itself.
+GROUPED_COMMANDS = ["dedupe"]
+TOP_LEVEL_COMMANDS = ["reconcile", "dismiss"]
+COMMANDS = GROUPED_COMMANDS + TOP_LEVEL_COMMANDS
 
 
 def test_no_module_has_grown_into_a_god_file():
@@ -53,29 +56,31 @@ def test_every_module_can_be_imported_first():
     assert result.returncode == 0, result.stderr
 
 
-def raindrop_commands():
-    [group] = app.registered_groups
-    raindrop = group.typer_instance
-    assert raindrop is not None
-    # Typer derives an unnamed command's name from its function, and types
-    # callbacks as plain Callable — which need not carry a __name__.
-    return {
-        c.name or getattr(c.callback, "__name__", ""): c.callback
-        for c in raindrop.registered_commands
-        if c.callback is not None
-    }
+def all_commands():
+    """Every command the CLI exposes, grouped or not, by name."""
+    found = {}
+    for group in app.registered_groups:
+        typer_instance = group.typer_instance
+        assert typer_instance is not None
+        for command in typer_instance.registered_commands:
+            if command.callback is not None:
+                found[command.name or getattr(command.callback, "__name__", "")] = command.callback
+    for command in app.registered_commands:
+        if command.callback is not None:
+            found[command.name or getattr(command.callback, "__name__", "")] = command.callback
+    return found
 
 
 @pytest.mark.parametrize("name", COMMANDS)
 def test_every_command_is_reachable_from_the_cli(name):
-    assert name in raindrop_commands()
+    assert name in all_commands()
 
 
 @pytest.mark.parametrize("name", COMMANDS)
 def test_each_command_lives_in_its_own_module(name):
-    assert raindrop_commands()[name].__module__ == f"musictrack.commands.{name}"
+    assert all_commands()[name].__module__ == f"musictrack.commands.{name}"
 
 
 def test_the_cli_exposes_nothing_but_those_commands():
     """A command that isn't in COMMANDS is one this file forgot to describe."""
-    assert sorted(raindrop_commands()) == sorted(COMMANDS)
+    assert sorted(all_commands()) == sorted(COMMANDS)

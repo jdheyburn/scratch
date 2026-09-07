@@ -19,3 +19,19 @@ class Raindrop:
     tags: tuple[str, ...]
     collection_id: int
     created: str
+
+
+@dataclass(frozen=True)
+class AlbumRef:
+    """A release as one source names it.
+
+    `album` holds whatever that source calls the release. For a beets track it
+    is the track title, because a single-track purchase imports as a singleton
+    with no album at all, and the track title is the only name it has.
+    """
+
+    source: str
+    artist: str
+    album: str
+    ref: str
+    url: str = ""
