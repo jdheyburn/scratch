@@ -20,7 +20,7 @@ PACKAGE_DIR = Path(musictrack.__file__).parent
 
 # Commands under the `raindrop` group, and commands registered on the app itself.
 GROUPED_COMMANDS = ["dedupe"]
-TOP_LEVEL_COMMANDS = ["reconcile"]
+TOP_LEVEL_COMMANDS = ["reconcile", "dismiss"]
 COMMANDS = GROUPED_COMMANDS + TOP_LEVEL_COMMANDS
 
 
