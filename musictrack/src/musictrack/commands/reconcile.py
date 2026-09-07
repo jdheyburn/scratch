@@ -12,6 +12,7 @@ difference reads as absence. The headings say so.
 
 from __future__ import annotations
 
+import sqlite3
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 
@@ -104,7 +105,7 @@ def wants_table(report: Report, dismissed: Dismissed | None = None) -> Table:
 
 def possible_table(report: Report, dismissed: Dismissed | None = None) -> Table:
     return _table(
-        "worth a look: title matched, artist did not",
+        "worth a look: not a certain match, tier says why",
         report.possible,
         True,
         show_tier=True,
@@ -133,14 +134,14 @@ def reconcile(
     """Compare Bandcamp and Spotify against the beets library."""
     show_wants = wants or not backlog
     show_backlog = backlog or not wants
-    dismissals = Dismissals().hidden()
-    # Hiding and marking are opposites of the same lookup: the default run
-    # filters candidates out before they are classified, --include-dismissed
-    # classifies everything and marks the dismissed ones instead.
-    hide = {} if include_dismissed else dismissals
-    mark = dismissals if include_dismissed else None
 
     try:
+        dismissals = Dismissals().hidden()
+        # Hiding and marking are opposites of the same lookup: the default run
+        # filters candidates out before they are classified, --include-dismissed
+        # classifies everything and marks the dismissed ones instead.
+        hide = {} if include_dismissed else dismissals
+        mark = dismissals if include_dismissed else None
         with console.status("reading the library"):
             index = LibraryIndex(albums=beets.album_refs(), tracks=beets.track_refs())
         bandcamp = BandcampClient(load_bandcamp_cookie())
@@ -157,6 +158,9 @@ def reconcile(
     except SourceError as problem:
         console.print(f"[red]{problem}[/]")
         raise typer.Exit(1) from problem
+    except (OSError, sqlite3.Error) as problem:
+        console.print(f"[red]could not open the dismissals database: {problem}[/]")
+        raise typer.Exit(1) from problem
 
     if show_wants:
         report = classify([*wishlist, *listening], index, hide)
@@ -172,3 +176,4 @@ def reconcile(
             "[dim]a row here means no title matched, which is usually a naming "
             "difference rather than a missing record[/]"
         )
+        console.print(f"[dim]{len(report.owned)} owned, {len(report.possible)} worth a look[/]")

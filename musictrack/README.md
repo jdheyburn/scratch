@@ -110,8 +110,8 @@ The two reports carry different weight. Owned rows are statements: an exact
 title with an agreeing artist was right in essentially every one of 338
 measured matches. Absent rows are questions: "not found" was wrong nine times
 in ten, because a shop and a tagger name the same record differently and every
-naming difference reads as absence. A "worth a look" row sits between the two,
-where a title matched but the artist did not, and shows which tier matched it.
+naming difference reads as absence. A "worth a look" row sits between the two:
+not a certain match, and the tier column names the rule that produced it.
 
 Measured 2026-09-03 against the live accounts and library:
 

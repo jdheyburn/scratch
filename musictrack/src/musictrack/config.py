@@ -41,7 +41,7 @@ HOW_TO_GET_A_COOKIE = (
     "  sqlite3 /tmp/ffc.sqlite \"select group_concat(name || '=' || value, '; ') "
     "from moz_cookies where host='.bandcamp.com';\" | tr -d '\\n' > ~/.config/bandcamp/cookie\n"
     "  chmod 600 ~/.config/bandcamp/cookie && rm -f /tmp/ffc.sqlite\n"
-    "The whole jar, not just `identity`: on its own it reads as a logged-out visitor."
+    "Copy every cookie in the jar. The `identity` cookie alone reads as a logged-out visitor."
 )
 
 HOW_TO_GET_SPOTIFY_CREDENTIALS = (

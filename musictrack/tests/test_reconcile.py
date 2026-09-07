@@ -122,9 +122,10 @@ def test_a_row_that_was_never_dismissed_stays_unmarked():
 
 def test_a_dismissal_with_no_reason_is_still_marked():
     """`Dismissals.add` and `musictrack dismiss --reason` both default the
-    reason to an empty string, so a plain dismissal is the ordinary case,
-    not an edge case. `.get()` returning "" must not read the same as
-    `.get()` returning None for a row that was never dismissed."""
+    reason to an empty string, so a plain dismissal is the ordinary case, not
+    an edge case. The table marks a row by whether its key is present in
+    `dismissed`, not by whether the reason is truthy, so an empty reason still
+    reads as dismissed rather than as never dismissed."""
     report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
     dismissed = {("bandcamp-wishlist", "1"): ""}
     rendered = render(wants_table(report, dismissed))
@@ -256,3 +257,27 @@ def test_include_dismissed_marks_a_reasonless_dismissal_too(monkeypatch):
     assert result.exit_code == 0
     assert "Parallel Dimensions" in result.stdout
     assert "dismissed" in result.stdout
+
+
+def test_an_unwritable_dismissals_store_is_a_message_not_a_traceback(monkeypatch):
+    """`Dismissals()` creates `~/.local/share/musictrack` on construction. An
+    unwritable directory must read as a clean failure, not an escaped
+    exception."""
+
+    def boom():
+        raise OSError("Permission denied")
+
+    monkeypatch.setattr(reconcile_module, "load_bandcamp_cookie", lambda: "cookie")
+    monkeypatch.setattr(reconcile_module, "Dismissals", boom)
+    result = CliRunner().invoke(app, ["reconcile"], env={"COLUMNS": "200"})
+    assert result.exit_code == 1
+    assert not isinstance(result.exception, OSError)
+    assert "Permission denied" in result.stdout
+
+
+def test_the_backlog_table_carries_a_summary_line_of_the_other_two_buckets(monkeypatch):
+    """The backlog table alone doesn't say where the rest of what was read
+    ended up; a line under it does, without adding a fourth table."""
+    result, _ = run(monkeypatch, "--backlog")
+    assert result.exit_code == 0
+    assert "0 owned, 0 worth a look" in result.stdout
