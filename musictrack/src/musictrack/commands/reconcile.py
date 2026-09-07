@@ -88,8 +88,12 @@ def _table(
         if show_tier:
             cells.append(match.tier)
         if dismissed is not None:
-            reason = dismissed.get((candidate.source, candidate.ref))
-            cells.append(f"dismissed: {reason}" if reason else "")
+            key = (candidate.source, candidate.ref)
+            if key in dismissed:
+                reason = dismissed[key]
+                cells.append(f"dismissed: {reason}" if reason else "dismissed")
+            else:
+                cells.append("")
         table.add_row(*cells)
     return table
 

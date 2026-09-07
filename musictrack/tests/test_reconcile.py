@@ -120,6 +120,57 @@ def test_a_row_that_was_never_dismissed_stays_unmarked():
     assert "dismissed:" not in lucy_lines[0]
 
 
+def test_a_dismissal_with_no_reason_is_still_marked():
+    """`Dismissals.add` and `musictrack dismiss --reason` both default the
+    reason to an empty string, so a plain dismissal is the ordinary case,
+    not an edge case. `.get()` returning "" must not read the same as
+    `.get()` returning None for a row that was never dismissed."""
+    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
+    dismissed = {("bandcamp-wishlist", "1"): ""}
+    rendered = render(wants_table(report, dismissed))
+    lines = [line for line in rendered.splitlines() if "Theo Parrish" in line]
+    assert lines
+    assert "dismissed" in lines[0]
+
+
+def test_the_three_dismissal_states_are_distinguishable():
+    """Never dismissed, dismissed with a reason, and dismissed with the
+    empty-reason default must each render differently in the same table."""
+    lib = LibraryIndex(
+        albums=[
+            album("Theo Parrish", "Parallel Dimensions"),
+            album("Lucy Gooch", "Rushing"),
+            album("Overmono", "Good Lies"),
+        ],
+        tracks=[],
+    )
+    report = classify(
+        [
+            want("Theo Parrish", "Parallel Dimensions", ref="1"),
+            want("Lucy Gooch", "Rushing", ref="2"),
+            want("Overmono", "Good Lies", ref="3"),
+        ],
+        lib,
+        {},
+    )
+    assert len(report.owned) == 3
+    dismissed = {
+        ("bandcamp-wishlist", "1"): "duplicate",
+        ("bandcamp-wishlist", "2"): "",
+    }
+    rendered = render(wants_table(report, dismissed))
+
+    def line_for(artist):
+        [found] = [line for line in rendered.splitlines() if artist in line]
+        return found
+
+    assert "dismissed: duplicate" in line_for("Theo Parrish")
+    reasonless = line_for("Lucy Gooch")
+    assert "dismissed" in reasonless
+    assert "dismissed:" not in reasonless
+    assert "dismissed" not in line_for("Overmono")
+
+
 # --- the command: each report reads only what it needs, and honours dismissals
 
 
@@ -197,3 +248,11 @@ def test_include_dismissed_shows_the_row_marked_with_its_reason(monkeypatch):
     assert result.exit_code == 0
     assert "Parallel Dimensions" in result.stdout
     assert "own the digital, want the vinyl" in result.stdout
+
+
+def test_include_dismissed_marks_a_reasonless_dismissal_too(monkeypatch):
+    dismissed = {("bandcamp-wishlist", "1"): ""}
+    result, _ = run(monkeypatch, "--wants", "--include-dismissed", dismissed=dismissed)
+    assert result.exit_code == 0
+    assert "Parallel Dimensions" in result.stdout
+    assert "dismissed" in result.stdout
