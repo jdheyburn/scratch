@@ -1,2641 +1,2264 @@
 [
- {
-  "item_id": 3214147842,
-  "item_type": "album",
-  "band_name": "Monolake",
-  "item_title": "Interstate",
-  "item_url": "https://roberthenke.bandcamp.com/album/interstate"
- },
- {
-  "item_id": 4203399176,
-  "item_type": "package",
-  "band_name": "Biosphere",
-  "item_title": "The Hilvarenbeek Recordings [Remastered and expanded version]",
-  "item_url": "https://biosphere.bandcamp.com/album/the-hilvarenbeek-recordings-remastered-and-expanded-version"
- },
- {
-  "item_id": 571767238,
-  "item_type": "package",
-  "band_name": "Andrew Wasylyk",
-  "item_title": "Irreparable Parables",
-  "item_url": "https://claypipemusic.bandcamp.com/album/irreparable-parables"
- },
- {
-  "item_id": 156945511,
-  "item_type": "package",
-  "band_name": "The Gentle People",
-  "item_title": "Soundtracks For Living (Expanded Edition)",
-  "item_url": "https://wrwtfww.com/album/soundtracks-for-living-expanded-edition"
- },
- {
-  "item_id": 2388020122,
-  "item_type": "package",
-  "band_name": "Shinichiro Yokota",
-  "item_title": "Pitstop Box",
-  "item_url": "https://wrwtfww.com/album/pitstop-box"
- },
- {
-  "item_id": 3184635096,
-  "item_type": "album",
-  "band_name": "Joachim Spieth | Andrew Thomas",
-  "item_title": "Nocturna",
-  "item_url": "https://joachimspieth.bandcamp.com/album/nocturna"
- },
- {
-  "item_id": 3183310437,
-  "item_type": "album",
-  "band_name": "Various Artists",
-  "item_title": "Pop Ambient 2026",
-  "item_url": "https://kompakt.bandcamp.com/album/pop-ambient-2026"
- },
- {
-  "item_id": 3828039430,
-  "item_type": "album",
-  "band_name": "Yungwebster",
-  "item_title": "Yungwebster",
-  "item_url": "https://sferic.bandcamp.com/album/yungwebster"
- },
- {
-  "item_id": 514544062,
-  "item_type": "album",
-  "band_name": "Galcher Lustwerk",
-  "item_title": "LUSTWERK III",
-  "item_url": "https://galcherlustwerk.bandcamp.com/album/lustwerk-iii"
- },
- {
-  "item_id": 786712155,
-  "item_type": "album",
-  "band_name": "NEXCYIA",
-  "item_title": "Endless Path of Memory",
-  "item_url": "https://nexcyia.bandcamp.com/album/endless-path-of-memory"
- },
- {
-  "item_id": 1446562590,
-  "item_type": "album",
-  "band_name": "Other Joe",
-  "item_title": "Flawless",
-  "item_url": "https://other-joe.bandcamp.com/album/flawless"
- },
- {
-  "item_id": 1757512948,
-  "item_type": "album",
-  "band_name": "Korn\u00e9l Kov\u00e1cs",
-  "item_title": "Radio Koko",
-  "item_url": "https://kornelkovacs.bandcamp.com/album/radio-koko"
- },
- {
-  "item_id": 3954522359,
-  "item_type": "album",
-  "band_name": "Low Flung",
-  "item_title": "Type-D",
-  "item_url": "https://lowflung.bandcamp.com/album/type-d"
- },
- {
-  "item_id": 2386354046,
-  "item_type": "album",
-  "band_name": "Bok Bok",
-  "item_title": "Blood Moon EP (EH003)",
-  "item_url": "https://bokbok.bandcamp.com/album/blood-moon-ep-eh003"
- },
- {
-  "item_id": 882692269,
-  "item_type": "album",
-  "band_name": "NEXCYIA",
-  "item_title": "Exodus",
-  "item_url": "https://nexcyia.bandcamp.com/album/exodus"
- },
- {
-  "item_id": 2981659387,
-  "item_type": "album",
-  "band_name": "Various",
-  "item_title": "Timber Management Volume 2",
-  "item_url": "https://peak352.bandcamp.com/album/timber-management-volume-2"
- },
- {
-  "item_id": 3535283820,
-  "item_type": "album",
-  "band_name": "Cousin & Priori",
-  "item_title": "Fly In Amber",
-  "item_url": "https://naffrecordings.bandcamp.com/album/fly-in-amber"
- },
- {
-  "item_id": 134385842,
-  "item_type": "album",
-  "band_name": "Kliche",
-  "item_title": "Dabrea",
-  "item_url": "https://birikliche.bandcamp.com/album/dabrea"
- },
- {
-  "item_id": 2508297181,
-  "item_type": "album",
-  "band_name": "anthe\u0301ne",
-  "item_title": "balance",
-  "item_url": "https://quietdetails.bandcamp.com/album/balance"
- },
- {
-  "item_id": 2440274256,
-  "item_type": "album",
-  "band_name": "Monolake",
-  "item_title": "Gravity",
-  "item_url": "https://roberthenke.bandcamp.com/album/gravity-2"
- },
- {
-  "item_id": 2073628370,
-  "item_type": "album",
-  "band_name": "Kara-Lis Coverdale",
-  "item_title": "A Series of Actions in a Sphere of Forever",
-  "item_url": "https://kara-liscoverdale.bandcamp.com/album/a-series-of-actions-in-a-sphere-of-forever"
- },
- {
-  "item_id": 2697513863,
-  "item_type": "track",
-  "band_name": "Levon Vincent",
-  "item_title": "CONTINENTAL TECHNO VERSION TWO - LEVON VINCENT",
-  "item_url": "https://levonvincent.bandcamp.com/track/continental-techno-version-two-levon-vincent"
- },
- {
-  "item_id": 3430244239,
-  "item_type": "track",
-  "band_name": "Levon Vincent",
-  "item_title": "CONTINENTAL TECHNO VERSION ONE - LEVON VINCENT",
-  "item_url": "https://levonvincent.bandcamp.com/track/continental-techno-version-one-levon-vincent-2"
- },
- {
-  "item_id": 2759155645,
-  "item_type": "album",
-  "band_name": "Drexciya",
-  "item_title": "Digital Tsunami",
-  "item_url": "https://tresorberlin.bandcamp.com/album/digital-tsunami"
- },
- {
-  "item_id": 2063443321,
-  "item_type": "album",
-  "band_name": "Drexciya",
-  "item_title": "Hydro Doorways",
-  "item_url": "https://tresorberlin.bandcamp.com/album/hydro-doorways"
- },
- {
-  "item_id": 3977044012,
-  "item_type": "album",
-  "band_name": "Drexciya",
-  "item_title": "Fusion Flats",
-  "item_url": "https://tresorberlin.bandcamp.com/album/fusion-flats"
- },
- {
-  "item_id": 2770123859,
-  "item_type": "album",
-  "band_name": "shinetiac",
-  "item_title": "Starfrog Slipmoded",
-  "item_url": "https://o-s-t.bandcamp.com/album/starfrog-slipmoded"
- },
- {
-  "item_id": 3146914164,
-  "item_type": "album",
-  "band_name": "Joy Orbison",
-  "item_title": "archive 09-10",
-  "item_url": "https://tossportal.bandcamp.com/album/archive-09-10"
- },
- {
-  "item_id": 2825157974,
-  "item_type": "album",
-  "band_name": "Federica Deiana",
-  "item_title": "Shell",
-  "item_url": "https://homenormal.bandcamp.com/album/shell"
- },
- {
-  "item_id": 2586714149,
-  "item_type": "album",
-  "band_name": "Shinichi Atobe",
-  "item_title": "P&S002",
-  "item_url": "https://plasticandsounds.bandcamp.com/album/p-s002"
- },
- {
-  "item_id": 556320637,
-  "item_type": "album",
-  "band_name": "Joe Harvey-Whyte & Bobby Lee",
-  "item_title": "Last Ride",
-  "item_url": "https://curation-records.bandcamp.com/album/last-ride"
- },
- {
-  "item_id": 4173208678,
-  "item_type": "album",
-  "band_name": "Lewis and Lee",
-  "item_title": "Lewis and Lee LP",
-  "item_url": "https://allmythoughts.bandcamp.com/album/lewis-and-lee-lp"
- },
- {
-  "item_id": 3995080393,
-  "item_type": "album",
-  "band_name": "36",
-  "item_title": "A Warm Static Sphere",
-  "item_url": "https://quietdetails.bandcamp.com/album/a-warm-static-sphere"
- },
- {
-  "item_id": 2516633408,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "FA\u00c7ADISMS",
-  "item_url": "https://irisarri.bandcamp.com/album/fa-adisms"
- },
- {
-  "item_id": 1355040044,
-  "item_type": "album",
-  "band_name": "DECIUS",
-  "item_title": "DECIUS VOL II (Splendour & Obedience)",
-  "item_url": "https://decius.bandcamp.com/album/decius-vol-ii-splendour-obedience"
- },
- {
-  "item_id": 1384447540,
-  "item_type": "album",
-  "band_name": "Florian TM Zeisig",
-  "item_title": "A New Life",
-  "item_url": "https://stroomtv.bandcamp.com/album/a-new-life"
- },
- {
-  "item_id": 3908462994,
-  "item_type": "album",
-  "band_name": "Pye Corner Audio",
-  "item_title": "Lake Deep Memory",
-  "item_url": "https://quietdetails.bandcamp.com/album/lake-deep-memory"
- },
- {
-  "item_id": 2017758565,
-  "item_type": "album",
-  "band_name": "Leandro Fresco & Rafael Anton Irisarri",
-  "item_title": "La Equidistancia",
-  "item_url": "https://leandrofrescorafaelantonirisarri.bandcamp.com/album/la-equidistancia"
- },
- {
-  "item_id": 2777774731,
-  "item_type": "album",
-  "band_name": "DECIUS",
-  "item_title": "DECIUS VOL I",
-  "item_url": "https://decius.bandcamp.com/album/decius-vol-i"
- },
- {
-  "item_id": 2131036548,
-  "item_type": "album",
-  "band_name": "Natural Wonder Beauty Concept",
-  "item_title": "Natural Wonder Beauty Concept",
-  "item_url": "https://naturalwonderbeautyconcept.bandcamp.com/album/natural-wonder-beauty-concept"
- },
- {
-  "item_id": 426823960,
-  "item_type": "album",
-  "band_name": "Mike Midnight",
-  "item_title": "Angel Hours",
-  "item_url": "https://fr33atlast.bandcamp.com/album/angel-hours"
- },
- {
-  "item_id": 2039174518,
-  "item_type": "track",
-  "band_name": "Mike Midnight",
-  "item_title": "Fluxus (Version)",
-  "item_url": "https://fr33atlast.bandcamp.com/track/fluxus-version"
- },
- {
-  "item_id": 3026924392,
-  "item_type": "album",
-  "band_name": "Pub",
-  "item_title": "Practice 01",
-  "item_url": "https://ampoulerecords.bandcamp.com/album/practice-01-2"
- },
- {
-  "item_id": 184171863,
-  "item_type": "album",
-  "band_name": "Bok Bok",
-  "item_title": "Hardbody Dubs Vol 5",
-  "item_url": "https://bokbok.bandcamp.com/album/hardbody-dubs-vol-5"
- },
- {
-  "item_id": 4259686390,
-  "item_type": "album",
-  "band_name": "Shoebox",
-  "item_title": "Falling In The Right Place",
-  "item_url": "https://shoeboxlabel.bandcamp.com/album/falling-in-the-right-place"
- },
- {
-  "item_id": 1840024558,
-  "item_type": "track",
-  "band_name": "J Wax",
-  "item_title": "Denis Sulta - It's Only Real (J Wax Edit)",
-  "item_url": "https://jwax1.bandcamp.com/track/denis-sulta-its-only-real-j-wax-edit"
- },
- {
-  "item_id": 568050193,
-  "item_type": "album",
-  "band_name": "XENIA REAPER",
-  "item_title": "Gambling",
-  "item_url": "https://indexrecords.bandcamp.com/album/gambling-2"
- },
- {
-  "item_id": 2288838335,
-  "item_type": "album",
-  "band_name": "Shinichi Atobe",
-  "item_title": "P&S001",
-  "item_url": "https://plasticandsounds.bandcamp.com/album/p-s001"
- },
- {
-  "item_id": 951122502,
-  "item_type": "album",
-  "band_name": "james K",
-  "item_title": "036",
-  "item_url": "https://jameskmusic.bandcamp.com/album/036"
- },
- {
-  "item_id": 1171418457,
-  "item_type": "album",
-  "band_name": "Soichi Terada",
-  "item_title": "Asakusa Light",
-  "item_url": "https://soichiterada.bandcamp.com/album/asakusa-light"
- },
- {
-  "item_id": 3015571,
-  "item_type": "track",
-  "band_name": "Zorrovian",
-  "item_title": "BIOS",
-  "item_url": "https://zorrovian.bandcamp.com/track/bios"
- },
- {
-  "item_id": 3711818873,
-  "item_type": "track",
-  "band_name": "Zorrovian",
-  "item_title": "BOOTUP",
-  "item_url": "https://zorrovian.bandcamp.com/track/bootup"
- },
- {
-  "item_id": 702551373,
-  "item_type": "track",
-  "band_name": "The Shen",
-  "item_title": "Reach",
-  "item_url": "https://theshen.bandcamp.com/track/reach"
- },
- {
-  "item_id": 2562295739,
-  "item_type": "track",
-  "band_name": "Zaida Zane",
-  "item_title": "newjeans - ETA [Zaida Zane Bootleg]",
-  "item_url": "https://zaida-zane.bandcamp.com/track/newjeans-eta-zaida-zane-bootleg"
- },
- {
-  "item_id": 723031635,
-  "item_type": "album",
-  "band_name": "Nick Le\u00f3n & Erika De Casier",
-  "item_title": "Bikini (Bok's Dub)",
-  "item_url": "https://bokbok.bandcamp.com/album/bikini-boks-dub"
- },
- {
-  "item_id": 1763850951,
-  "item_type": "album",
-  "band_name": "Priori",
-  "item_title": "This but More (Loidis Reconfiguration)",
-  "item_url": "https://prioricamp.bandcamp.com/album/this-but-more-loidis-reconfiguration"
- },
- {
-  "item_id": 2498272151,
-  "item_type": "album",
-  "band_name": "Brendan Eder Ensemble",
-  "item_title": "Therapy",
-  "item_url": "https://brendaneder.bandcamp.com/album/therapy"
- },
- {
-  "item_id": 2507121485,
-  "item_type": "track",
-  "band_name": "Zaida Zane",
-  "item_title": "Needs [Zaida Zane Bootleg]",
-  "item_url": "https://zaida-zane.bandcamp.com/track/needs-zaida-zane-bootleg"
- },
- {
-  "item_id": 2007235416,
-  "item_type": "album",
-  "band_name": "Fennesz",
-  "item_title": "Live at St James's Church, Piccadilly",
-  "item_url": "https://fenneszreleases.bandcamp.com/album/live-at-st-jamess-church-piccadilly"
- },
- {
-  "item_id": 2055523443,
-  "item_type": "album",
-  "band_name": "Fennesz",
-  "item_title": "Mosaic",
-  "item_url": "https://fenneszreleases.bandcamp.com/album/mosaic"
- },
- {
-  "item_id": 3263376637,
-  "item_type": "album",
-  "band_name": "DJ POLO",
-  "item_title": "Currents / Night Waves",
-  "item_url": "https://djpolouk.bandcamp.com/album/currents-night-waves"
- },
- {
-  "item_id": 3952788238,
-  "item_type": "album",
-  "band_name": "OSSX",
-  "item_title": "Liquidation",
-  "item_url": "https://ossx.bandcamp.com/album/liquidation"
- },
- {
-  "item_id": 819134954,
-  "item_type": "album",
-  "band_name": "fields we found / quiet details",
-  "item_title": "rhythm structures 01",
-  "item_url": "https://fieldswefound.bandcamp.com/album/rhythm-structures-01"
- },
- {
-  "item_id": 41216582,
-  "item_type": "album",
-  "band_name": "Jefre Cantu-Ledesma",
-  "item_title": "Gift Songs",
-  "item_url": "https://jefrecantu-ledesma.bandcamp.com/album/gift-songs"
- },
- {
-  "item_id": 254329639,
-  "item_type": "package",
-  "band_name": "Pizza Hotline",
-  "item_title": "Polygon Island",
-  "item_url": "https://pizzahotline.bandcamp.com/album/polygon-island"
- },
- {
-  "item_id": 2026230995,
-  "item_type": "package",
-  "band_name": "Pizza Hotline",
-  "item_title": "LEVEL SELECT",
-  "item_url": "https://pizzahotline.bandcamp.com/album/level-select"
- },
- {
-  "item_id": 1874349618,
-  "item_type": "album",
-  "band_name": "Thomas Fehlmann",
-  "item_title": "Gute Luft",
-  "item_url": "https://thomasfehlmann.bandcamp.com/album/gute-luft"
- },
- {
-  "item_id": 3311259953,
-  "item_type": "album",
-  "band_name": "upsammy",
-  "item_title": "Strange Meridians",
-  "item_url": "https://upsammy.bandcamp.com/album/strange-meridians"
- },
- {
-  "item_id": 2501135640,
-  "item_type": "album",
-  "band_name": "Daphni",
-  "item_title": "Fly Away (Deetron Mixes)",
-  "item_url": "https://caribouband.bandcamp.com/album/fly-away-deetron-mixes"
- },
- {
-  "item_id": 2222168401,
-  "item_type": "album",
-  "band_name": "Bok Bok",
-  "item_title": "Hardbody Dubs Vol 4",
-  "item_url": "https://bokbok.bandcamp.com/album/hardbody-dubs-vol-4"
- },
- {
-  "item_id": 2390290710,
-  "item_type": "album",
-  "band_name": "Bok Bok",
-  "item_title": "Hardbody Dubs Vol 1",
-  "item_url": "https://bokbok.bandcamp.com/album/hardbody-dubs-vol-1"
- },
- {
-  "item_id": 3253164136,
-  "item_type": "album",
-  "band_name": "Bok Bok",
-  "item_title": "Hardbody Dubs Vol 3",
-  "item_url": "https://bokbok.bandcamp.com/album/hardbody-dubs-vol-3"
- },
- {
-  "item_id": 3374079873,
-  "item_type": "album",
-  "band_name": "Len",
-  "item_title": "Len - YaTOO (Bok's Dub)",
-  "item_url": "https://bokbok.bandcamp.com/album/len-yatoo-boks-dub"
- },
- {
-  "item_id": 3810845440,
-  "item_type": "album",
-  "band_name": "Daphni",
-  "item_title": "Sizzling EP",
-  "item_url": "https://caribouband.bandcamp.com/album/sizzling-ep"
- },
- {
-  "item_id": 1504946545,
-  "item_type": "album",
-  "band_name": "Caribou",
-  "item_title": "You Can Do It",
-  "item_url": "https://caribouband.bandcamp.com/album/you-can-do-it"
- },
- {
-  "item_id": 2518723976,
-  "item_type": "album",
-  "band_name": "Caribou",
-  "item_title": "Broke My Heart Remixes",
-  "item_url": "https://caribouband.bandcamp.com/album/broke-my-heart-remixes"
- },
- {
-  "item_id": 3586179242,
-  "item_type": "album",
-  "band_name": "Voice Actor, Squu",
-  "item_title": "Lust (1)",
-  "item_url": "https://stroomtv.bandcamp.com/album/lust-1"
- },
- {
-  "item_id": 3289972917,
-  "item_type": "album",
-  "band_name": "Daniel Stefanik",
-  "item_title": "Echoes EP",
-  "item_url": "https://ornaments-label.bandcamp.com/album/echoes-ep"
- },
- {
-  "item_id": 4160394904,
-  "item_type": "album",
-  "band_name": "Kontakt Records",
-  "item_title": "Blue Channel - Dubplate Vibing Part II",
-  "item_url": "https://kontakt-records.bandcamp.com/album/blue-channel-dubplate-vibing-part-ii"
- },
- {
-  "item_id": 141795324,
-  "item_type": "album",
-  "band_name": "ASC",
-  "item_title": "Tales of Introspection",
-  "item_url": "https://quietdetails.bandcamp.com/album/tales-of-introspection"
- },
- {
-  "item_id": 3877390679,
-  "item_type": "album",
-  "band_name": "Various",
-  "item_title": "Early Sightings Volume 1",
-  "item_url": "https://peak352.bandcamp.com/album/early-sightings-volume-1"
- },
- {
-  "item_id": 2794401287,
-  "item_type": "album",
-  "band_name": "Florian TM Zeisig",
-  "item_title": "ZZZZZzzzzzz",
-  "item_url": "https://floriantmzeisig.bandcamp.com/album/zzzzzzzzzzz"
- },
- {
-  "item_id": 834511659,
-  "item_type": "album",
-  "band_name": "Blank Gloss",
-  "item_title": "Cornered",
-  "item_url": "https://blankgloss.bandcamp.com/album/cornered"
- },
- {
-  "item_id": 962493101,
-  "item_type": "album",
-  "band_name": "Karenn",
-  "item_title": "Everything Is Curly",
-  "item_url": "https://karenn.bandcamp.com/album/everything-is-curly"
- },
- {
-  "item_id": 700885726,
-  "item_type": "album",
-  "band_name": "DMX Krew",
-  "item_title": "Nu Romantix",
-  "item_url": "https://dmxkrew.bandcamp.com/album/nu-romantix"
- },
- {
-  "item_id": 3240976397,
-  "item_type": "album",
-  "band_name": "990x",
-  "item_title": "Ruins",
-  "item_url": "https://sferic.bandcamp.com/album/ruins"
- },
- {
-  "item_id": 240119328,
-  "item_type": "album",
-  "band_name": "Other Joe",
-  "item_title": "blessings from th eheart",
-  "item_url": "https://other-joe.bandcamp.com/album/blessings-from-th-eheart"
- },
- {
-  "item_id": 1116274379,
-  "item_type": "album",
-  "band_name": "NUG",
-  "item_title": "Napping Under God",
-  "item_url": "https://bblisss.bandcamp.com/album/napping-under-god"
- },
- {
-  "item_id": 1578826506,
-  "item_type": "album",
-  "band_name": "Long Island Sound",
-  "item_title": "Hydra",
-  "item_url": "https://longislandsoundsos.bandcamp.com/album/hydra"
- },
- {
-  "item_id": 1458490396,
-  "item_type": "album",
-  "band_name": "Hysterical Love Project",
-  "item_title": "Endless Bliss Weekender",
-  "item_url": "https://hystericalloveproject.bandcamp.com/album/endless-bliss-weekender"
- },
- {
-  "item_id": 2890923314,
-  "item_type": "album",
-  "band_name": "Karen Nyame KG & Ronnie Loko",
-  "item_title": "Tell Me  /  Take It Off",
-  "item_url": "https://nightslugs.bandcamp.com/album/tell-me-take-it-off"
- },
- {
-  "item_id": 880942795,
-  "item_type": "album",
-  "band_name": "James Hoff",
-  "item_title": "Shadows Lifted from Invisible Hands",
-  "item_url": "https://jameshoff.bandcamp.com/album/shadows-lifted-from-invisible-hands"
- },
- {
-  "item_id": 952945024,
-  "item_type": "album",
-  "band_name": "Angel R",
-  "item_title": "Mossed Capable Of Being Observant",
-  "item_url": "https://enmossed.bandcamp.com/album/mossed-capable-of-being-observant"
- },
- {
-  "item_id": 656308236,
-  "item_type": "album",
-  "band_name": "Andrew Wasylyk | Tommy Perman",
-  "item_title": "Ash Grey and the Gull Glides On",
-  "item_url": "https://claypipemusic.bandcamp.com/album/ash-grey-and-the-gull-glides-on"
- },
- {
-  "item_id": 4078004497,
-  "item_type": "album",
-  "band_name": "Joachim Spieth",
-  "item_title": "Irradiance",
-  "item_url": "https://joachimspieth.bandcamp.com/album/irradiance"
- },
- {
-  "item_id": 1206914779,
-  "item_type": "album",
-  "band_name": "KMRU",
-  "item_title": "forge",
-  "item_url": "https://kmru.bandcamp.com/album/forge"
- },
- {
-  "item_id": 2966071460,
-  "item_type": "album",
-  "band_name": "Joachim Spieth",
-  "item_title": "Terrain",
-  "item_url": "https://joachimspieth.bandcamp.com/album/terrain"
- },
- {
-  "item_id": 4046848246,
-  "item_type": "album",
-  "band_name": "Markus Guentner",
-  "item_title": "Extropy",
-  "item_url": "https://markusguentner.bandcamp.com/album/extropy-2"
- },
- {
-  "item_id": 1306328649,
-  "item_type": "album",
-  "band_name": "Brendon Moeller",
-  "item_title": "Mirage",
-  "item_url": "https://quietdetails.bandcamp.com/album/mirage"
- },
- {
-  "item_id": 2018679191,
-  "item_type": "album",
-  "band_name": "Blank Gloss",
-  "item_title": "Melt",
-  "item_url": "https://blankgloss.bandcamp.com/album/melt"
- },
- {
-  "item_id": 664325725,
-  "item_type": "album",
-  "band_name": "Kontakt Records",
-  "item_title": "Blue Channel - Dubplate Vibing Part I",
-  "item_url": "https://kontakt-records.bandcamp.com/album/blue-channel-dubplate-vibing-part-i"
- },
- {
-  "item_id": 802966672,
-  "item_type": "album",
-  "band_name": "Regularfantasy",
-  "item_title": "New Glow EP",
-  "item_url": "https://regularfantasy.bandcamp.com/album/new-glow-ep"
- },
- {
-  "item_id": 3251275518,
-  "item_type": "album",
-  "band_name": "Low End Activist",
-  "item_title": "Airdrop",
-  "item_url": "https://lowendactivist.bandcamp.com/album/airdrop"
- },
- {
-  "item_id": 2580519941,
-  "item_type": "track",
-  "band_name": "UNiiQU3",
-  "item_title": "Match My Speed ( UNIIQU3 Nasty remix)",
-  "item_url": "https://uniiqu3.bandcamp.com/track/match-my-speed-uniiqu3-nasty-remix"
- },
- {
-  "item_id": 1327871720,
-  "item_type": "album",
-  "band_name": "Shinichi Atobe",
-  "item_title": "Peace of mind",
-  "item_url": "https://earlyreflection.bandcamp.com/album/peace-of-mind"
- },
- {
-  "item_id": 1413733626,
-  "item_type": "album",
-  "band_name": "GAS",
-  "item_title": "Der Lange Marsch",
-  "item_url": "https://kompakt-gas.bandcamp.com/album/der-lange-marsch"
- },
- {
-  "item_id": 694924646,
-  "item_type": "album",
-  "band_name": "GAS",
-  "item_title": "Oktember",
-  "item_url": "https://kompakt-gas.bandcamp.com/album/oktember"
- },
- {
-  "item_id": 2280812332,
-  "item_type": "album",
-  "band_name": "GAS",
-  "item_title": "GAS",
-  "item_url": "https://kompakt-gas.bandcamp.com/album/gas"
- },
- {
-  "item_id": 2016710804,
-  "item_type": "album",
-  "band_name": "Skee Mask",
-  "item_title": "ITLP19 - Resort",
-  "item_url": "https://iliantape.bandcamp.com/album/itlp19-resort"
- },
- {
-  "item_id": 2850276101,
-  "item_type": "package",
-  "band_name": "Burial",
-  "item_title": "Untrue",
-  "item_url": "https://burial.bandcamp.com/album/untrue"
- },
- {
-  "item_id": 3304750897,
-  "item_type": "album",
-  "band_name": "Plush Records Inc.",
-  "item_title": "Plush V",
-  "item_url": "https://plushrecordsinc.bandcamp.com/album/plush-v"
- },
- {
-  "item_id": 408676867,
-  "item_type": "track",
-  "band_name": "Jorja Smith",
-  "item_title": "Little Things (Bok's Dub)",
-  "item_url": "https://bokbok.bandcamp.com/track/little-things-boks-dub"
- },
- {
-  "item_id": 3767908712,
-  "item_type": "album",
-  "band_name": "Jazzy",
-  "item_title": "Jazzy - Giving Me (Bok's Dub)",
-  "item_url": "https://bokbok.bandcamp.com/album/jazzy-giving-me-boks-dub"
- },
- {
-  "item_id": 577161308,
-  "item_type": "album",
-  "band_name": "Various",
-  "item_title": "Timber Management Volume 1",
-  "item_url": "https://peak352.bandcamp.com/album/timber-management-volume-1"
- },
- {
-  "item_id": 1466975207,
-  "item_type": "track",
-  "band_name": "Helix",
-  "item_title": "Tinashe - Nasty (Helix Remix)",
-  "item_url": "https://1djhelix.bandcamp.com/track/tinashe-nasty-helix-remix"
- },
- {
-  "item_id": 1688031391,
-  "item_type": "album",
-  "band_name": "ZG",
-  "item_title": "ZG",
-  "item_url": "https://zgmusic.bandcamp.com/album/zg"
- },
- {
-  "item_id": 2774572318,
-  "item_type": "album",
-  "band_name": "Fennec",
-  "item_title": "Nice Work Vol. 2",
-  "item_url": "https://fennecsound.com/album/nice-work-vol-2"
- },
- {
-  "item_id": 3993160526,
-  "item_type": "album",
-  "band_name": "Plush Managements Inc.",
-  "item_title": "Regularfantasy Presents... Plush III",
-  "item_url": "https://plushrecordsinc.bandcamp.com/album/regularfantasy-presents-plush-iii"
- },
- {
-  "item_id": 2504161331,
-  "item_type": "track",
-  "band_name": "J Wax",
-  "item_title": "Charli XCX - 365 (J Wax Edit - Slowed)",
-  "item_url": "https://jwax1.bandcamp.com/track/charli-xcx-365-j-wax-edit-slowed"
- },
- {
-  "item_id": 1489052967,
-  "item_type": "album",
-  "band_name": "James Bernard",
-  "item_title": "Only Now",
-  "item_url": "https://quietdetails.bandcamp.com/album/only-now"
- },
- {
-  "item_id": 1131227304,
-  "item_type": "album",
-  "band_name": "Juan Atkins & Moritz von Oswald present Borderland",
-  "item_title": "Transport",
-  "item_url": "https://tresorberlin.bandcamp.com/album/transport"
- },
- {
-  "item_id": 3400932378,
-  "item_type": "album",
-  "band_name": "Paul St. Hilaire",
-  "item_title": "Paul St. Hilaire - Tikiman Vol.1",
-  "item_url": "https://kynantrecords.bandcamp.com/album/paul-st-hilaire-tikiman-vol-1"
- },
- {
-  "item_id": 653938490,
-  "item_type": "package",
-  "band_name": "Burial",
-  "item_title": "Ghost Hardware",
-  "item_url": "https://burial.bandcamp.com/album/ghost-hardware"
- },
- {
-  "item_id": 1618965012,
-  "item_type": "album",
-  "band_name": "36",
-  "item_title": "Fade To Grey (Reinterpreted)",
-  "item_url": "https://astrangelyisolatedplace.bandcamp.com/album/fade-to-grey-reinterpreted"
- },
- {
-  "item_id": 1115961286,
-  "item_type": "album",
-  "band_name": "Men I Trust",
-  "item_title": "Oncle Jazz",
-  "item_url": "https://menitrust.bandcamp.com/album/oncle-jazz"
- },
- {
-  "item_id": 4138507755,
-  "item_type": "album",
-  "band_name": "Kontakt Records",
-  "item_title": "Stelios Vassiloudis - Bifurcation / Conforce RMX",
-  "item_url": "https://kontakt-records.bandcamp.com/album/stelios-vassiloudis-bifurcation-conforce-rmx"
- },
- {
-  "item_id": 3810515155,
-  "item_type": "track",
-  "band_name": "TEREKKE",
-  "item_title": "Evaporain",
-  "item_url": "https://terekke.bandcamp.com/track/evaporain"
- },
- {
-  "item_id": 2937556674,
-  "item_type": "track",
-  "band_name": "hinako omori",
-  "item_title": "cyanotype memories (joe goddard remix)",
-  "item_url": "https://hinakoomori.bandcamp.com/track/cyanotype-memories-joe-goddard-remix"
- },
- {
-  "item_id": 4247908050,
-  "item_type": "album",
-  "band_name": "Ikonika",
-  "item_title": "Details",
-  "item_url": "https://ikonika.bandcamp.com/album/details"
- },
- {
-  "item_id": 1001361896,
-  "item_type": "album",
-  "band_name": "Kontakt Records",
-  "item_title": "Resoe - Memory Line / Lawrence RMX",
-  "item_url": "https://kontakt-records.bandcamp.com/album/resoe-memory-line-lawrence-rmx"
- },
- {
-  "item_id": 686623374,
-  "item_type": "album",
-  "band_name": "Florian T M Zeisig",
-  "item_title": "Planet Inc",
-  "item_url": "https://stroomtv.bandcamp.com/album/planet-inc"
- },
- {
-  "item_id": 3037271398,
-  "item_type": "album",
-  "band_name": "Fields Of Mist",
-  "item_title": "ITX030 - Biospore Farmers",
-  "item_url": "https://iliantape.bandcamp.com/album/itx030-biospore-farmers"
- },
- {
-  "item_id": 1287628346,
-  "item_type": "album",
-  "band_name": "Biosphere",
-  "item_title": "Patashnik [Decrypted By Sketch]",
-  "item_url": "https://biosphere.bandcamp.com/album/patashnik-decrypted-by-sketch-1"
- },
- {
-  "item_id": 1997443864,
-  "item_type": "album",
-  "band_name": "Basil & Rogers",
-  "item_title": "Self-Titled",
-  "item_url": "https://forestjams.bandcamp.com/album/self-titled"
- },
- {
-  "item_id": 2118567246,
-  "item_type": "album",
-  "band_name": "Plush Managements Inc.",
-  "item_title": "PLUSH002",
-  "item_url": "https://plushrecordsinc.bandcamp.com/album/plush002"
- },
- {
-  "item_id": 4189029486,
-  "item_type": "package",
-  "band_name": "Biosphere",
-  "item_title": "Autour De La Lune [Reissue]",
-  "item_url": "https://biosphere.bandcamp.com/album/autour-de-la-lune-reissue"
- },
- {
-  "item_id": 4052589792,
-  "item_type": "package",
-  "band_name": "Burial",
-  "item_title": "South London Boroughs",
-  "item_url": "https://burial.bandcamp.com/album/south-london-boroughs"
- },
- {
-  "item_id": 4049990262,
-  "item_type": "album",
-  "band_name": "Silent Servant",
-  "item_title": "In Memoriam",
-  "item_url": "https://tresorberlin.bandcamp.com/album/in-memoriam"
- },
- {
-  "item_id": 2612575189,
-  "item_type": "album",
-  "band_name": "Forest Drive West",
-  "item_title": "Parallel Space EP",
-  "item_url": "https://forestdrivewest.bandcamp.com/album/parallel-space-ep"
- },
- {
-  "item_id": 1437819997,
-  "item_type": "album",
-  "band_name": "Other Joe",
-  "item_title": "Jealousy Tulip",
-  "item_url": "https://other-joe.bandcamp.com/album/jealousy-tulip"
- },
- {
-  "item_id": 2282578081,
-  "item_type": "album",
-  "band_name": "Jake Muir",
-  "item_title": "the hum of your veiled voice",
-  "item_url": "https://sferic.bandcamp.com/album/the-hum-of-your-veiled-voice"
- },
- {
-  "item_id": 687312260,
-  "item_type": "album",
-  "band_name": "Marcos Cabral",
-  "item_title": "Nature Walk EP",
-  "item_url": "https://dimensionsrecordings.bandcamp.com/album/nature-walk-ep"
- },
- {
-  "item_id": 3938873206,
-  "item_type": "album",
-  "band_name": "Cousin",
-  "item_title": "HomeSoon",
-  "item_url": "https://secondcousin.bandcamp.com/album/homesoon"
- },
- {
-  "item_id": 2084210161,
-  "item_type": "album",
-  "band_name": "Silent Servant",
-  "item_title": "Negative Fascination (Expanded)",
-  "item_url": "https://hospitalproductions.bandcamp.com/album/negative-fascination-expanded"
- },
- {
-  "item_id": 4110681227,
-  "item_type": "album",
-  "band_name": "Skee Mask",
-  "item_title": "A",
-  "item_url": "https://skeemask.bandcamp.com/album/a"
- },
- {
-  "item_id": 675410939,
-  "item_type": "album",
-  "band_name": "TEREKKE",
-  "item_title": "Live at Het Bimhuis",
-  "item_url": "https://terekke.bandcamp.com/album/live-at-het-bimhuis"
- },
- {
-  "item_id": 2303753367,
-  "item_type": "album",
-  "band_name": "Fennec",
-  "item_title": "free us of this feeling",
-  "item_url": "https://fennecsound.com/album/free-us-of-this-feeling"
- },
- {
-  "item_id": 3466645636,
-  "item_type": "package",
-  "band_name": "Call Super",
-  "item_title": "Arpo",
-  "item_url": "https://callsuper.bandcamp.com/album/arpo"
- },
- {
-  "item_id": 483547716,
-  "item_type": "album",
-  "band_name": "zake\u0300",
-  "item_title": "Lapis",
-  "item_url": "https://quietdetails.bandcamp.com/album/lapis-2"
- },
- {
-  "item_id": 4048569464,
-  "item_type": "album",
-  "band_name": "Patricia Wolf",
-  "item_title": "See-Through",
-  "item_url": "https://patriciawolf.bandcamp.com/album/see-through"
- },
- {
-  "item_id": 4126186781,
-  "item_type": "album",
-  "band_name": "Hoavi",
-  "item_title": "Music for Six Rooms",
-  "item_url": "https://balmat.bandcamp.com/album/music-for-six-rooms"
- },
- {
-  "item_id": 4174814748,
-  "item_type": "album",
-  "band_name": "nueen",
-  "item_title": "Diagrams of Thought",
-  "item_url": "https://nueen.bandcamp.com/album/diagrams-of-thought"
- },
- {
-  "item_id": 841394953,
-  "item_type": "album",
-  "band_name": "The Humble Bee",
-  "item_title": "AI-24: A Miscellany For The Quiet Hours",
-  "item_url": "https://astralindustries.bandcamp.com/album/ai-24-a-miscellany-for-the-quiet-hours"
- },
- {
-  "item_id": 1128172594,
-  "item_type": "album",
-  "band_name": "Wolfgang Voigt & Deepchord",
-  "item_title": "AI-04: Colours of Time, re-interpreted",
-  "item_url": "https://astralindustries.bandcamp.com/album/ai-04-colours-of-time-re-interpreted"
- },
- {
-  "item_id": 2281334649,
-  "item_type": "album",
-  "band_name": "Dialog",
-  "item_title": "AI-31: Dialog",
-  "item_url": "https://astralindustries.bandcamp.com/album/ai-31-dialog"
- },
- {
-  "item_id": 2943026203,
-  "item_type": "album",
-  "band_name": "Shorelights",
-  "item_title": "AI-16: Bioluminescence",
-  "item_url": "https://astralindustries.bandcamp.com/album/ai-16-bioluminescence"
- },
- {
-  "item_id": 3302583548,
-  "item_type": "album",
-  "band_name": "Waveform Transmission",
-  "item_title": "AI-20: V 3.0-3.9",
-  "item_url": "https://astralindustries.bandcamp.com/album/ai-20-v-30-39"
- },
- {
-  "item_id": 4214512949,
-  "item_type": "album",
-  "band_name": "Biosphere",
-  "item_title": "Inland Delta",
-  "item_url": "https://biosphere.bandcamp.com/album/inland-delta-2"
- },
- {
-  "item_id": 4059148063,
-  "item_type": "track",
-  "band_name": "Greg Beato",
-  "item_title": "swerrrm",
-  "item_url": "https://gregbeato.bandcamp.com/track/swerrrm"
- },
- {
-  "item_id": 3334495970,
-  "item_type": "album",
-  "band_name": "Sofie Birch",
-  "item_title": "Holotropica",
-  "item_url": "https://sofiebirch.bandcamp.com/album/holotropica"
- },
- {
-  "item_id": 4070969470,
-  "item_type": "album",
-  "band_name": "Patrick Holland",
-  "item_title": "Fog Wall",
-  "item_url": "https://patrickholland.bandcamp.com/album/fog-wall"
- },
- {
-  "item_id": 177188420,
-  "item_type": "album",
-  "band_name": "Fennec",
-  "item_title": "Nice Work Vol. 1",
-  "item_url": "https://fennecsound.com/album/nice-work-vol-1"
- },
- {
-  "item_id": 1929303763,
-  "item_type": "album",
-  "band_name": "Plush Managements Inc.",
-  "item_title": "Magic Plush",
-  "item_url": "https://plushrecordsinc.bandcamp.com/album/magic-plush"
- },
- {
-  "item_id": 1097533236,
-  "item_type": "album",
-  "band_name": "Rainforest Spiritual Enslavement",
-  "item_title": "Killer Whale Atmospheres",
-  "item_url": "https://rainforestspiritualenslavement.bandcamp.com/album/killer-whale-atmospheres"
- },
- {
-  "item_id": 1534810572,
-  "item_type": "album",
-  "band_name": "36",
-  "item_title": "Ablyss",
-  "item_url": "https://3six.net/album/ablyss"
- },
- {
-  "item_id": 2732601330,
-  "item_type": "album",
-  "band_name": "Other Joe",
-  "item_title": "Alien Haze",
-  "item_url": "https://other-joe.bandcamp.com/album/alien-haze"
- },
- {
-  "item_id": 3560059401,
-  "item_type": "album",
-  "band_name": "Girl Unit",
-  "item_title": "Song Feel",
-  "item_url": "https://girlunit.bandcamp.com/album/song-feel"
- },
- {
-  "item_id": 78717550,
-  "item_type": "album",
-  "band_name": "Skull Disco",
-  "item_title": "Soundboy Punishments",
-  "item_url": "https://samshackleton.bandcamp.com/album/soundboy-punishments"
- },
- {
-  "item_id": 4080305020,
-  "item_type": "album",
-  "band_name": "Andrea",
-  "item_title": "ITLP14 - Due In Color",
-  "item_url": "https://iliantape.bandcamp.com/album/itlp14-due-in-color"
- },
- {
-  "item_id": 2693514214,
-  "item_type": "album",
-  "band_name": "Andrea",
-  "item_title": "ITLP06 - Ritorno",
-  "item_url": "https://iliantape.bandcamp.com/album/itlp06-ritorno"
- },
- {
-  "item_id": 531994993,
-  "item_type": "album",
-  "band_name": "Helix",
-  "item_title": "Greatest Hits Volume 3",
-  "item_url": "https://1djhelix.bandcamp.com/album/greatest-hits-volume-3"
- },
- {
-  "item_id": 1324881243,
-  "item_type": "album",
-  "band_name": "Helix",
-  "item_title": "Greatest Hits Volume 2",
-  "item_url": "https://1djhelix.bandcamp.com/album/greatest-hits-volume-2"
- },
- {
-  "item_id": 1877880864,
-  "item_type": "album",
-  "band_name": "Helix",
-  "item_title": "Greatest Hits Volume 1",
-  "item_url": "https://1djhelix.bandcamp.com/album/greatest-hits-volume-1"
- },
- {
-  "item_id": 3314896911,
-  "item_type": "album",
-  "band_name": "Night Slugs",
-  "item_title": "Night Slugs Allstars X",
-  "item_url": "https://nightslugs.bandcamp.com/album/night-slugs-allstars-x"
- },
- {
-  "item_id": 584813579,
-  "item_type": "album",
-  "band_name": "Rainforest Spiritual Enslavement",
-  "item_title": "Ambient Black Magic",
-  "item_url": "https://rainforestspiritualenslavement.bandcamp.com/album/ambient-black-magic"
- },
- {
-  "item_id": 830160989,
-  "item_type": "album",
-  "band_name": "CHEMOTEX",
-  "item_title": "Schrade Knives",
-  "item_url": "https://chemotex.bandcamp.com/album/schrade-knives"
- },
- {
-  "item_id": 763826438,
-  "item_type": "album",
-  "band_name": "x or size",
-  "item_title": "Covert ID",
-  "item_url": "https://xorsize.bandcamp.com/album/covert-id"
- },
- {
-  "item_id": 3094450115,
-  "item_type": "album",
-  "band_name": "Donato Dozzy",
-  "item_title": "Filo Loves The Acid",
-  "item_url": "https://tresorberlin.bandcamp.com/album/filo-loves-the-acid"
- },
- {
-  "item_id": 2189127690,
-  "item_type": "album",
-  "band_name": "Galcher Lustwerk",
-  "item_title": "LUSTWERK II",
-  "item_url": "https://galcherlustwerk.bandcamp.com/album/lustwerk-ii"
- },
- {
-  "item_id": 4240177619,
-  "item_type": "track",
-  "band_name": "Gesloten Cirkel",
-  "item_title": "HOLE",
-  "item_url": "https://geslotencirkel.bandcamp.com/track/hole"
- },
- {
-  "item_id": 2322695875,
-  "item_type": "album",
-  "band_name": "Celer + Forest Management",
-  "item_title": "Landmarks",
-  "item_url": "https://ctatsu.bandcamp.com/album/landmarks"
- },
- {
-  "item_id": 1269763270,
-  "item_type": "album",
-  "band_name": "TEREKKE",
-  "item_title": "( \u0361\u00b0 \u035c\u0296 \u0361\u00b0)",
-  "item_url": "https://terekke.bandcamp.com/album/-"
- },
- {
-  "item_id": 2142866202,
-  "item_type": "album",
-  "band_name": "Lucid Dreams",
-  "item_title": "AI-28: Lucid Dreams",
-  "item_url": "https://astralindustries.bandcamp.com/album/ai-28-lucid-dreams"
- },
- {
-  "item_id": 389650460,
-  "item_type": "track",
-  "band_name": "Bok & Trago",
-  "item_title": "Pathfinder [BB VIP]  (2012)",
-  "item_url": "https://bokbok.bandcamp.com/track/pathfinder-bb-vip-2012"
- },
- {
-  "item_id": 515023349,
-  "item_type": "track",
-  "band_name": "Bok Bok x Modjo",
-  "item_title": "Raining x 'Lady'",
-  "item_url": "https://bokbok.bandcamp.com/track/raining-x-lady"
- },
- {
-  "item_id": 3662536036,
-  "item_type": "track",
-  "band_name": "Bok Bok",
-  "item_title": "Midnight Stop (2012)",
-  "item_url": "https://bokbok.bandcamp.com/track/midnight-stop-2012"
- },
- {
-  "item_id": 3883439191,
-  "item_type": "track",
-  "band_name": "Mr Charizma",
-  "item_title": "On A Journey [Cover] (2012)",
-  "item_url": "https://bokbok.bandcamp.com/track/on-a-journey-cover-2012"
- },
- {
-  "item_id": 1237315269,
-  "item_type": "album",
-  "band_name": "Night Slugs",
-  "item_title": "Night Slugs Classix Remixed",
-  "item_url": "https://nightslugs.bandcamp.com/album/night-slugs-classix-remixed"
- },
- {
-  "item_id": 3088117280,
-  "item_type": "album",
-  "band_name": "UNiiQU3",
-  "item_title": "Heartbeats",
-  "item_url": "https://uniiqu3.bandcamp.com/album/heartbeats"
- },
- {
-  "item_id": 3191437227,
-  "item_type": "album",
-  "band_name": "Rainforest Spiritual Enslavement",
-  "item_title": "Green Graves",
-  "item_url": "https://rainforestspiritualenslavement.bandcamp.com/album/green-graves-2"
- },
- {
-  "item_id": 1981955436,
-  "item_type": "album",
-  "band_name": "Various Artists",
-  "item_title": "Pop Ambient 2023",
-  "item_url": "https://kompakt.bandcamp.com/album/pop-ambient-2023"
- },
- {
-  "item_id": 3404649550,
-  "item_type": "album",
-  "band_name": "JVXTA",
-  "item_title": "Euston Blues",
-  "item_url": "https://jvxta.bandcamp.com/album/euston-blues"
- },
- {
-  "item_id": 212279701,
-  "item_type": "album",
-  "band_name": "Bok Bok",
-  "item_title": "Duetto",
-  "item_url": "https://bokbok.bandcamp.com/album/duetto-2"
- },
- {
-  "item_id": 2583246797,
-  "item_type": "album",
-  "band_name": "Lektor Scopes",
-  "item_title": "My Intentions / Dirty Games",
-  "item_url": "https://nightslugs.bandcamp.com/album/my-intentions-dirty-games"
- },
- {
-  "item_id": 2972073063,
-  "item_type": "album",
-  "band_name": "Zaida Zane",
-  "item_title": "Boy Eyes",
-  "item_url": "https://zaida-zane.bandcamp.com/album/boy-eyes"
- },
- {
-  "item_id": 3104040645,
-  "item_type": "album",
-  "band_name": "DJ J Heat",
-  "item_title": "Jersey Transit Systems",
-  "item_url": "https://nightslugs.bandcamp.com/album/jersey-transit-systems"
- },
- {
-  "item_id": 1500360339,
-  "item_type": "album",
-  "band_name": "Chaos In The CBD",
-  "item_title": "fabric presents Chaos In The CBD",
-  "item_url": "https://chaosinthecbd.bandcamp.com/album/fabric-presents-chaos-in-the-cbd"
- },
- {
-  "item_id": 3580614136,
-  "item_type": "package",
-  "band_name": "Deepchord",
-  "item_title": "AI-01: Lanterns",
-  "item_url": "https://astralindustries.bandcamp.com/album/ai-01-lanterns"
- },
- {
-  "item_id": 2359155773,
-  "item_type": "album",
-  "band_name": "Abstract Thought",
-  "item_title": "Hypothetical Situations",
-  "item_url": "https://cloneaqualungseries.bandcamp.com/album/hypothetical-situations"
- },
- {
-  "item_id": 3155552654,
-  "item_type": "album",
-  "band_name": "Space Afrika",
-  "item_title": "Somewhere Decent To Live",
-  "item_url": "https://space-afrika.bandcamp.com/album/somewhere-decent-to-live"
- },
- {
-  "item_id": 2325911820,
-  "item_type": "album",
-  "band_name": "Florian T M Zeisig",
-  "item_title": "Music For Parents",
-  "item_url": "https://metronrecords.bandcamp.com/album/music-for-parents"
- },
- {
-  "item_id": 3510068481,
-  "item_type": "album",
-  "band_name": "EDMX",
-  "item_title": "Wicked Drummer EP",
-  "item_url": "https://skrufix.bandcamp.com/album/wicked-drummer-ep"
- },
- {
-  "item_id": 2267130115,
-  "item_type": "album",
-  "band_name": "Karenn",
-  "item_title": "Voam Club Archive Volume 1",
-  "item_url": "https://karenn.bandcamp.com/album/voam-club-archive-volume-1"
- },
- {
-  "item_id": 1542576521,
-  "item_type": "album",
-  "band_name": "Fennec",
-  "item_title": "a couple of good days",
-  "item_url": "https://fennecsound.com/album/a-couple-of-good-days"
- },
- {
-  "item_id": 1941084947,
-  "item_type": "album",
-  "band_name": "Ikonika",
-  "item_title": "Bubble Up EP",
-  "item_url": "https://ikonika.bandcamp.com/album/bubble-up-ep"
- },
- {
-  "item_id": 3850167267,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "Midnight Colours",
-  "item_url": "https://irisarri.bandcamp.com/album/midnight-colours"
- },
- {
-  "item_id": 2814842517,
-  "item_type": "album",
-  "band_name": "The Sight Below",
-  "item_title": "Glider 10",
-  "item_url": "https://irisarri.bandcamp.com/album/glider-10"
- },
- {
-  "item_id": 3633176640,
-  "item_type": "album",
-  "band_name": "The Sight Below",
-  "item_title": "Glider 10: Reworks",
-  "item_url": "https://irisarri.bandcamp.com/album/glider-10-reworks-2"
- },
- {
-  "item_id": 225296164,
-  "item_type": "track",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "Fernweh",
-  "item_url": "https://irisarri.bandcamp.com/track/fernweh"
- },
- {
-  "item_id": 1428006790,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "Peripeteia",
-  "item_url": "https://irisarri.bandcamp.com/album/peripeteia"
- },
- {
-  "item_id": 395713889,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "El Ferrocarril Desvaneciente",
-  "item_url": "https://irisarri.bandcamp.com/album/el-ferrocarril-desvaneciente"
- },
- {
-  "item_id": 988735259,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "Solastalgia",
-  "item_url": "https://irisarri.bandcamp.com/album/solastalgia"
- },
- {
-  "item_id": 1202341175,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "A Fragile Geography",
-  "item_url": "https://irisarri.bandcamp.com/album/a-fragile-geography"
- },
- {
-  "item_id": 1218807138,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "Agitas Al Sol",
-  "item_url": "https://irisarri.bandcamp.com/album/agitas-al-sol"
- },
- {
-  "item_id": 1334914982,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "The Shameless Years",
-  "item_url": "https://irisarri.bandcamp.com/album/the-shameless-years"
- },
- {
-  "item_id": 1409716356,
-  "item_type": "track",
-  "band_name": "The Sight Below",
-  "item_title": "Life's Fading Light (Almost Slipped Away mix)",
-  "item_url": "https://irisarri.bandcamp.com/track/lifes-fading-light-almost-slipped-away-mix"
- },
- {
-  "item_id": 1599220831,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "The Unintentional Sea",
-  "item_url": "https://irisarri.bandcamp.com/album/the-unintentional-sea"
- },
- {
-  "item_id": 2047526199,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "The North Bend (10th Anniversary remaster)",
-  "item_url": "https://irisarri.bandcamp.com/album/the-north-bend-10th-anniversary-remaster"
- },
- {
-  "item_id": 3929264978,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "Sirimiri",
-  "item_url": "https://irisarri.bandcamp.com/album/sirimiri"
- },
- {
-  "item_id": 427722798,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "Daydreaming",
-  "item_url": "https://irisarri.bandcamp.com/album/daydreaming"
- },
- {
-  "item_id": 1712111059,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "Sacred Variations",
-  "item_url": "https://irisarri.bandcamp.com/album/sacred-variations"
- },
- {
-  "item_id": 2827376391,
-  "item_type": "album",
-  "band_name": "Rafael Anton Irisarri",
-  "item_title": "Sacred Hatred",
-  "item_url": "https://irisarri.bandcamp.com/album/sacred-hatred"
- },
- {
-  "item_id": 3609572488,
-  "item_type": "album",
-  "band_name": "The Sight Below",
-  "item_title": "Reworks",
-  "item_url": "https://irisarri.bandcamp.com/album/reworks"
- },
- {
-  "item_id": 2547344013,
-  "item_type": "album",
-  "band_name": "Andrew Wasylyk",
-  "item_title": "Hearing the Water Before Seeing the Falls",
-  "item_url": "https://claypipemusic.bandcamp.com/album/hearing-the-water-before-seeing-the-falls"
- },
- {
-  "item_id": 1771029749,
-  "item_type": "album",
-  "band_name": "Biosphere",
-  "item_title": "Substrata (Alternative Versions)",
-  "item_url": "https://biosphere.bandcamp.com/album/substrata-alternative-versions"
- },
- {
-  "item_id": 850335233,
-  "item_type": "album",
-  "band_name": "Drexciya",
-  "item_title": "Harnessed The Storm",
-  "item_url": "https://tresorberlin.bandcamp.com/album/harnessed-the-storm"
- },
- {
-  "item_id": 3385209998,
-  "item_type": "album",
-  "band_name": "Drexciya",
-  "item_title": "Neptune's Lair",
-  "item_url": "https://tresorberlin.bandcamp.com/album/neptunes-lair"
- },
- {
-  "item_id": 4236651227,
-  "item_type": "album",
-  "band_name": "Joachim Spieth",
-  "item_title": "Ousia",
-  "item_url": "https://joachimspieth.bandcamp.com/album/ousia"
- },
- {
-  "item_id": 1557419568,
-  "item_type": "album",
-  "band_name": "ROAD HOG",
-  "item_title": "Home For The Holidays",
-  "item_url": "https://roadhog.bandcamp.com/album/home-for-the-holidays"
- },
- {
-  "item_id": 2084351844,
-  "item_type": "album",
-  "band_name": "Phase Fatale",
-  "item_title": "Burning The Rural District",
-  "item_url": "https://hospitalproductions.bandcamp.com/album/burning-the-rural-district"
- },
- {
-  "item_id": 326925681,
-  "item_type": "album",
-  "band_name": "James Bernard",
-  "item_title": "Unreleased Works 1994-1999 (Volumes 1 & 2)",
-  "item_url": "https://jamesbernard.bandcamp.com/album/unreleased-works-1994-1999-volumes-1-2"
- },
- {
-  "item_id": 3456997594,
-  "item_type": "album",
-  "band_name": "Various Artists",
-  "item_title": "For Ukraine (Volume 1)",
-  "item_url": "https://headphonecommute.bandcamp.com/album/for-ukraine-volume-1"
- },
- {
-  "item_id": 1059188925,
-  "item_type": "album",
-  "band_name": "Sonic Groove",
-  "item_title": "Stand Up In Defiance: A Benefit For Ukraine (SGF01)",
-  "item_url": "https://sonicgroove.bandcamp.com/album/stand-up-in-defiance-a-benefit-for-ukraine-sgf01"
- },
- {
-  "item_id": 222624053,
-  "item_type": "album",
-  "band_name": "Skee Mask",
-  "item_title": "ITLP09 - Pool",
-  "item_url": "https://iliantape.bandcamp.com/album/itlp09-pool"
- },
- {
-  "item_id": 522577932,
-  "item_type": "album",
-  "band_name": "Japanese Telecom",
-  "item_title": "Virtual Geisha",
-  "item_url": "https://cloneaqualungseries.bandcamp.com/album/virtual-geisha"
- },
- {
-  "item_id": 1615590175,
-  "item_type": "album",
-  "band_name": "Gesloten Cirkel",
-  "item_title": "185",
-  "item_url": "https://solaronemusic.bandcamp.com/album/185"
- },
- {
-  "item_id": 4174038044,
-  "item_type": "album",
-  "band_name": "Andrew Wasylyk",
-  "item_title": "Balgay Hill: Morning in Magnolia",
-  "item_url": "https://claypipemusic.bandcamp.com/album/balgay-hill-morning-in-magnolia"
- },
- {
-  "item_id": 2436273230,
-  "item_type": "album",
-  "band_name": "Biosphere",
-  "item_title": "The Senja Recordings",
-  "item_url": "https://biosphere.bandcamp.com/album/the-senja-recordings"
- },
- {
-  "item_id": 2729447884,
-  "item_type": "album",
-  "band_name": "Celestial",
-  "item_title": "I Had Too Much To Dream Last Night",
-  "item_url": "https://celestialecstatic.bandcamp.com/album/i-had-too-much-to-dream-last-night"
- },
- {
-  "item_id": 4237151568,
-  "item_type": "album",
-  "band_name": "Felisha Ledesma",
-  "item_title": "Fringe",
-  "item_url": "https://felishaledesma.bandcamp.com/album/fringe"
- },
- {
-  "item_id": 3908709826,
-  "item_type": "album",
-  "band_name": "36",
-  "item_title": "All Possible States",
-  "item_url": "https://3six.net/album/all-possible-states"
- },
- {
-  "item_id": 3397405473,
-  "item_type": "album",
-  "band_name": "Celer",
-  "item_title": "Tempelhof",
-  "item_url": "https://celer.bandcamp.com/album/tempelhof"
- },
- {
-  "item_id": 3811984997,
-  "item_type": "album",
-  "band_name": "The Caretaker",
-  "item_title": "Everywhere, an empty bliss",
-  "item_url": "https://thecaretaker.bandcamp.com/album/everywhere-an-empty-bliss"
- },
- {
-  "item_id": 1157425991,
-  "item_type": "album",
-  "band_name": "Jake Muir",
-  "item_title": "Lady's Mantle",
-  "item_url": "https://sferic.bandcamp.com/album/ladys-mantle-5"
- },
- {
-  "item_id": 1257747090,
-  "item_type": "album",
-  "band_name": "Celer",
-  "item_title": "Xi\u00e8xie tapes",
-  "item_url": "https://celer.bandcamp.com/album/xi-xie-tapes"
- },
- {
-  "item_id": 4283686300,
-  "item_type": "track",
-  "band_name": "Celer",
-  "item_title": "Lights Inside and Ahead (Uncut)",
-  "item_url": "https://celer.bandcamp.com/track/lights-inside-and-ahead-uncut"
- },
- {
-  "item_id": 289428014,
-  "item_type": "album",
-  "band_name": "Various Artists",
-  "item_title": "Pop Ambient 2020",
-  "item_url": "https://kompakt.bandcamp.com/album/pop-ambient-2020"
- },
- {
-  "item_id": 2231238372,
-  "item_type": "album",
-  "band_name": "Various Artists",
-  "item_title": "Pop Ambient 2001",
-  "item_url": "https://kompakt.bandcamp.com/album/pop-ambient-2001"
- },
- {
-  "item_id": 3239828741,
-  "item_type": "album",
-  "band_name": "Rainforest Spiritual Enslavement",
-  "item_title": "Jellyfish Reproduce Black Magic",
-  "item_url": "https://rainforestspiritualenslavement.bandcamp.com/album/jellyfish-reproduce-black-magic"
- },
- {
-  "item_id": 1614094932,
-  "item_type": "album",
-  "band_name": "Susumu Yokota",
-  "item_title": "Acid Mt. Fuji (remastered)",
-  "item_url": "https://midgar-records.bandcamp.com/album/acid-mt-fuji-remastered"
- },
- {
-  "item_id": 260556938,
-  "item_type": "album",
-  "band_name": "Rainforest Spiritual Enslavement",
-  "item_title": "Flying Fish Ambience",
-  "item_url": "https://rainforestspiritualenslavement.bandcamp.com/album/flying-fish-ambience"
- },
- {
-  "item_id": 3894320471,
-  "item_type": "package",
-  "band_name": "Andrew Wasylyk",
-  "item_title": "Themes For Buildings And Spaces",
-  "item_url": "https://andrewwasylyk.bandcamp.com/album/themes-for-buildings-and-spaces-2"
- },
- {
-  "item_id": 371090267,
-  "item_type": "track",
-  "band_name": "Dissolver / LifLefLof",
-  "item_title": "My Neck, My Back (Dissolver's Whiplash edit)",
-  "item_url": "https://dissolverlifleflof.bandcamp.com/track/my-neck-my-back-dissolvers-whiplash-edit"
- },
- {
-  "item_id": 2495073888,
-  "item_type": "album",
-  "band_name": "36",
-  "item_title": "Music For Isolation (Suite)",
-  "item_url": "https://3six.net/album/music-for-isolation-suite"
- },
- {
-  "item_id": 304511345,
-  "item_type": "album",
-  "band_name": "kaka",
-  "item_title": "into u",
-  "item_url": "https://ikonika.bandcamp.com/album/into-u"
- },
- {
-  "item_id": 2890952043,
-  "item_type": "package",
-  "band_name": "Biosphere",
-  "item_title": "N-Plants",
-  "item_url": "https://biosphere.bandcamp.com/album/n-plants"
- },
- {
-  "item_id": 3704130255,
-  "item_type": "package",
-  "band_name": "Biosphere",
-  "item_title": "Cirque [Reissue with bonus album]",
-  "item_url": "https://biosphere.bandcamp.com/album/cirque-reissue-with-bonus-album"
- },
- {
-  "item_id": 2026427459,
-  "item_type": "album",
-  "band_name": "Moodymann",
-  "item_title": "DEMOS, CASSETTES, ADATS & FLOPPIES PT.1",
-  "item_url": "https://moodymann.bandcamp.com/album/demos-cassettes-adats-floppies-pt-1"
- },
- {
-  "item_id": 993796104,
-  "item_type": "album",
-  "band_name": "zak\u00e8",
-  "item_title": "Unfurled Works, Vol. I",
-  "item_url": "https://zakedrone.bandcamp.com/album/unfurled-works-vol-i"
- },
- {
-  "item_id": 257338339,
-  "item_type": "track",
-  "band_name": "Black Swan & 36",
-  "item_title": "Mist (2020 Remaster)",
-  "item_url": "https://3six.net/track/mist-2020-remaster"
- },
- {
-  "item_id": 400232394,
-  "item_type": "album",
-  "band_name": "Biosphere",
-  "item_title": "Dropsonde [Reissue with bonus album]",
-  "item_url": "https://biosphere.bandcamp.com/album/dropsonde-reissue-with-bonus-album"
- },
- {
-  "item_id": 810155818,
-  "item_type": "album",
-  "band_name": "GAS",
-  "item_title": "Pop",
-  "item_url": "https://kompakt-gas.bandcamp.com/album/pop"
- },
- {
-  "item_id": 431867479,
-  "item_type": "album",
-  "band_name": "zak\u00e8 & Slow Dancing Society",
-  "item_title": "Mirrored",
-  "item_url": "https://zakedrone.bandcamp.com/album/mirrored"
- },
- {
-  "item_id": 880193910,
-  "item_type": "album",
-  "band_name": "zak\u00e8 & City of Dawn",
-  "item_title": "Wander",
-  "item_url": "https://zakedrone.bandcamp.com/album/wander"
- },
- {
-  "item_id": 3676104316,
-  "item_type": "album",
-  "band_name": "zak\u00e8",
-  "item_title": "Carolina",
-  "item_url": "https://zakedrone.bandcamp.com/album/carolina"
- },
- {
-  "item_id": 2986905406,
-  "item_type": "album",
-  "band_name": "ROAD HOG",
-  "item_title": "More Spares",
-  "item_url": "https://roadhog.bandcamp.com/album/more-spares"
- },
- {
-  "item_id": 3409909469,
-  "item_type": "album",
-  "band_name": "Road Hog",
-  "item_title": "Spares",
-  "item_url": "https://roadhog.bandcamp.com/album/spares"
- },
- {
-  "item_id": 145093434,
-  "item_type": "album",
-  "band_name": "Tom Vourtsis",
-  "item_title": "Midnight Color",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/midnight-color"
- },
- {
-  "item_id": 357015914,
-  "item_type": "album",
-  "band_name": "Moss Covered Technology",
-  "item_title": "Once Hallowed",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/once-hallowed"
- },
- {
-  "item_id": 520473922,
-  "item_type": "album",
-  "band_name": "Mor Air",
-  "item_title": "Nine Movements for Water",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/nine-movements-for-water"
- },
- {
-  "item_id": 662691250,
-  "item_type": "album",
-  "band_name": "Infinite Medium",
-  "item_title": "Decayed Resonance",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/decayed-resonance"
- },
- {
-  "item_id": 671321027,
-  "item_type": "album",
-  "band_name": "Carlos Ferreira",
-  "item_title": "A Glimpse of Hope",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/a-glimpse-of-hope"
- },
- {
-  "item_id": 971149725,
-  "item_type": "album",
-  "band_name": "J\u00f6rgen Kjellgren",
-  "item_title": "100919",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/100919"
- },
- {
-  "item_id": 1097301760,
-  "item_type": "album",
-  "band_name": "Low Howl",
-  "item_title": "Lux",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/lux"
- },
- {
-  "item_id": 1161676946,
-  "item_type": "album",
-  "band_name": "Broken",
-  "item_title": "Capadokya",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/capadokya"
- },
- {
-  "item_id": 1181253359,
-  "item_type": "album",
-  "band_name": "From Overseas",
-  "item_title": "Melancholic Objects",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/melancholic-objects"
- },
- {
-  "item_id": 1440269900,
-  "item_type": "album",
-  "band_name": "w\u00f8unds",
-  "item_title": "How to Get Lost (and Never Found)",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/how-to-get-lost-and-never-found"
- },
- {
-  "item_id": 1870106335,
-  "item_type": "album",
-  "band_name": "Slow Dancing Society",
-  "item_title": "Failing Light",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/failing-light"
- },
- {
-  "item_id": 1996589177,
-  "item_type": "album",
-  "band_name": "zak\u00e8",
-  "item_title": "Laudation, Unfurled",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/laudation-unfurled"
- },
- {
-  "item_id": 2108179197,
-  "item_type": "album",
-  "band_name": "Blanket Swimming & DR",
-  "item_title": "High Tide",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/high-tide"
- },
- {
-  "item_id": 2231541119,
-  "item_type": "album",
-  "band_name": "Pagination",
-  "item_title": "Slleet",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/slleet"
- },
- {
-  "item_id": 2276359394,
-  "item_type": "album",
-  "band_name": "Etxera",
-  "item_title": "Paradas",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/paradas"
- },
- {
-  "item_id": 2372642349,
-  "item_type": "album",
-  "band_name": "Evgeny Bylina",
-  "item_title": "Wherever It Was Possible",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/wherever-it-was-possible"
- },
- {
-  "item_id": 2390435801,
-  "item_type": "album",
-  "band_name": "City of Dawn",
-  "item_title": "Elapsed",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/elapsed"
- },
- {
-  "item_id": 2397114317,
-  "item_type": "album",
-  "band_name": "Tyresta",
-  "item_title": "Galatea",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/galatea"
- },
- {
-  "item_id": 2855498884,
-  "item_type": "album",
-  "band_name": "Mathieu Lamontagne",
-  "item_title": "Savoureuses D\u00e9coupes",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/savoureuses-d-coupes"
- },
- {
-  "item_id": 2954814065,
-  "item_type": "album",
-  "band_name": "Bu.Re_",
-  "item_title": "Divergence, Unfurled",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/divergence-unfurled"
- },
- {
-  "item_id": 3018536712,
-  "item_type": "album",
-  "band_name": "Akkad The Orphic Priest",
-  "item_title": "Apopheny",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/apopheny"
- },
- {
-  "item_id": 3186048582,
-  "item_type": "album",
-  "band_name": "Hipnotic Earth",
-  "item_title": "Rare Quiet Day",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/rare-quiet-day"
- },
- {
-  "item_id": 3359331849,
-  "item_type": "album",
-  "band_name": "Syneva",
-  "item_title": "My Beautiful Sprinter",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/my-beautiful-sprinter"
- },
- {
-  "item_id": 3493624852,
-  "item_type": "album",
-  "band_name": "Deer Meadow",
-  "item_title": "Missing Class",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/missing-class"
- },
- {
-  "item_id": 3573851937,
-  "item_type": "album",
-  "band_name": "Departure Street",
-  "item_title": "Some Bodies Electric",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/some-bodies-electric"
- },
- {
-  "item_id": 3793376990,
-  "item_type": "album",
-  "band_name": "andarctica",
-  "item_title": "Held | Pur",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/held-pur"
- },
- {
-  "item_id": 3876487846,
-  "item_type": "album",
-  "band_name": "Two Hands | One Engine",
-  "item_title": "Hecla",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/hecla"
- },
- {
-  "item_id": 4176353241,
-  "item_type": "album",
-  "band_name": "Wayne Robert Thomas",
-  "item_title": "Well Now You Know, Unfurled",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/well-now-you-know-unfurled"
- },
- {
-  "item_id": 4203901628,
-  "item_type": "album",
-  "band_name": "Aaron Ross Hansen",
-  "item_title": "Stained Glass of Spain",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/stained-glass-of-spain"
- },
- {
-  "item_id": 4266067417,
-  "item_type": "album",
-  "band_name": "Dawn Chorus and the Infallible Sea",
-  "item_title": "Amber",
-  "item_url": "https://healingsoundpropagandist.bandcamp.com/album/amber"
- },
- {
-  "item_id": 898433239,
-  "item_type": "album",
-  "band_name": "The Green Kingdom",
-  "item_title": "Residence on Earth",
-  "item_url": "https://pitp.bandcamp.com/album/residence-on-earth"
- },
- {
-  "item_id": 3244834014,
-  "item_type": "album",
-  "band_name": "Various Artists",
-  "item_title": "Healing Sounds II: A Compilation For Those In Need",
-  "item_url": "https://pitp.bandcamp.com/album/healing-sounds-ii-a-compilation-for-those-in-need"
- },
- {
-  "item_id": 2351548591,
-  "item_type": "album",
-  "band_name": "Slow Dancing Society",
-  "item_title": "The Torchlight Parade Vol. I & II",
-  "item_url": "https://pitp.bandcamp.com/album/the-torchlight-parade-vol-i-ii"
- },
- {
-  "item_id": 471171905,
-  "item_type": "album",
-  "band_name": "anth\u00e9ne",
-  "item_title": "Long Formations +4",
-  "item_url": "https://pitp.bandcamp.com/album/long-formations-4"
- },
- {
-  "item_id": 760251090,
-  "item_type": "album",
-  "band_name": "Marc Ertel",
-  "item_title": "[Overtures]",
-  "item_url": "https://pitp.bandcamp.com/album/overtures"
- },
- {
-  "item_id": 977336048,
-  "item_type": "album",
-  "band_name": "36 & zak\u00e8",
-  "item_title": "Stasis Sounds For Long-Distance Space Travel",
-  "item_url": "https://pitp.bandcamp.com/album/stasis-sounds-for-long-distance-space-travel"
- },
- {
-  "item_id": 1101189016,
-  "item_type": "album",
-  "band_name": "From Overseas",
-  "item_title": "Home",
-  "item_url": "https://pitp.bandcamp.com/album/home"
- },
- {
-  "item_id": 1924716388,
-  "item_type": "album",
-  "band_name": "T.R. Jordan",
-  "item_title": "Recollections Suite",
-  "item_url": "https://pitp.bandcamp.com/album/recollections-suite"
- },
- {
-  "item_id": 2041180354,
-  "item_type": "album",
-  "band_name": "Slow Dancing Society",
-  "item_title": "Fantosmes",
-  "item_url": "https://pitp.bandcamp.com/album/fantosmes"
- },
- {
-  "item_id": 2086152203,
-  "item_type": "album",
-  "band_name": "Lucy Gooch",
-  "item_title": "Rushing",
-  "item_url": "https://pitp.bandcamp.com/album/rushing"
- },
- {
-  "item_id": 2447246638,
-  "item_type": "album",
-  "band_name": "Bedroom",
-  "item_title": "A Thousand Harmonies in Silence",
-  "item_url": "https://pitp.bandcamp.com/album/a-thousand-harmonies-in-silence"
- },
- {
-  "item_id": 2611362315,
-  "item_type": "album",
-  "band_name": "Slow Dancing Society",
-  "item_title": "The Sound of Lights When Dim",
-  "item_url": "https://pitp.bandcamp.com/album/the-sound-of-lights-when-dim"
- },
- {
-  "item_id": 3695475822,
-  "item_type": "album",
-  "band_name": "Slow Dancing Society",
-  "item_title": "The Disappearing Collective Vol. I",
-  "item_url": "https://pitp.bandcamp.com/album/the-disappearing-collective-vol-i"
- },
- {
-  "item_id": 4223864017,
-  "item_type": "album",
-  "band_name": "T.R. Jordan",
-  "item_title": "Just For You",
-  "item_url": "https://pitp.bandcamp.com/album/just-for-you"
- },
- {
-  "item_id": 2675302711,
-  "item_type": "album",
-  "band_name": "North Atlantic Drift",
-  "item_title": "Pillars",
-  "item_url": "https://polarseasrecordings.bandcamp.com/album/pillars"
- },
- {
-  "item_id": 2819523124,
-  "item_type": "album",
-  "band_name": "Leyland Kirby",
-  "item_title": "We, so tired of all the darkness in our lives",
-  "item_url": "https://leylandkirby.bandcamp.com/album/we-so-tired-of-all-the-darkness-in-our-lives"
- },
- {
-  "item_id": 2871320993,
-  "item_type": "album",
-  "band_name": "Leandro Fresco & Rafael Anton Irisarri",
-  "item_title": "Una Presencia En La Brisa",
-  "item_url": "https://leandrofrescorafaelantonirisarri.bandcamp.com/album/una-presencia-en-la-brisa"
- },
- {
-  "item_id": 2800129694,
-  "item_type": "album",
-  "band_name": "GAS",
-  "item_title": "K\u00f6nigsforst",
-  "item_url": "https://kompakt-gas.bandcamp.com/album/k-nigsforst"
- },
- {
-  "item_id": 211175418,
-  "item_type": "album",
-  "band_name": "Isaac Helsen",
-  "item_title": "Remnants Vol. I",
-  "item_url": "https://pitp.bandcamp.com/album/remnants-vol-i"
- },
- {
-  "item_id": 254090496,
-  "item_type": "album",
-  "band_name": "zak\u00e8",
-  "item_title": "Orchestral Tape Studies II",
-  "item_url": "https://pitp.bandcamp.com/album/orchestral-tape-studies-ii-4"
- },
- {
-  "item_id": 255355458,
-  "item_type": "album",
-  "band_name": "Hotel Neon",
-  "item_title": "Bloom | Fold",
-  "item_url": "https://pitp.bandcamp.com/album/bloom-fold"
- },
- {
-  "item_id": 331850690,
-  "item_type": "album",
-  "band_name": "Phoebe",
-  "item_title": "Reminder | Lucent",
-  "item_url": "https://pitp.bandcamp.com/album/reminder-lucent"
- },
- {
-  "item_id": 351901306,
-  "item_type": "album",
-  "band_name": "Various Artists",
-  "item_title": "Past/Present 2024 Compilation",
-  "item_url": "https://pitp.bandcamp.com/album/past-present-2024-compilation"
- },
- {
-  "item_id": 412688540,
-  "item_type": "album",
-  "band_name": "Amulets",
-  "item_title": "Streaking Light | The Lowest Tide",
-  "item_url": "https://pitp.bandcamp.com/album/streaking-light-the-lowest-tide"
- },
- {
-  "item_id": 433919582,
-  "item_type": "album",
-  "band_name": "Gallery Six",
-  "item_title": "Under the Morning Mist | In This Perfect Dream",
-  "item_url": "https://pitp.bandcamp.com/album/under-the-morning-mist-in-this-perfect-dream"
- },
- {
-  "item_id": 497795904,
-  "item_type": "album",
-  "band_name": "Viul",
-  "item_title": "Seven Fixed Dreams | Seven Ghost Years",
-  "item_url": "https://pitp.bandcamp.com/album/seven-fixed-dreams-seven-ghost-years"
- },
- {
-  "item_id": 588732141,
-  "item_type": "album",
-  "band_name": "Tyresta & zak\u00e8",
-  "item_title": "Orchestral Tape Studies [Tyresta Reworks]",
-  "item_url": "https://pitp.bandcamp.com/album/orchestral-tape-studies-tyresta-reworks"
- },
- {
-  "item_id": 684121161,
-  "item_type": "album",
-  "band_name": "Erinome",
-  "item_title": "Low Priest",
-  "item_url": "https://pitp.bandcamp.com/album/low-priest"
- },
- {
-  "item_id": 734978322,
-  "item_type": "album",
-  "band_name": "Forest Management",
-  "item_title": "Perfect Hour | Sheridan",
-  "item_url": "https://pitp.bandcamp.com/album/perfect-hour-sheridan"
- },
- {
-  "item_id": 750938286,
-  "item_type": "album",
-  "band_name": "Ludvig Cimbrelius",
-  "item_title": "Intimacy",
-  "item_url": "https://pitp.bandcamp.com/album/intimacy"
- },
- {
-  "item_id": 792687115,
-  "item_type": "album",
-  "band_name": "zak\u00e8",
-  "item_title": "Orchestral Tape Studies",
-  "item_url": "https://pitp.bandcamp.com/album/orchestral-tape-studies"
- },
- {
-  "item_id": 977559570,
-  "item_type": "album",
-  "band_name": "Phillip Wilkerson",
-  "item_title": "Sunlight of Oneness | Very Amazing Now",
-  "item_url": "https://pitp.bandcamp.com/album/sunlight-of-oneness-very-amazing-now"
- },
- {
-  "item_id": 1039515690,
-  "item_type": "album",
-  "band_name": "zak\u00e8",
-  "item_title": "Collected Orchestral Works, Vol. I",
-  "item_url": "https://pitp.bandcamp.com/album/collected-orchestral-works-vol-i"
- },
- {
-  "item_id": 1041415518,
-  "item_type": "album",
-  "band_name": "Jack Hyde",
-  "item_title": "Heather | Ebb",
-  "item_url": "https://pitp.bandcamp.com/album/heather-ebb"
- },
- {
-  "item_id": 1119145428,
-  "item_type": "album",
-  "band_name": "Beno\u00eet Pioulard",
-  "item_title": "May / Atra",
-  "item_url": "https://pitp.bandcamp.com/album/may-atra"
- },
- {
-  "item_id": 1152632754,
-  "item_type": "album",
-  "band_name": "Hakobune",
-  "item_title": "The Last of Our Time Together",
-  "item_url": "https://pitp.bandcamp.com/album/the-last-of-our-time-together"
- },
- {
-  "item_id": 1189858367,
-  "item_type": "album",
-  "band_name": "Tyresta",
-  "item_title": "Fallen Moon",
-  "item_url": "https://pitp.bandcamp.com/album/fallen-moon"
- },
- {
-  "item_id": 1226039862,
-  "item_type": "album",
-  "band_name": "Maryam Sirvan",
-  "item_title": "Songs of an Empty Room",
-  "item_url": "https://pitp.bandcamp.com/album/songs-of-an-empty-room"
- },
- {
-  "item_id": 1289593787,
-  "item_type": "album",
-  "band_name": "Sean Curtis Patrick",
-  "item_title": "The Best Driving Music in the World Ever",
-  "item_url": "https://pitp.bandcamp.com/album/the-best-driving-music-in-the-world-ever-2"
- },
- {
-  "item_id": 1402879106,
-  "item_type": "album",
-  "band_name": "PGD/MV",
-  "item_title": "Morvan",
-  "item_url": "https://pitp.bandcamp.com/album/morvan"
- },
- {
-  "item_id": 1417400287,
-  "item_type": "album",
-  "band_name": "Isaac Helsen",
-  "item_title": "Remnants Vol. III",
-  "item_url": "https://pitp.bandcamp.com/album/remnants-vol-iii"
- },
- {
-  "item_id": 1482590981,
-  "item_type": "album",
-  "band_name": "Isaac Helsen",
-  "item_title": "Remnants Vol. II",
-  "item_url": "https://pitp.bandcamp.com/album/remnants-vol-ii"
- },
- {
-  "item_id": 1510669661,
-  "item_type": "album",
-  "band_name": "Isaac Helsen",
-  "item_title": "Remnants Vol. VII",
-  "item_url": "https://pitp.bandcamp.com/album/remnants-vol-vii"
- },
- {
-  "item_id": 1784941157,
-  "item_type": "album",
-  "band_name": "Isaac Helsen",
-  "item_title": "Remnants Series Vol. I-VIII",
-  "item_url": "https://pitp.bandcamp.com/album/remnants-series-vol-i-viii"
- },
- {
-  "item_id": 1908277191,
-  "item_type": "album",
-  "band_name": "Various Artists",
-  "item_title": "Healing Sounds I: A Compilation For Those In Need",
-  "item_url": "https://pitp.bandcamp.com/album/healing-sounds-i-a-compilation-for-those-in-need"
- },
- {
-  "item_id": 1929731772,
-  "item_type": "album",
-  "band_name": "Black Brunswicker",
-  "item_title": "Hidden Amongst the Trees and Foothills",
-  "item_url": "https://pitp.bandcamp.com/album/hidden-amongst-the-trees-and-foothills"
- },
- {
-  "item_id": 2038710923,
-  "item_type": "album",
-  "band_name": "Isaac Helsen",
-  "item_title": "Remnants Vol. IV",
-  "item_url": "https://pitp.bandcamp.com/album/remnants-vol-iv"
- },
- {
-  "item_id": 2079547725,
-  "item_type": "album",
-  "band_name": "Duenn",
-  "item_title": "Pattern",
-  "item_url": "https://pitp.bandcamp.com/album/pattern"
- },
- {
-  "item_id": 2269434781,
-  "item_type": "album",
-  "band_name": "36 & Black Swan",
-  "item_title": "In Four Parts",
-  "item_url": "https://pitp.bandcamp.com/album/in-four-parts"
- },
- {
-  "item_id": 2282101201,
-  "item_type": "album",
-  "band_name": "Endless Melancholy",
-  "item_title": "Moments We Spent Together | Marigold Fields",
-  "item_url": "https://pitp.bandcamp.com/album/moments-we-spent-together-marigold-fields"
- },
- {
-  "item_id": 2294188310,
-  "item_type": "album",
-  "band_name": "36",
-  "item_title": "The Lower Lights",
-  "item_url": "https://pitp.bandcamp.com/album/the-lower-lights"
- },
- {
-  "item_id": 2410783028,
-  "item_type": "album",
-  "band_name": "Isaac Helsen",
-  "item_title": "Remnants Vol. VI",
-  "item_url": "https://pitp.bandcamp.com/album/remnants-vol-vi"
- },
- {
-  "item_id": 2544133159,
-  "item_type": "album",
-  "band_name": "NUM",
-  "item_title": "False Awakening",
-  "item_url": "https://pitp.bandcamp.com/album/false-awakening"
- },
- {
-  "item_id": 2578169546,
-  "item_type": "album",
-  "band_name": "Jordan Christoff",
-  "item_title": "Liminal",
-  "item_url": "https://pitp.bandcamp.com/album/liminal"
- },
- {
-  "item_id": 2679612124,
-  "item_type": "album",
-  "band_name": "Ian Hawgood",
-  "item_title": "Vocalism | Regeneration",
-  "item_url": "https://pitp.bandcamp.com/album/vocalism-regeneration"
- },
- {
-  "item_id": 2711960827,
-  "item_type": "album",
-  "band_name": "Hilyard",
-  "item_title": "Distant | Spirals",
-  "item_url": "https://pitp.bandcamp.com/album/distant-spirals"
- },
- {
-  "item_id": 2947070215,
-  "item_type": "album",
-  "band_name": "36",
-  "item_title": "Beneath The Lower Lights",
-  "item_url": "https://pitp.bandcamp.com/album/beneath-the-lower-lights"
- },
- {
-  "item_id": 2965544544,
-  "item_type": "album",
-  "band_name": "Isaac Helsen",
-  "item_title": "Remnants Vol. V",
-  "item_url": "https://pitp.bandcamp.com/album/remnants-vol-v"
- },
- {
-  "item_id": 2992558094,
-  "item_type": "album",
-  "band_name": "Matthew Prokop",
-  "item_title": "For Tired Souls",
-  "item_url": "https://pitp.bandcamp.com/album/for-tired-souls"
- },
- {
-  "item_id": 3023133127,
-  "item_type": "album",
-  "band_name": "Celer",
-  "item_title": "It's Al-- It's Already Too Late",
-  "item_url": "https://pitp.bandcamp.com/album/its-al-its-already-too-late"
- },
- {
-  "item_id": 3030264121,
-  "item_type": "album",
-  "band_name": "zak\u00e8 & Wayne Robert Thomas",
-  "item_title": "To Those Who Dwelt in a Land of Deep Darkness",
-  "item_url": "https://pitp.bandcamp.com/album/to-those-who-dwelt-in-a-land-of-deep-darkness"
- },
- {
-  "item_id": 3167658209,
-  "item_type": "album",
-  "band_name": "Dawn Chorus and the Infallible Sea",
-  "item_title": "Alpha",
-  "item_url": "https://pitp.bandcamp.com/album/alpha"
- },
- {
-  "item_id": 3193495898,
-  "item_type": "album",
-  "band_name": "Beno\u00eet Pioulard \u2022 Hotel Neon \u2022 Viul",
-  "item_title": "Tour Sampler [2022]",
-  "item_url": "https://pitp.bandcamp.com/album/tour-sampler-2022"
- },
- {
-  "item_id": 3253902886,
-  "item_type": "album",
-  "band_name": "zak\u00e8",
-  "item_title": "zak\u00e8  [20th Anniversary Edition]",
-  "item_url": "https://pitp.bandcamp.com/album/zak-20th-anniversary-edition"
- },
- {
-  "item_id": 3517964929,
-  "item_type": "album",
-  "band_name": "Warmth",
-  "item_title": "Parallel Inflection",
-  "item_url": "https://pitp.bandcamp.com/album/parallel-inflection"
- },
- {
-  "item_id": 3542956135,
-  "item_type": "album",
-  "band_name": "James Bernard",
-  "item_title": "Fragments + Distancing",
-  "item_url": "https://pitp.bandcamp.com/album/fragments-distancing"
- },
- {
-  "item_id": 3546601758,
-  "item_type": "album",
-  "band_name": "Viul",
-  "item_title": "Outside the Dream World",
-  "item_url": "https://pitp.bandcamp.com/album/outside-the-dream-world"
- },
- {
-  "item_id": 3750609585,
-  "item_type": "album",
-  "band_name": "Erinome",
-  "item_title": "A Burning Down I & II",
-  "item_url": "https://pitp.bandcamp.com/album/a-burning-down-i-ii"
- },
- {
-  "item_id": 3997480721,
-  "item_type": "album",
-  "band_name": "Wayne Robert Thomas & Isaac Helsen",
-  "item_title": "R\u00c1S",
-  "item_url": "https://pitp.bandcamp.com/album/r-s"
- },
- {
-  "item_id": 4169041892,
-  "item_type": "album",
-  "band_name": "Isaac Helsen",
-  "item_title": "Remnants Vol. VIII",
-  "item_url": "https://pitp.bandcamp.com/album/remnants-vol-viii"
- },
- {
-  "item_id": 4175072258,
-  "item_type": "album",
-  "band_name": "Gallery Six",
-  "item_title": "Wind Colors",
-  "item_url": "https://pitp.bandcamp.com/album/wind-colors"
- },
- {
-  "item_id": 2303878530,
-  "item_type": "album",
-  "band_name": "GAS",
-  "item_title": "Zauberberg",
-  "item_url": "https://kompakt-gas.bandcamp.com/album/zauberberg"
- },
- {
-  "item_id": 672344457,
-  "item_type": "album",
-  "band_name": "Road Hog",
-  "item_title": "Haul Ass",
-  "item_url": "https://roadhog.bandcamp.com/album/haul-ass"
- },
- {
-  "item_id": 805317794,
-  "item_type": "album",
-  "band_name": "Domenico Crisci",
-  "item_title": "Body Punishment",
-  "item_url": "https://opaltapes.bandcamp.com/album/body-punishment"
- },
- {
-  "item_id": 3468123571,
-  "item_type": "album",
-  "band_name": "Sami%SuYung",
-  "item_title": "Ethics",
-  "item_url": "https://samisuyung.bandcamp.com/album/ethics"
- },
- {
-  "item_id": 4061781280,
-  "item_type": "album",
-  "band_name": "Convextion",
-  "item_title": "2845",
-  "item_url": "https://mojubarecords.bandcamp.com/album/2845"
- },
- {
-  "item_id": 4095749933,
-  "item_type": "album",
-  "band_name": "Road Hog",
-  "item_title": "Tour de Hog",
-  "item_url": "https://roadhog.bandcamp.com/album/tour-de-hog"
- },
- {
-  "item_id": 2386600804,
-  "item_type": "album",
-  "band_name": "Road Hog",
-  "item_title": "D.W.B.",
-  "item_url": "https://roadhog.bandcamp.com/album/d-w-b"
- },
- {
-  "item_id": 2443393985,
-  "item_type": "album",
-  "band_name": "Road Hog",
-  "item_title": "On The Lam",
-  "item_url": "https://roadhog.bandcamp.com/album/on-the-lam"
- },
- {
-  "item_id": 1254426195,
-  "item_type": "track",
-  "band_name": "Martyn",
-  "item_title": "Be My Own Pupil",
-  "item_url": "https://martyn.bandcamp.com/track/be-my-own-pupil"
- }
+  {
+    "item_id": 3214147842,
+    "band_name": "Monolake",
+    "item_title": "Interstate",
+    "item_url": "https://roberthenke.bandcamp.com/album/interstate"
+  },
+  {
+    "item_id": 4203399176,
+    "band_name": "Biosphere",
+    "item_title": "The Hilvarenbeek Recordings [Remastered and expanded version]",
+    "item_url": "https://biosphere.bandcamp.com/album/the-hilvarenbeek-recordings-remastered-and-expanded-version"
+  },
+  {
+    "item_id": 571767238,
+    "band_name": "Andrew Wasylyk",
+    "item_title": "Irreparable Parables",
+    "item_url": "https://claypipemusic.bandcamp.com/album/irreparable-parables"
+  },
+  {
+    "item_id": 156945511,
+    "band_name": "The Gentle People",
+    "item_title": "Soundtracks For Living (Expanded Edition)",
+    "item_url": "https://wrwtfww.com/album/soundtracks-for-living-expanded-edition"
+  },
+  {
+    "item_id": 2388020122,
+    "band_name": "Shinichiro Yokota",
+    "item_title": "Pitstop Box",
+    "item_url": "https://wrwtfww.com/album/pitstop-box"
+  },
+  {
+    "item_id": 3184635096,
+    "band_name": "Joachim Spieth | Andrew Thomas",
+    "item_title": "Nocturna",
+    "item_url": "https://joachimspieth.bandcamp.com/album/nocturna"
+  },
+  {
+    "item_id": 3183310437,
+    "band_name": "Various Artists",
+    "item_title": "Pop Ambient 2026",
+    "item_url": "https://kompakt.bandcamp.com/album/pop-ambient-2026"
+  },
+  {
+    "item_id": 3828039430,
+    "band_name": "Yungwebster",
+    "item_title": "Yungwebster",
+    "item_url": "https://sferic.bandcamp.com/album/yungwebster"
+  },
+  {
+    "item_id": 514544062,
+    "band_name": "Galcher Lustwerk",
+    "item_title": "LUSTWERK III",
+    "item_url": "https://galcherlustwerk.bandcamp.com/album/lustwerk-iii"
+  },
+  {
+    "item_id": 786712155,
+    "band_name": "NEXCYIA",
+    "item_title": "Endless Path of Memory",
+    "item_url": "https://nexcyia.bandcamp.com/album/endless-path-of-memory"
+  },
+  {
+    "item_id": 1446562590,
+    "band_name": "Other Joe",
+    "item_title": "Flawless",
+    "item_url": "https://other-joe.bandcamp.com/album/flawless"
+  },
+  {
+    "item_id": 1757512948,
+    "band_name": "Korn\u00e9l Kov\u00e1cs",
+    "item_title": "Radio Koko",
+    "item_url": "https://kornelkovacs.bandcamp.com/album/radio-koko"
+  },
+  {
+    "item_id": 3954522359,
+    "band_name": "Low Flung",
+    "item_title": "Type-D",
+    "item_url": "https://lowflung.bandcamp.com/album/type-d"
+  },
+  {
+    "item_id": 2386354046,
+    "band_name": "Bok Bok",
+    "item_title": "Blood Moon EP (EH003)",
+    "item_url": "https://bokbok.bandcamp.com/album/blood-moon-ep-eh003"
+  },
+  {
+    "item_id": 882692269,
+    "band_name": "NEXCYIA",
+    "item_title": "Exodus",
+    "item_url": "https://nexcyia.bandcamp.com/album/exodus"
+  },
+  {
+    "item_id": 2981659387,
+    "band_name": "Various",
+    "item_title": "Timber Management Volume 2",
+    "item_url": "https://peak352.bandcamp.com/album/timber-management-volume-2"
+  },
+  {
+    "item_id": 3535283820,
+    "band_name": "Cousin & Priori",
+    "item_title": "Fly In Amber",
+    "item_url": "https://naffrecordings.bandcamp.com/album/fly-in-amber"
+  },
+  {
+    "item_id": 134385842,
+    "band_name": "Kliche",
+    "item_title": "Dabrea",
+    "item_url": "https://birikliche.bandcamp.com/album/dabrea"
+  },
+  {
+    "item_id": 2508297181,
+    "band_name": "anthe\u0301ne",
+    "item_title": "balance",
+    "item_url": "https://quietdetails.bandcamp.com/album/balance"
+  },
+  {
+    "item_id": 2440274256,
+    "band_name": "Monolake",
+    "item_title": "Gravity",
+    "item_url": "https://roberthenke.bandcamp.com/album/gravity-2"
+  },
+  {
+    "item_id": 2073628370,
+    "band_name": "Kara-Lis Coverdale",
+    "item_title": "A Series of Actions in a Sphere of Forever",
+    "item_url": "https://kara-liscoverdale.bandcamp.com/album/a-series-of-actions-in-a-sphere-of-forever"
+  },
+  {
+    "item_id": 2697513863,
+    "band_name": "Levon Vincent",
+    "item_title": "CONTINENTAL TECHNO VERSION TWO - LEVON VINCENT",
+    "item_url": "https://levonvincent.bandcamp.com/track/continental-techno-version-two-levon-vincent"
+  },
+  {
+    "item_id": 3430244239,
+    "band_name": "Levon Vincent",
+    "item_title": "CONTINENTAL TECHNO VERSION ONE - LEVON VINCENT",
+    "item_url": "https://levonvincent.bandcamp.com/track/continental-techno-version-one-levon-vincent-2"
+  },
+  {
+    "item_id": 2759155645,
+    "band_name": "Drexciya",
+    "item_title": "Digital Tsunami",
+    "item_url": "https://tresorberlin.bandcamp.com/album/digital-tsunami"
+  },
+  {
+    "item_id": 2063443321,
+    "band_name": "Drexciya",
+    "item_title": "Hydro Doorways",
+    "item_url": "https://tresorberlin.bandcamp.com/album/hydro-doorways"
+  },
+  {
+    "item_id": 3977044012,
+    "band_name": "Drexciya",
+    "item_title": "Fusion Flats",
+    "item_url": "https://tresorberlin.bandcamp.com/album/fusion-flats"
+  },
+  {
+    "item_id": 2770123859,
+    "band_name": "shinetiac",
+    "item_title": "Starfrog Slipmoded",
+    "item_url": "https://o-s-t.bandcamp.com/album/starfrog-slipmoded"
+  },
+  {
+    "item_id": 3146914164,
+    "band_name": "Joy Orbison",
+    "item_title": "archive 09-10",
+    "item_url": "https://tossportal.bandcamp.com/album/archive-09-10"
+  },
+  {
+    "item_id": 2825157974,
+    "band_name": "Federica Deiana",
+    "item_title": "Shell",
+    "item_url": "https://homenormal.bandcamp.com/album/shell"
+  },
+  {
+    "item_id": 2586714149,
+    "band_name": "Shinichi Atobe",
+    "item_title": "P&S002",
+    "item_url": "https://plasticandsounds.bandcamp.com/album/p-s002"
+  },
+  {
+    "item_id": 556320637,
+    "band_name": "Joe Harvey-Whyte & Bobby Lee",
+    "item_title": "Last Ride",
+    "item_url": "https://curation-records.bandcamp.com/album/last-ride"
+  },
+  {
+    "item_id": 4173208678,
+    "band_name": "Lewis and Lee",
+    "item_title": "Lewis and Lee LP",
+    "item_url": "https://allmythoughts.bandcamp.com/album/lewis-and-lee-lp"
+  },
+  {
+    "item_id": 3995080393,
+    "band_name": "36",
+    "item_title": "A Warm Static Sphere",
+    "item_url": "https://quietdetails.bandcamp.com/album/a-warm-static-sphere"
+  },
+  {
+    "item_id": 2516633408,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "FA\u00c7ADISMS",
+    "item_url": "https://irisarri.bandcamp.com/album/fa-adisms"
+  },
+  {
+    "item_id": 1355040044,
+    "band_name": "DECIUS",
+    "item_title": "DECIUS VOL II (Splendour & Obedience)",
+    "item_url": "https://decius.bandcamp.com/album/decius-vol-ii-splendour-obedience"
+  },
+  {
+    "item_id": 1384447540,
+    "band_name": "Florian TM Zeisig",
+    "item_title": "A New Life",
+    "item_url": "https://stroomtv.bandcamp.com/album/a-new-life"
+  },
+  {
+    "item_id": 3908462994,
+    "band_name": "Pye Corner Audio",
+    "item_title": "Lake Deep Memory",
+    "item_url": "https://quietdetails.bandcamp.com/album/lake-deep-memory"
+  },
+  {
+    "item_id": 2017758565,
+    "band_name": "Leandro Fresco & Rafael Anton Irisarri",
+    "item_title": "La Equidistancia",
+    "item_url": "https://leandrofrescorafaelantonirisarri.bandcamp.com/album/la-equidistancia"
+  },
+  {
+    "item_id": 2777774731,
+    "band_name": "DECIUS",
+    "item_title": "DECIUS VOL I",
+    "item_url": "https://decius.bandcamp.com/album/decius-vol-i"
+  },
+  {
+    "item_id": 2131036548,
+    "band_name": "Natural Wonder Beauty Concept",
+    "item_title": "Natural Wonder Beauty Concept",
+    "item_url": "https://naturalwonderbeautyconcept.bandcamp.com/album/natural-wonder-beauty-concept"
+  },
+  {
+    "item_id": 426823960,
+    "band_name": "Mike Midnight",
+    "item_title": "Angel Hours",
+    "item_url": "https://fr33atlast.bandcamp.com/album/angel-hours"
+  },
+  {
+    "item_id": 2039174518,
+    "band_name": "Mike Midnight",
+    "item_title": "Fluxus (Version)",
+    "item_url": "https://fr33atlast.bandcamp.com/track/fluxus-version"
+  },
+  {
+    "item_id": 3026924392,
+    "band_name": "Pub",
+    "item_title": "Practice 01",
+    "item_url": "https://ampoulerecords.bandcamp.com/album/practice-01-2"
+  },
+  {
+    "item_id": 184171863,
+    "band_name": "Bok Bok",
+    "item_title": "Hardbody Dubs Vol 5",
+    "item_url": "https://bokbok.bandcamp.com/album/hardbody-dubs-vol-5"
+  },
+  {
+    "item_id": 4259686390,
+    "band_name": "Shoebox",
+    "item_title": "Falling In The Right Place",
+    "item_url": "https://shoeboxlabel.bandcamp.com/album/falling-in-the-right-place"
+  },
+  {
+    "item_id": 1840024558,
+    "band_name": "J Wax",
+    "item_title": "Denis Sulta - It's Only Real (J Wax Edit)",
+    "item_url": "https://jwax1.bandcamp.com/track/denis-sulta-its-only-real-j-wax-edit"
+  },
+  {
+    "item_id": 568050193,
+    "band_name": "XENIA REAPER",
+    "item_title": "Gambling",
+    "item_url": "https://indexrecords.bandcamp.com/album/gambling-2"
+  },
+  {
+    "item_id": 2288838335,
+    "band_name": "Shinichi Atobe",
+    "item_title": "P&S001",
+    "item_url": "https://plasticandsounds.bandcamp.com/album/p-s001"
+  },
+  {
+    "item_id": 951122502,
+    "band_name": "james K",
+    "item_title": "036",
+    "item_url": "https://jameskmusic.bandcamp.com/album/036"
+  },
+  {
+    "item_id": 1171418457,
+    "band_name": "Soichi Terada",
+    "item_title": "Asakusa Light",
+    "item_url": "https://soichiterada.bandcamp.com/album/asakusa-light"
+  },
+  {
+    "item_id": 3015571,
+    "band_name": "Zorrovian",
+    "item_title": "BIOS",
+    "item_url": "https://zorrovian.bandcamp.com/track/bios"
+  },
+  {
+    "item_id": 3711818873,
+    "band_name": "Zorrovian",
+    "item_title": "BOOTUP",
+    "item_url": "https://zorrovian.bandcamp.com/track/bootup"
+  },
+  {
+    "item_id": 702551373,
+    "band_name": "The Shen",
+    "item_title": "Reach",
+    "item_url": "https://theshen.bandcamp.com/track/reach"
+  },
+  {
+    "item_id": 2562295739,
+    "band_name": "Zaida Zane",
+    "item_title": "newjeans - ETA [Zaida Zane Bootleg]",
+    "item_url": "https://zaida-zane.bandcamp.com/track/newjeans-eta-zaida-zane-bootleg"
+  },
+  {
+    "item_id": 723031635,
+    "band_name": "Nick Le\u00f3n & Erika De Casier",
+    "item_title": "Bikini (Bok's Dub)",
+    "item_url": "https://bokbok.bandcamp.com/album/bikini-boks-dub"
+  },
+  {
+    "item_id": 1763850951,
+    "band_name": "Priori",
+    "item_title": "This but More (Loidis Reconfiguration)",
+    "item_url": "https://prioricamp.bandcamp.com/album/this-but-more-loidis-reconfiguration"
+  },
+  {
+    "item_id": 2498272151,
+    "band_name": "Brendan Eder Ensemble",
+    "item_title": "Therapy",
+    "item_url": "https://brendaneder.bandcamp.com/album/therapy"
+  },
+  {
+    "item_id": 2507121485,
+    "band_name": "Zaida Zane",
+    "item_title": "Needs [Zaida Zane Bootleg]",
+    "item_url": "https://zaida-zane.bandcamp.com/track/needs-zaida-zane-bootleg"
+  },
+  {
+    "item_id": 2007235416,
+    "band_name": "Fennesz",
+    "item_title": "Live at St James's Church, Piccadilly",
+    "item_url": "https://fenneszreleases.bandcamp.com/album/live-at-st-jamess-church-piccadilly"
+  },
+  {
+    "item_id": 2055523443,
+    "band_name": "Fennesz",
+    "item_title": "Mosaic",
+    "item_url": "https://fenneszreleases.bandcamp.com/album/mosaic"
+  },
+  {
+    "item_id": 3263376637,
+    "band_name": "DJ POLO",
+    "item_title": "Currents / Night Waves",
+    "item_url": "https://djpolouk.bandcamp.com/album/currents-night-waves"
+  },
+  {
+    "item_id": 3952788238,
+    "band_name": "OSSX",
+    "item_title": "Liquidation",
+    "item_url": "https://ossx.bandcamp.com/album/liquidation"
+  },
+  {
+    "item_id": 819134954,
+    "band_name": "fields we found / quiet details",
+    "item_title": "rhythm structures 01",
+    "item_url": "https://fieldswefound.bandcamp.com/album/rhythm-structures-01"
+  },
+  {
+    "item_id": 41216582,
+    "band_name": "Jefre Cantu-Ledesma",
+    "item_title": "Gift Songs",
+    "item_url": "https://jefrecantu-ledesma.bandcamp.com/album/gift-songs"
+  },
+  {
+    "item_id": 254329639,
+    "band_name": "Pizza Hotline",
+    "item_title": "Polygon Island",
+    "item_url": "https://pizzahotline.bandcamp.com/album/polygon-island"
+  },
+  {
+    "item_id": 2026230995,
+    "band_name": "Pizza Hotline",
+    "item_title": "LEVEL SELECT",
+    "item_url": "https://pizzahotline.bandcamp.com/album/level-select"
+  },
+  {
+    "item_id": 1874349618,
+    "band_name": "Thomas Fehlmann",
+    "item_title": "Gute Luft",
+    "item_url": "https://thomasfehlmann.bandcamp.com/album/gute-luft"
+  },
+  {
+    "item_id": 3311259953,
+    "band_name": "upsammy",
+    "item_title": "Strange Meridians",
+    "item_url": "https://upsammy.bandcamp.com/album/strange-meridians"
+  },
+  {
+    "item_id": 2501135640,
+    "band_name": "Daphni",
+    "item_title": "Fly Away (Deetron Mixes)",
+    "item_url": "https://caribouband.bandcamp.com/album/fly-away-deetron-mixes"
+  },
+  {
+    "item_id": 2222168401,
+    "band_name": "Bok Bok",
+    "item_title": "Hardbody Dubs Vol 4",
+    "item_url": "https://bokbok.bandcamp.com/album/hardbody-dubs-vol-4"
+  },
+  {
+    "item_id": 2390290710,
+    "band_name": "Bok Bok",
+    "item_title": "Hardbody Dubs Vol 1",
+    "item_url": "https://bokbok.bandcamp.com/album/hardbody-dubs-vol-1"
+  },
+  {
+    "item_id": 3253164136,
+    "band_name": "Bok Bok",
+    "item_title": "Hardbody Dubs Vol 3",
+    "item_url": "https://bokbok.bandcamp.com/album/hardbody-dubs-vol-3"
+  },
+  {
+    "item_id": 3374079873,
+    "band_name": "Len",
+    "item_title": "Len - YaTOO (Bok's Dub)",
+    "item_url": "https://bokbok.bandcamp.com/album/len-yatoo-boks-dub"
+  },
+  {
+    "item_id": 3810845440,
+    "band_name": "Daphni",
+    "item_title": "Sizzling EP",
+    "item_url": "https://caribouband.bandcamp.com/album/sizzling-ep"
+  },
+  {
+    "item_id": 1504946545,
+    "band_name": "Caribou",
+    "item_title": "You Can Do It",
+    "item_url": "https://caribouband.bandcamp.com/album/you-can-do-it"
+  },
+  {
+    "item_id": 2518723976,
+    "band_name": "Caribou",
+    "item_title": "Broke My Heart Remixes",
+    "item_url": "https://caribouband.bandcamp.com/album/broke-my-heart-remixes"
+  },
+  {
+    "item_id": 3586179242,
+    "band_name": "Voice Actor, Squu",
+    "item_title": "Lust (1)",
+    "item_url": "https://stroomtv.bandcamp.com/album/lust-1"
+  },
+  {
+    "item_id": 3289972917,
+    "band_name": "Daniel Stefanik",
+    "item_title": "Echoes EP",
+    "item_url": "https://ornaments-label.bandcamp.com/album/echoes-ep"
+  },
+  {
+    "item_id": 4160394904,
+    "band_name": "Kontakt Records",
+    "item_title": "Blue Channel - Dubplate Vibing Part II",
+    "item_url": "https://kontakt-records.bandcamp.com/album/blue-channel-dubplate-vibing-part-ii"
+  },
+  {
+    "item_id": 141795324,
+    "band_name": "ASC",
+    "item_title": "Tales of Introspection",
+    "item_url": "https://quietdetails.bandcamp.com/album/tales-of-introspection"
+  },
+  {
+    "item_id": 3877390679,
+    "band_name": "Various",
+    "item_title": "Early Sightings Volume 1",
+    "item_url": "https://peak352.bandcamp.com/album/early-sightings-volume-1"
+  },
+  {
+    "item_id": 2794401287,
+    "band_name": "Florian TM Zeisig",
+    "item_title": "ZZZZZzzzzzz",
+    "item_url": "https://floriantmzeisig.bandcamp.com/album/zzzzzzzzzzz"
+  },
+  {
+    "item_id": 834511659,
+    "band_name": "Blank Gloss",
+    "item_title": "Cornered",
+    "item_url": "https://blankgloss.bandcamp.com/album/cornered"
+  },
+  {
+    "item_id": 962493101,
+    "band_name": "Karenn",
+    "item_title": "Everything Is Curly",
+    "item_url": "https://karenn.bandcamp.com/album/everything-is-curly"
+  },
+  {
+    "item_id": 700885726,
+    "band_name": "DMX Krew",
+    "item_title": "Nu Romantix",
+    "item_url": "https://dmxkrew.bandcamp.com/album/nu-romantix"
+  },
+  {
+    "item_id": 3240976397,
+    "band_name": "990x",
+    "item_title": "Ruins",
+    "item_url": "https://sferic.bandcamp.com/album/ruins"
+  },
+  {
+    "item_id": 240119328,
+    "band_name": "Other Joe",
+    "item_title": "blessings from th eheart",
+    "item_url": "https://other-joe.bandcamp.com/album/blessings-from-th-eheart"
+  },
+  {
+    "item_id": 1116274379,
+    "band_name": "NUG",
+    "item_title": "Napping Under God",
+    "item_url": "https://bblisss.bandcamp.com/album/napping-under-god"
+  },
+  {
+    "item_id": 1578826506,
+    "band_name": "Long Island Sound",
+    "item_title": "Hydra",
+    "item_url": "https://longislandsoundsos.bandcamp.com/album/hydra"
+  },
+  {
+    "item_id": 1458490396,
+    "band_name": "Hysterical Love Project",
+    "item_title": "Endless Bliss Weekender",
+    "item_url": "https://hystericalloveproject.bandcamp.com/album/endless-bliss-weekender"
+  },
+  {
+    "item_id": 2890923314,
+    "band_name": "Karen Nyame KG & Ronnie Loko",
+    "item_title": "Tell Me  /  Take It Off",
+    "item_url": "https://nightslugs.bandcamp.com/album/tell-me-take-it-off"
+  },
+  {
+    "item_id": 880942795,
+    "band_name": "James Hoff",
+    "item_title": "Shadows Lifted from Invisible Hands",
+    "item_url": "https://jameshoff.bandcamp.com/album/shadows-lifted-from-invisible-hands"
+  },
+  {
+    "item_id": 952945024,
+    "band_name": "Angel R",
+    "item_title": "Mossed Capable Of Being Observant",
+    "item_url": "https://enmossed.bandcamp.com/album/mossed-capable-of-being-observant"
+  },
+  {
+    "item_id": 656308236,
+    "band_name": "Andrew Wasylyk | Tommy Perman",
+    "item_title": "Ash Grey and the Gull Glides On",
+    "item_url": "https://claypipemusic.bandcamp.com/album/ash-grey-and-the-gull-glides-on"
+  },
+  {
+    "item_id": 4078004497,
+    "band_name": "Joachim Spieth",
+    "item_title": "Irradiance",
+    "item_url": "https://joachimspieth.bandcamp.com/album/irradiance"
+  },
+  {
+    "item_id": 1206914779,
+    "band_name": "KMRU",
+    "item_title": "forge",
+    "item_url": "https://kmru.bandcamp.com/album/forge"
+  },
+  {
+    "item_id": 2966071460,
+    "band_name": "Joachim Spieth",
+    "item_title": "Terrain",
+    "item_url": "https://joachimspieth.bandcamp.com/album/terrain"
+  },
+  {
+    "item_id": 4046848246,
+    "band_name": "Markus Guentner",
+    "item_title": "Extropy",
+    "item_url": "https://markusguentner.bandcamp.com/album/extropy-2"
+  },
+  {
+    "item_id": 1306328649,
+    "band_name": "Brendon Moeller",
+    "item_title": "Mirage",
+    "item_url": "https://quietdetails.bandcamp.com/album/mirage"
+  },
+  {
+    "item_id": 2018679191,
+    "band_name": "Blank Gloss",
+    "item_title": "Melt",
+    "item_url": "https://blankgloss.bandcamp.com/album/melt"
+  },
+  {
+    "item_id": 664325725,
+    "band_name": "Kontakt Records",
+    "item_title": "Blue Channel - Dubplate Vibing Part I",
+    "item_url": "https://kontakt-records.bandcamp.com/album/blue-channel-dubplate-vibing-part-i"
+  },
+  {
+    "item_id": 802966672,
+    "band_name": "Regularfantasy",
+    "item_title": "New Glow EP",
+    "item_url": "https://regularfantasy.bandcamp.com/album/new-glow-ep"
+  },
+  {
+    "item_id": 3251275518,
+    "band_name": "Low End Activist",
+    "item_title": "Airdrop",
+    "item_url": "https://lowendactivist.bandcamp.com/album/airdrop"
+  },
+  {
+    "item_id": 2580519941,
+    "band_name": "UNiiQU3",
+    "item_title": "Match My Speed ( UNIIQU3 Nasty remix)",
+    "item_url": "https://uniiqu3.bandcamp.com/track/match-my-speed-uniiqu3-nasty-remix"
+  },
+  {
+    "item_id": 1327871720,
+    "band_name": "Shinichi Atobe",
+    "item_title": "Peace of mind",
+    "item_url": "https://earlyreflection.bandcamp.com/album/peace-of-mind"
+  },
+  {
+    "item_id": 1413733626,
+    "band_name": "GAS",
+    "item_title": "Der Lange Marsch",
+    "item_url": "https://kompakt-gas.bandcamp.com/album/der-lange-marsch"
+  },
+  {
+    "item_id": 694924646,
+    "band_name": "GAS",
+    "item_title": "Oktember",
+    "item_url": "https://kompakt-gas.bandcamp.com/album/oktember"
+  },
+  {
+    "item_id": 2280812332,
+    "band_name": "GAS",
+    "item_title": "GAS",
+    "item_url": "https://kompakt-gas.bandcamp.com/album/gas"
+  },
+  {
+    "item_id": 2016710804,
+    "band_name": "Skee Mask",
+    "item_title": "ITLP19 - Resort",
+    "item_url": "https://iliantape.bandcamp.com/album/itlp19-resort"
+  },
+  {
+    "item_id": 2850276101,
+    "band_name": "Burial",
+    "item_title": "Untrue",
+    "item_url": "https://burial.bandcamp.com/album/untrue"
+  },
+  {
+    "item_id": 3304750897,
+    "band_name": "Plush Records Inc.",
+    "item_title": "Plush V",
+    "item_url": "https://plushrecordsinc.bandcamp.com/album/plush-v"
+  },
+  {
+    "item_id": 408676867,
+    "band_name": "Jorja Smith",
+    "item_title": "Little Things (Bok's Dub)",
+    "item_url": "https://bokbok.bandcamp.com/track/little-things-boks-dub"
+  },
+  {
+    "item_id": 3767908712,
+    "band_name": "Jazzy",
+    "item_title": "Jazzy - Giving Me (Bok's Dub)",
+    "item_url": "https://bokbok.bandcamp.com/album/jazzy-giving-me-boks-dub"
+  },
+  {
+    "item_id": 577161308,
+    "band_name": "Various",
+    "item_title": "Timber Management Volume 1",
+    "item_url": "https://peak352.bandcamp.com/album/timber-management-volume-1"
+  },
+  {
+    "item_id": 1466975207,
+    "band_name": "Helix",
+    "item_title": "Tinashe - Nasty (Helix Remix)",
+    "item_url": "https://1djhelix.bandcamp.com/track/tinashe-nasty-helix-remix"
+  },
+  {
+    "item_id": 1688031391,
+    "band_name": "ZG",
+    "item_title": "ZG",
+    "item_url": "https://zgmusic.bandcamp.com/album/zg"
+  },
+  {
+    "item_id": 2774572318,
+    "band_name": "Fennec",
+    "item_title": "Nice Work Vol. 2",
+    "item_url": "https://fennecsound.com/album/nice-work-vol-2"
+  },
+  {
+    "item_id": 3993160526,
+    "band_name": "Plush Managements Inc.",
+    "item_title": "Regularfantasy Presents... Plush III",
+    "item_url": "https://plushrecordsinc.bandcamp.com/album/regularfantasy-presents-plush-iii"
+  },
+  {
+    "item_id": 2504161331,
+    "band_name": "J Wax",
+    "item_title": "Charli XCX - 365 (J Wax Edit - Slowed)",
+    "item_url": "https://jwax1.bandcamp.com/track/charli-xcx-365-j-wax-edit-slowed"
+  },
+  {
+    "item_id": 1489052967,
+    "band_name": "James Bernard",
+    "item_title": "Only Now",
+    "item_url": "https://quietdetails.bandcamp.com/album/only-now"
+  },
+  {
+    "item_id": 1131227304,
+    "band_name": "Juan Atkins & Moritz von Oswald present Borderland",
+    "item_title": "Transport",
+    "item_url": "https://tresorberlin.bandcamp.com/album/transport"
+  },
+  {
+    "item_id": 3400932378,
+    "band_name": "Paul St. Hilaire",
+    "item_title": "Paul St. Hilaire - Tikiman Vol.1",
+    "item_url": "https://kynantrecords.bandcamp.com/album/paul-st-hilaire-tikiman-vol-1"
+  },
+  {
+    "item_id": 653938490,
+    "band_name": "Burial",
+    "item_title": "Ghost Hardware",
+    "item_url": "https://burial.bandcamp.com/album/ghost-hardware"
+  },
+  {
+    "item_id": 1618965012,
+    "band_name": "36",
+    "item_title": "Fade To Grey (Reinterpreted)",
+    "item_url": "https://astrangelyisolatedplace.bandcamp.com/album/fade-to-grey-reinterpreted"
+  },
+  {
+    "item_id": 1115961286,
+    "band_name": "Men I Trust",
+    "item_title": "Oncle Jazz",
+    "item_url": "https://menitrust.bandcamp.com/album/oncle-jazz"
+  },
+  {
+    "item_id": 4138507755,
+    "band_name": "Kontakt Records",
+    "item_title": "Stelios Vassiloudis - Bifurcation / Conforce RMX",
+    "item_url": "https://kontakt-records.bandcamp.com/album/stelios-vassiloudis-bifurcation-conforce-rmx"
+  },
+  {
+    "item_id": 3810515155,
+    "band_name": "TEREKKE",
+    "item_title": "Evaporain",
+    "item_url": "https://terekke.bandcamp.com/track/evaporain"
+  },
+  {
+    "item_id": 2937556674,
+    "band_name": "hinako omori",
+    "item_title": "cyanotype memories (joe goddard remix)",
+    "item_url": "https://hinakoomori.bandcamp.com/track/cyanotype-memories-joe-goddard-remix"
+  },
+  {
+    "item_id": 4247908050,
+    "band_name": "Ikonika",
+    "item_title": "Details",
+    "item_url": "https://ikonika.bandcamp.com/album/details"
+  },
+  {
+    "item_id": 1001361896,
+    "band_name": "Kontakt Records",
+    "item_title": "Resoe - Memory Line / Lawrence RMX",
+    "item_url": "https://kontakt-records.bandcamp.com/album/resoe-memory-line-lawrence-rmx"
+  },
+  {
+    "item_id": 686623374,
+    "band_name": "Florian T M Zeisig",
+    "item_title": "Planet Inc",
+    "item_url": "https://stroomtv.bandcamp.com/album/planet-inc"
+  },
+  {
+    "item_id": 3037271398,
+    "band_name": "Fields Of Mist",
+    "item_title": "ITX030 - Biospore Farmers",
+    "item_url": "https://iliantape.bandcamp.com/album/itx030-biospore-farmers"
+  },
+  {
+    "item_id": 1287628346,
+    "band_name": "Biosphere",
+    "item_title": "Patashnik [Decrypted By Sketch]",
+    "item_url": "https://biosphere.bandcamp.com/album/patashnik-decrypted-by-sketch-1"
+  },
+  {
+    "item_id": 1997443864,
+    "band_name": "Basil & Rogers",
+    "item_title": "Self-Titled",
+    "item_url": "https://forestjams.bandcamp.com/album/self-titled"
+  },
+  {
+    "item_id": 2118567246,
+    "band_name": "Plush Managements Inc.",
+    "item_title": "PLUSH002",
+    "item_url": "https://plushrecordsinc.bandcamp.com/album/plush002"
+  },
+  {
+    "item_id": 4189029486,
+    "band_name": "Biosphere",
+    "item_title": "Autour De La Lune [Reissue]",
+    "item_url": "https://biosphere.bandcamp.com/album/autour-de-la-lune-reissue"
+  },
+  {
+    "item_id": 4052589792,
+    "band_name": "Burial",
+    "item_title": "South London Boroughs",
+    "item_url": "https://burial.bandcamp.com/album/south-london-boroughs"
+  },
+  {
+    "item_id": 4049990262,
+    "band_name": "Silent Servant",
+    "item_title": "In Memoriam",
+    "item_url": "https://tresorberlin.bandcamp.com/album/in-memoriam"
+  },
+  {
+    "item_id": 2612575189,
+    "band_name": "Forest Drive West",
+    "item_title": "Parallel Space EP",
+    "item_url": "https://forestdrivewest.bandcamp.com/album/parallel-space-ep"
+  },
+  {
+    "item_id": 1437819997,
+    "band_name": "Other Joe",
+    "item_title": "Jealousy Tulip",
+    "item_url": "https://other-joe.bandcamp.com/album/jealousy-tulip"
+  },
+  {
+    "item_id": 2282578081,
+    "band_name": "Jake Muir",
+    "item_title": "the hum of your veiled voice",
+    "item_url": "https://sferic.bandcamp.com/album/the-hum-of-your-veiled-voice"
+  },
+  {
+    "item_id": 687312260,
+    "band_name": "Marcos Cabral",
+    "item_title": "Nature Walk EP",
+    "item_url": "https://dimensionsrecordings.bandcamp.com/album/nature-walk-ep"
+  },
+  {
+    "item_id": 3938873206,
+    "band_name": "Cousin",
+    "item_title": "HomeSoon",
+    "item_url": "https://secondcousin.bandcamp.com/album/homesoon"
+  },
+  {
+    "item_id": 2084210161,
+    "band_name": "Silent Servant",
+    "item_title": "Negative Fascination (Expanded)",
+    "item_url": "https://hospitalproductions.bandcamp.com/album/negative-fascination-expanded"
+  },
+  {
+    "item_id": 4110681227,
+    "band_name": "Skee Mask",
+    "item_title": "A",
+    "item_url": "https://skeemask.bandcamp.com/album/a"
+  },
+  {
+    "item_id": 675410939,
+    "band_name": "TEREKKE",
+    "item_title": "Live at Het Bimhuis",
+    "item_url": "https://terekke.bandcamp.com/album/live-at-het-bimhuis"
+  },
+  {
+    "item_id": 2303753367,
+    "band_name": "Fennec",
+    "item_title": "free us of this feeling",
+    "item_url": "https://fennecsound.com/album/free-us-of-this-feeling"
+  },
+  {
+    "item_id": 3466645636,
+    "band_name": "Call Super",
+    "item_title": "Arpo",
+    "item_url": "https://callsuper.bandcamp.com/album/arpo"
+  },
+  {
+    "item_id": 483547716,
+    "band_name": "zake\u0300",
+    "item_title": "Lapis",
+    "item_url": "https://quietdetails.bandcamp.com/album/lapis-2"
+  },
+  {
+    "item_id": 4048569464,
+    "band_name": "Patricia Wolf",
+    "item_title": "See-Through",
+    "item_url": "https://patriciawolf.bandcamp.com/album/see-through"
+  },
+  {
+    "item_id": 4126186781,
+    "band_name": "Hoavi",
+    "item_title": "Music for Six Rooms",
+    "item_url": "https://balmat.bandcamp.com/album/music-for-six-rooms"
+  },
+  {
+    "item_id": 4174814748,
+    "band_name": "nueen",
+    "item_title": "Diagrams of Thought",
+    "item_url": "https://nueen.bandcamp.com/album/diagrams-of-thought"
+  },
+  {
+    "item_id": 841394953,
+    "band_name": "The Humble Bee",
+    "item_title": "AI-24: A Miscellany For The Quiet Hours",
+    "item_url": "https://astralindustries.bandcamp.com/album/ai-24-a-miscellany-for-the-quiet-hours"
+  },
+  {
+    "item_id": 1128172594,
+    "band_name": "Wolfgang Voigt & Deepchord",
+    "item_title": "AI-04: Colours of Time, re-interpreted",
+    "item_url": "https://astralindustries.bandcamp.com/album/ai-04-colours-of-time-re-interpreted"
+  },
+  {
+    "item_id": 2281334649,
+    "band_name": "Dialog",
+    "item_title": "AI-31: Dialog",
+    "item_url": "https://astralindustries.bandcamp.com/album/ai-31-dialog"
+  },
+  {
+    "item_id": 2943026203,
+    "band_name": "Shorelights",
+    "item_title": "AI-16: Bioluminescence",
+    "item_url": "https://astralindustries.bandcamp.com/album/ai-16-bioluminescence"
+  },
+  {
+    "item_id": 3302583548,
+    "band_name": "Waveform Transmission",
+    "item_title": "AI-20: V 3.0-3.9",
+    "item_url": "https://astralindustries.bandcamp.com/album/ai-20-v-30-39"
+  },
+  {
+    "item_id": 4214512949,
+    "band_name": "Biosphere",
+    "item_title": "Inland Delta",
+    "item_url": "https://biosphere.bandcamp.com/album/inland-delta-2"
+  },
+  {
+    "item_id": 4059148063,
+    "band_name": "Greg Beato",
+    "item_title": "swerrrm",
+    "item_url": "https://gregbeato.bandcamp.com/track/swerrrm"
+  },
+  {
+    "item_id": 3334495970,
+    "band_name": "Sofie Birch",
+    "item_title": "Holotropica",
+    "item_url": "https://sofiebirch.bandcamp.com/album/holotropica"
+  },
+  {
+    "item_id": 4070969470,
+    "band_name": "Patrick Holland",
+    "item_title": "Fog Wall",
+    "item_url": "https://patrickholland.bandcamp.com/album/fog-wall"
+  },
+  {
+    "item_id": 177188420,
+    "band_name": "Fennec",
+    "item_title": "Nice Work Vol. 1",
+    "item_url": "https://fennecsound.com/album/nice-work-vol-1"
+  },
+  {
+    "item_id": 1929303763,
+    "band_name": "Plush Managements Inc.",
+    "item_title": "Magic Plush",
+    "item_url": "https://plushrecordsinc.bandcamp.com/album/magic-plush"
+  },
+  {
+    "item_id": 1097533236,
+    "band_name": "Rainforest Spiritual Enslavement",
+    "item_title": "Killer Whale Atmospheres",
+    "item_url": "https://rainforestspiritualenslavement.bandcamp.com/album/killer-whale-atmospheres"
+  },
+  {
+    "item_id": 1534810572,
+    "band_name": "36",
+    "item_title": "Ablyss",
+    "item_url": "https://3six.net/album/ablyss"
+  },
+  {
+    "item_id": 2732601330,
+    "band_name": "Other Joe",
+    "item_title": "Alien Haze",
+    "item_url": "https://other-joe.bandcamp.com/album/alien-haze"
+  },
+  {
+    "item_id": 3560059401,
+    "band_name": "Girl Unit",
+    "item_title": "Song Feel",
+    "item_url": "https://girlunit.bandcamp.com/album/song-feel"
+  },
+  {
+    "item_id": 78717550,
+    "band_name": "Skull Disco",
+    "item_title": "Soundboy Punishments",
+    "item_url": "https://samshackleton.bandcamp.com/album/soundboy-punishments"
+  },
+  {
+    "item_id": 4080305020,
+    "band_name": "Andrea",
+    "item_title": "ITLP14 - Due In Color",
+    "item_url": "https://iliantape.bandcamp.com/album/itlp14-due-in-color"
+  },
+  {
+    "item_id": 2693514214,
+    "band_name": "Andrea",
+    "item_title": "ITLP06 - Ritorno",
+    "item_url": "https://iliantape.bandcamp.com/album/itlp06-ritorno"
+  },
+  {
+    "item_id": 531994993,
+    "band_name": "Helix",
+    "item_title": "Greatest Hits Volume 3",
+    "item_url": "https://1djhelix.bandcamp.com/album/greatest-hits-volume-3"
+  },
+  {
+    "item_id": 1324881243,
+    "band_name": "Helix",
+    "item_title": "Greatest Hits Volume 2",
+    "item_url": "https://1djhelix.bandcamp.com/album/greatest-hits-volume-2"
+  },
+  {
+    "item_id": 1877880864,
+    "band_name": "Helix",
+    "item_title": "Greatest Hits Volume 1",
+    "item_url": "https://1djhelix.bandcamp.com/album/greatest-hits-volume-1"
+  },
+  {
+    "item_id": 3314896911,
+    "band_name": "Night Slugs",
+    "item_title": "Night Slugs Allstars X",
+    "item_url": "https://nightslugs.bandcamp.com/album/night-slugs-allstars-x"
+  },
+  {
+    "item_id": 584813579,
+    "band_name": "Rainforest Spiritual Enslavement",
+    "item_title": "Ambient Black Magic",
+    "item_url": "https://rainforestspiritualenslavement.bandcamp.com/album/ambient-black-magic"
+  },
+  {
+    "item_id": 830160989,
+    "band_name": "CHEMOTEX",
+    "item_title": "Schrade Knives",
+    "item_url": "https://chemotex.bandcamp.com/album/schrade-knives"
+  },
+  {
+    "item_id": 763826438,
+    "band_name": "x or size",
+    "item_title": "Covert ID",
+    "item_url": "https://xorsize.bandcamp.com/album/covert-id"
+  },
+  {
+    "item_id": 3094450115,
+    "band_name": "Donato Dozzy",
+    "item_title": "Filo Loves The Acid",
+    "item_url": "https://tresorberlin.bandcamp.com/album/filo-loves-the-acid"
+  },
+  {
+    "item_id": 2189127690,
+    "band_name": "Galcher Lustwerk",
+    "item_title": "LUSTWERK II",
+    "item_url": "https://galcherlustwerk.bandcamp.com/album/lustwerk-ii"
+  },
+  {
+    "item_id": 4240177619,
+    "band_name": "Gesloten Cirkel",
+    "item_title": "HOLE",
+    "item_url": "https://geslotencirkel.bandcamp.com/track/hole"
+  },
+  {
+    "item_id": 2322695875,
+    "band_name": "Celer + Forest Management",
+    "item_title": "Landmarks",
+    "item_url": "https://ctatsu.bandcamp.com/album/landmarks"
+  },
+  {
+    "item_id": 1269763270,
+    "band_name": "TEREKKE",
+    "item_title": "( \u0361\u00b0 \u035c\u0296 \u0361\u00b0)",
+    "item_url": "https://terekke.bandcamp.com/album/-"
+  },
+  {
+    "item_id": 2142866202,
+    "band_name": "Lucid Dreams",
+    "item_title": "AI-28: Lucid Dreams",
+    "item_url": "https://astralindustries.bandcamp.com/album/ai-28-lucid-dreams"
+  },
+  {
+    "item_id": 389650460,
+    "band_name": "Bok & Trago",
+    "item_title": "Pathfinder [BB VIP]  (2012)",
+    "item_url": "https://bokbok.bandcamp.com/track/pathfinder-bb-vip-2012"
+  },
+  {
+    "item_id": 515023349,
+    "band_name": "Bok Bok x Modjo",
+    "item_title": "Raining x 'Lady'",
+    "item_url": "https://bokbok.bandcamp.com/track/raining-x-lady"
+  },
+  {
+    "item_id": 3662536036,
+    "band_name": "Bok Bok",
+    "item_title": "Midnight Stop (2012)",
+    "item_url": "https://bokbok.bandcamp.com/track/midnight-stop-2012"
+  },
+  {
+    "item_id": 3883439191,
+    "band_name": "Mr Charizma",
+    "item_title": "On A Journey [Cover] (2012)",
+    "item_url": "https://bokbok.bandcamp.com/track/on-a-journey-cover-2012"
+  },
+  {
+    "item_id": 1237315269,
+    "band_name": "Night Slugs",
+    "item_title": "Night Slugs Classix Remixed",
+    "item_url": "https://nightslugs.bandcamp.com/album/night-slugs-classix-remixed"
+  },
+  {
+    "item_id": 3088117280,
+    "band_name": "UNiiQU3",
+    "item_title": "Heartbeats",
+    "item_url": "https://uniiqu3.bandcamp.com/album/heartbeats"
+  },
+  {
+    "item_id": 3191437227,
+    "band_name": "Rainforest Spiritual Enslavement",
+    "item_title": "Green Graves",
+    "item_url": "https://rainforestspiritualenslavement.bandcamp.com/album/green-graves-2"
+  },
+  {
+    "item_id": 1981955436,
+    "band_name": "Various Artists",
+    "item_title": "Pop Ambient 2023",
+    "item_url": "https://kompakt.bandcamp.com/album/pop-ambient-2023"
+  },
+  {
+    "item_id": 3404649550,
+    "band_name": "JVXTA",
+    "item_title": "Euston Blues",
+    "item_url": "https://jvxta.bandcamp.com/album/euston-blues"
+  },
+  {
+    "item_id": 212279701,
+    "band_name": "Bok Bok",
+    "item_title": "Duetto",
+    "item_url": "https://bokbok.bandcamp.com/album/duetto-2"
+  },
+  {
+    "item_id": 2583246797,
+    "band_name": "Lektor Scopes",
+    "item_title": "My Intentions / Dirty Games",
+    "item_url": "https://nightslugs.bandcamp.com/album/my-intentions-dirty-games"
+  },
+  {
+    "item_id": 2972073063,
+    "band_name": "Zaida Zane",
+    "item_title": "Boy Eyes",
+    "item_url": "https://zaida-zane.bandcamp.com/album/boy-eyes"
+  },
+  {
+    "item_id": 3104040645,
+    "band_name": "DJ J Heat",
+    "item_title": "Jersey Transit Systems",
+    "item_url": "https://nightslugs.bandcamp.com/album/jersey-transit-systems"
+  },
+  {
+    "item_id": 1500360339,
+    "band_name": "Chaos In The CBD",
+    "item_title": "fabric presents Chaos In The CBD",
+    "item_url": "https://chaosinthecbd.bandcamp.com/album/fabric-presents-chaos-in-the-cbd"
+  },
+  {
+    "item_id": 3580614136,
+    "band_name": "Deepchord",
+    "item_title": "AI-01: Lanterns",
+    "item_url": "https://astralindustries.bandcamp.com/album/ai-01-lanterns"
+  },
+  {
+    "item_id": 2359155773,
+    "band_name": "Abstract Thought",
+    "item_title": "Hypothetical Situations",
+    "item_url": "https://cloneaqualungseries.bandcamp.com/album/hypothetical-situations"
+  },
+  {
+    "item_id": 3155552654,
+    "band_name": "Space Afrika",
+    "item_title": "Somewhere Decent To Live",
+    "item_url": "https://space-afrika.bandcamp.com/album/somewhere-decent-to-live"
+  },
+  {
+    "item_id": 2325911820,
+    "band_name": "Florian T M Zeisig",
+    "item_title": "Music For Parents",
+    "item_url": "https://metronrecords.bandcamp.com/album/music-for-parents"
+  },
+  {
+    "item_id": 3510068481,
+    "band_name": "EDMX",
+    "item_title": "Wicked Drummer EP",
+    "item_url": "https://skrufix.bandcamp.com/album/wicked-drummer-ep"
+  },
+  {
+    "item_id": 2267130115,
+    "band_name": "Karenn",
+    "item_title": "Voam Club Archive Volume 1",
+    "item_url": "https://karenn.bandcamp.com/album/voam-club-archive-volume-1"
+  },
+  {
+    "item_id": 1542576521,
+    "band_name": "Fennec",
+    "item_title": "a couple of good days",
+    "item_url": "https://fennecsound.com/album/a-couple-of-good-days"
+  },
+  {
+    "item_id": 1941084947,
+    "band_name": "Ikonika",
+    "item_title": "Bubble Up EP",
+    "item_url": "https://ikonika.bandcamp.com/album/bubble-up-ep"
+  },
+  {
+    "item_id": 3850167267,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "Midnight Colours",
+    "item_url": "https://irisarri.bandcamp.com/album/midnight-colours"
+  },
+  {
+    "item_id": 2814842517,
+    "band_name": "The Sight Below",
+    "item_title": "Glider 10",
+    "item_url": "https://irisarri.bandcamp.com/album/glider-10"
+  },
+  {
+    "item_id": 3633176640,
+    "band_name": "The Sight Below",
+    "item_title": "Glider 10: Reworks",
+    "item_url": "https://irisarri.bandcamp.com/album/glider-10-reworks-2"
+  },
+  {
+    "item_id": 225296164,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "Fernweh",
+    "item_url": "https://irisarri.bandcamp.com/track/fernweh"
+  },
+  {
+    "item_id": 1428006790,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "Peripeteia",
+    "item_url": "https://irisarri.bandcamp.com/album/peripeteia"
+  },
+  {
+    "item_id": 395713889,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "El Ferrocarril Desvaneciente",
+    "item_url": "https://irisarri.bandcamp.com/album/el-ferrocarril-desvaneciente"
+  },
+  {
+    "item_id": 988735259,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "Solastalgia",
+    "item_url": "https://irisarri.bandcamp.com/album/solastalgia"
+  },
+  {
+    "item_id": 1202341175,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "A Fragile Geography",
+    "item_url": "https://irisarri.bandcamp.com/album/a-fragile-geography"
+  },
+  {
+    "item_id": 1218807138,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "Agitas Al Sol",
+    "item_url": "https://irisarri.bandcamp.com/album/agitas-al-sol"
+  },
+  {
+    "item_id": 1334914982,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "The Shameless Years",
+    "item_url": "https://irisarri.bandcamp.com/album/the-shameless-years"
+  },
+  {
+    "item_id": 1409716356,
+    "band_name": "The Sight Below",
+    "item_title": "Life's Fading Light (Almost Slipped Away mix)",
+    "item_url": "https://irisarri.bandcamp.com/track/lifes-fading-light-almost-slipped-away-mix"
+  },
+  {
+    "item_id": 1599220831,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "The Unintentional Sea",
+    "item_url": "https://irisarri.bandcamp.com/album/the-unintentional-sea"
+  },
+  {
+    "item_id": 2047526199,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "The North Bend (10th Anniversary remaster)",
+    "item_url": "https://irisarri.bandcamp.com/album/the-north-bend-10th-anniversary-remaster"
+  },
+  {
+    "item_id": 3929264978,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "Sirimiri",
+    "item_url": "https://irisarri.bandcamp.com/album/sirimiri"
+  },
+  {
+    "item_id": 427722798,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "Daydreaming",
+    "item_url": "https://irisarri.bandcamp.com/album/daydreaming"
+  },
+  {
+    "item_id": 1712111059,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "Sacred Variations",
+    "item_url": "https://irisarri.bandcamp.com/album/sacred-variations"
+  },
+  {
+    "item_id": 2827376391,
+    "band_name": "Rafael Anton Irisarri",
+    "item_title": "Sacred Hatred",
+    "item_url": "https://irisarri.bandcamp.com/album/sacred-hatred"
+  },
+  {
+    "item_id": 3609572488,
+    "band_name": "The Sight Below",
+    "item_title": "Reworks",
+    "item_url": "https://irisarri.bandcamp.com/album/reworks"
+  },
+  {
+    "item_id": 2547344013,
+    "band_name": "Andrew Wasylyk",
+    "item_title": "Hearing the Water Before Seeing the Falls",
+    "item_url": "https://claypipemusic.bandcamp.com/album/hearing-the-water-before-seeing-the-falls"
+  },
+  {
+    "item_id": 1771029749,
+    "band_name": "Biosphere",
+    "item_title": "Substrata (Alternative Versions)",
+    "item_url": "https://biosphere.bandcamp.com/album/substrata-alternative-versions"
+  },
+  {
+    "item_id": 850335233,
+    "band_name": "Drexciya",
+    "item_title": "Harnessed The Storm",
+    "item_url": "https://tresorberlin.bandcamp.com/album/harnessed-the-storm"
+  },
+  {
+    "item_id": 3385209998,
+    "band_name": "Drexciya",
+    "item_title": "Neptune's Lair",
+    "item_url": "https://tresorberlin.bandcamp.com/album/neptunes-lair"
+  },
+  {
+    "item_id": 4236651227,
+    "band_name": "Joachim Spieth",
+    "item_title": "Ousia",
+    "item_url": "https://joachimspieth.bandcamp.com/album/ousia"
+  },
+  {
+    "item_id": 1557419568,
+    "band_name": "ROAD HOG",
+    "item_title": "Home For The Holidays",
+    "item_url": "https://roadhog.bandcamp.com/album/home-for-the-holidays"
+  },
+  {
+    "item_id": 2084351844,
+    "band_name": "Phase Fatale",
+    "item_title": "Burning The Rural District",
+    "item_url": "https://hospitalproductions.bandcamp.com/album/burning-the-rural-district"
+  },
+  {
+    "item_id": 326925681,
+    "band_name": "James Bernard",
+    "item_title": "Unreleased Works 1994-1999 (Volumes 1 & 2)",
+    "item_url": "https://jamesbernard.bandcamp.com/album/unreleased-works-1994-1999-volumes-1-2"
+  },
+  {
+    "item_id": 3456997594,
+    "band_name": "Various Artists",
+    "item_title": "For Ukraine (Volume 1)",
+    "item_url": "https://headphonecommute.bandcamp.com/album/for-ukraine-volume-1"
+  },
+  {
+    "item_id": 1059188925,
+    "band_name": "Sonic Groove",
+    "item_title": "Stand Up In Defiance: A Benefit For Ukraine (SGF01)",
+    "item_url": "https://sonicgroove.bandcamp.com/album/stand-up-in-defiance-a-benefit-for-ukraine-sgf01"
+  },
+  {
+    "item_id": 222624053,
+    "band_name": "Skee Mask",
+    "item_title": "ITLP09 - Pool",
+    "item_url": "https://iliantape.bandcamp.com/album/itlp09-pool"
+  },
+  {
+    "item_id": 522577932,
+    "band_name": "Japanese Telecom",
+    "item_title": "Virtual Geisha",
+    "item_url": "https://cloneaqualungseries.bandcamp.com/album/virtual-geisha"
+  },
+  {
+    "item_id": 1615590175,
+    "band_name": "Gesloten Cirkel",
+    "item_title": "185",
+    "item_url": "https://solaronemusic.bandcamp.com/album/185"
+  },
+  {
+    "item_id": 4174038044,
+    "band_name": "Andrew Wasylyk",
+    "item_title": "Balgay Hill: Morning in Magnolia",
+    "item_url": "https://claypipemusic.bandcamp.com/album/balgay-hill-morning-in-magnolia"
+  },
+  {
+    "item_id": 2436273230,
+    "band_name": "Biosphere",
+    "item_title": "The Senja Recordings",
+    "item_url": "https://biosphere.bandcamp.com/album/the-senja-recordings"
+  },
+  {
+    "item_id": 2729447884,
+    "band_name": "Celestial",
+    "item_title": "I Had Too Much To Dream Last Night",
+    "item_url": "https://celestialecstatic.bandcamp.com/album/i-had-too-much-to-dream-last-night"
+  },
+  {
+    "item_id": 4237151568,
+    "band_name": "Felisha Ledesma",
+    "item_title": "Fringe",
+    "item_url": "https://felishaledesma.bandcamp.com/album/fringe"
+  },
+  {
+    "item_id": 3908709826,
+    "band_name": "36",
+    "item_title": "All Possible States",
+    "item_url": "https://3six.net/album/all-possible-states"
+  },
+  {
+    "item_id": 3397405473,
+    "band_name": "Celer",
+    "item_title": "Tempelhof",
+    "item_url": "https://celer.bandcamp.com/album/tempelhof"
+  },
+  {
+    "item_id": 3811984997,
+    "band_name": "The Caretaker",
+    "item_title": "Everywhere, an empty bliss",
+    "item_url": "https://thecaretaker.bandcamp.com/album/everywhere-an-empty-bliss"
+  },
+  {
+    "item_id": 1157425991,
+    "band_name": "Jake Muir",
+    "item_title": "Lady's Mantle",
+    "item_url": "https://sferic.bandcamp.com/album/ladys-mantle-5"
+  },
+  {
+    "item_id": 1257747090,
+    "band_name": "Celer",
+    "item_title": "Xi\u00e8xie tapes",
+    "item_url": "https://celer.bandcamp.com/album/xi-xie-tapes"
+  },
+  {
+    "item_id": 4283686300,
+    "band_name": "Celer",
+    "item_title": "Lights Inside and Ahead (Uncut)",
+    "item_url": "https://celer.bandcamp.com/track/lights-inside-and-ahead-uncut"
+  },
+  {
+    "item_id": 289428014,
+    "band_name": "Various Artists",
+    "item_title": "Pop Ambient 2020",
+    "item_url": "https://kompakt.bandcamp.com/album/pop-ambient-2020"
+  },
+  {
+    "item_id": 2231238372,
+    "band_name": "Various Artists",
+    "item_title": "Pop Ambient 2001",
+    "item_url": "https://kompakt.bandcamp.com/album/pop-ambient-2001"
+  },
+  {
+    "item_id": 3239828741,
+    "band_name": "Rainforest Spiritual Enslavement",
+    "item_title": "Jellyfish Reproduce Black Magic",
+    "item_url": "https://rainforestspiritualenslavement.bandcamp.com/album/jellyfish-reproduce-black-magic"
+  },
+  {
+    "item_id": 1614094932,
+    "band_name": "Susumu Yokota",
+    "item_title": "Acid Mt. Fuji (remastered)",
+    "item_url": "https://midgar-records.bandcamp.com/album/acid-mt-fuji-remastered"
+  },
+  {
+    "item_id": 260556938,
+    "band_name": "Rainforest Spiritual Enslavement",
+    "item_title": "Flying Fish Ambience",
+    "item_url": "https://rainforestspiritualenslavement.bandcamp.com/album/flying-fish-ambience"
+  },
+  {
+    "item_id": 3894320471,
+    "band_name": "Andrew Wasylyk",
+    "item_title": "Themes For Buildings And Spaces",
+    "item_url": "https://andrewwasylyk.bandcamp.com/album/themes-for-buildings-and-spaces-2"
+  },
+  {
+    "item_id": 371090267,
+    "band_name": "Dissolver / LifLefLof",
+    "item_title": "My Neck, My Back (Dissolver's Whiplash edit)",
+    "item_url": "https://dissolverlifleflof.bandcamp.com/track/my-neck-my-back-dissolvers-whiplash-edit"
+  },
+  {
+    "item_id": 2495073888,
+    "band_name": "36",
+    "item_title": "Music For Isolation (Suite)",
+    "item_url": "https://3six.net/album/music-for-isolation-suite"
+  },
+  {
+    "item_id": 304511345,
+    "band_name": "kaka",
+    "item_title": "into u",
+    "item_url": "https://ikonika.bandcamp.com/album/into-u"
+  },
+  {
+    "item_id": 2890952043,
+    "band_name": "Biosphere",
+    "item_title": "N-Plants",
+    "item_url": "https://biosphere.bandcamp.com/album/n-plants"
+  },
+  {
+    "item_id": 3704130255,
+    "band_name": "Biosphere",
+    "item_title": "Cirque [Reissue with bonus album]",
+    "item_url": "https://biosphere.bandcamp.com/album/cirque-reissue-with-bonus-album"
+  },
+  {
+    "item_id": 2026427459,
+    "band_name": "Moodymann",
+    "item_title": "DEMOS, CASSETTES, ADATS & FLOPPIES PT.1",
+    "item_url": "https://moodymann.bandcamp.com/album/demos-cassettes-adats-floppies-pt-1"
+  },
+  {
+    "item_id": 993796104,
+    "band_name": "zak\u00e8",
+    "item_title": "Unfurled Works, Vol. I",
+    "item_url": "https://zakedrone.bandcamp.com/album/unfurled-works-vol-i"
+  },
+  {
+    "item_id": 257338339,
+    "band_name": "Black Swan & 36",
+    "item_title": "Mist (2020 Remaster)",
+    "item_url": "https://3six.net/track/mist-2020-remaster"
+  },
+  {
+    "item_id": 400232394,
+    "band_name": "Biosphere",
+    "item_title": "Dropsonde [Reissue with bonus album]",
+    "item_url": "https://biosphere.bandcamp.com/album/dropsonde-reissue-with-bonus-album"
+  },
+  {
+    "item_id": 810155818,
+    "band_name": "GAS",
+    "item_title": "Pop",
+    "item_url": "https://kompakt-gas.bandcamp.com/album/pop"
+  },
+  {
+    "item_id": 431867479,
+    "band_name": "zak\u00e8 & Slow Dancing Society",
+    "item_title": "Mirrored",
+    "item_url": "https://zakedrone.bandcamp.com/album/mirrored"
+  },
+  {
+    "item_id": 880193910,
+    "band_name": "zak\u00e8 & City of Dawn",
+    "item_title": "Wander",
+    "item_url": "https://zakedrone.bandcamp.com/album/wander"
+  },
+  {
+    "item_id": 3676104316,
+    "band_name": "zak\u00e8",
+    "item_title": "Carolina",
+    "item_url": "https://zakedrone.bandcamp.com/album/carolina"
+  },
+  {
+    "item_id": 2986905406,
+    "band_name": "ROAD HOG",
+    "item_title": "More Spares",
+    "item_url": "https://roadhog.bandcamp.com/album/more-spares"
+  },
+  {
+    "item_id": 3409909469,
+    "band_name": "Road Hog",
+    "item_title": "Spares",
+    "item_url": "https://roadhog.bandcamp.com/album/spares"
+  },
+  {
+    "item_id": 145093434,
+    "band_name": "Tom Vourtsis",
+    "item_title": "Midnight Color",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/midnight-color"
+  },
+  {
+    "item_id": 357015914,
+    "band_name": "Moss Covered Technology",
+    "item_title": "Once Hallowed",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/once-hallowed"
+  },
+  {
+    "item_id": 520473922,
+    "band_name": "Mor Air",
+    "item_title": "Nine Movements for Water",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/nine-movements-for-water"
+  },
+  {
+    "item_id": 662691250,
+    "band_name": "Infinite Medium",
+    "item_title": "Decayed Resonance",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/decayed-resonance"
+  },
+  {
+    "item_id": 671321027,
+    "band_name": "Carlos Ferreira",
+    "item_title": "A Glimpse of Hope",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/a-glimpse-of-hope"
+  },
+  {
+    "item_id": 971149725,
+    "band_name": "J\u00f6rgen Kjellgren",
+    "item_title": "100919",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/100919"
+  },
+  {
+    "item_id": 1097301760,
+    "band_name": "Low Howl",
+    "item_title": "Lux",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/lux"
+  },
+  {
+    "item_id": 1161676946,
+    "band_name": "Broken",
+    "item_title": "Capadokya",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/capadokya"
+  },
+  {
+    "item_id": 1181253359,
+    "band_name": "From Overseas",
+    "item_title": "Melancholic Objects",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/melancholic-objects"
+  },
+  {
+    "item_id": 1440269900,
+    "band_name": "w\u00f8unds",
+    "item_title": "How to Get Lost (and Never Found)",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/how-to-get-lost-and-never-found"
+  },
+  {
+    "item_id": 1870106335,
+    "band_name": "Slow Dancing Society",
+    "item_title": "Failing Light",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/failing-light"
+  },
+  {
+    "item_id": 1996589177,
+    "band_name": "zak\u00e8",
+    "item_title": "Laudation, Unfurled",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/laudation-unfurled"
+  },
+  {
+    "item_id": 2108179197,
+    "band_name": "Blanket Swimming & DR",
+    "item_title": "High Tide",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/high-tide"
+  },
+  {
+    "item_id": 2231541119,
+    "band_name": "Pagination",
+    "item_title": "Slleet",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/slleet"
+  },
+  {
+    "item_id": 2276359394,
+    "band_name": "Etxera",
+    "item_title": "Paradas",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/paradas"
+  },
+  {
+    "item_id": 2372642349,
+    "band_name": "Evgeny Bylina",
+    "item_title": "Wherever It Was Possible",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/wherever-it-was-possible"
+  },
+  {
+    "item_id": 2390435801,
+    "band_name": "City of Dawn",
+    "item_title": "Elapsed",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/elapsed"
+  },
+  {
+    "item_id": 2397114317,
+    "band_name": "Tyresta",
+    "item_title": "Galatea",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/galatea"
+  },
+  {
+    "item_id": 2855498884,
+    "band_name": "Mathieu Lamontagne",
+    "item_title": "Savoureuses D\u00e9coupes",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/savoureuses-d-coupes"
+  },
+  {
+    "item_id": 2954814065,
+    "band_name": "Bu.Re_",
+    "item_title": "Divergence, Unfurled",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/divergence-unfurled"
+  },
+  {
+    "item_id": 3018536712,
+    "band_name": "Akkad The Orphic Priest",
+    "item_title": "Apopheny",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/apopheny"
+  },
+  {
+    "item_id": 3186048582,
+    "band_name": "Hipnotic Earth",
+    "item_title": "Rare Quiet Day",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/rare-quiet-day"
+  },
+  {
+    "item_id": 3359331849,
+    "band_name": "Syneva",
+    "item_title": "My Beautiful Sprinter",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/my-beautiful-sprinter"
+  },
+  {
+    "item_id": 3493624852,
+    "band_name": "Deer Meadow",
+    "item_title": "Missing Class",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/missing-class"
+  },
+  {
+    "item_id": 3573851937,
+    "band_name": "Departure Street",
+    "item_title": "Some Bodies Electric",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/some-bodies-electric"
+  },
+  {
+    "item_id": 3793376990,
+    "band_name": "andarctica",
+    "item_title": "Held | Pur",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/held-pur"
+  },
+  {
+    "item_id": 3876487846,
+    "band_name": "Two Hands | One Engine",
+    "item_title": "Hecla",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/hecla"
+  },
+  {
+    "item_id": 4176353241,
+    "band_name": "Wayne Robert Thomas",
+    "item_title": "Well Now You Know, Unfurled",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/well-now-you-know-unfurled"
+  },
+  {
+    "item_id": 4203901628,
+    "band_name": "Aaron Ross Hansen",
+    "item_title": "Stained Glass of Spain",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/stained-glass-of-spain"
+  },
+  {
+    "item_id": 4266067417,
+    "band_name": "Dawn Chorus and the Infallible Sea",
+    "item_title": "Amber",
+    "item_url": "https://healingsoundpropagandist.bandcamp.com/album/amber"
+  },
+  {
+    "item_id": 898433239,
+    "band_name": "The Green Kingdom",
+    "item_title": "Residence on Earth",
+    "item_url": "https://pitp.bandcamp.com/album/residence-on-earth"
+  },
+  {
+    "item_id": 3244834014,
+    "band_name": "Various Artists",
+    "item_title": "Healing Sounds II: A Compilation For Those In Need",
+    "item_url": "https://pitp.bandcamp.com/album/healing-sounds-ii-a-compilation-for-those-in-need"
+  },
+  {
+    "item_id": 2351548591,
+    "band_name": "Slow Dancing Society",
+    "item_title": "The Torchlight Parade Vol. I & II",
+    "item_url": "https://pitp.bandcamp.com/album/the-torchlight-parade-vol-i-ii"
+  },
+  {
+    "item_id": 471171905,
+    "band_name": "anth\u00e9ne",
+    "item_title": "Long Formations +4",
+    "item_url": "https://pitp.bandcamp.com/album/long-formations-4"
+  },
+  {
+    "item_id": 760251090,
+    "band_name": "Marc Ertel",
+    "item_title": "[Overtures]",
+    "item_url": "https://pitp.bandcamp.com/album/overtures"
+  },
+  {
+    "item_id": 977336048,
+    "band_name": "36 & zak\u00e8",
+    "item_title": "Stasis Sounds For Long-Distance Space Travel",
+    "item_url": "https://pitp.bandcamp.com/album/stasis-sounds-for-long-distance-space-travel"
+  },
+  {
+    "item_id": 1101189016,
+    "band_name": "From Overseas",
+    "item_title": "Home",
+    "item_url": "https://pitp.bandcamp.com/album/home"
+  },
+  {
+    "item_id": 1924716388,
+    "band_name": "T.R. Jordan",
+    "item_title": "Recollections Suite",
+    "item_url": "https://pitp.bandcamp.com/album/recollections-suite"
+  },
+  {
+    "item_id": 2041180354,
+    "band_name": "Slow Dancing Society",
+    "item_title": "Fantosmes",
+    "item_url": "https://pitp.bandcamp.com/album/fantosmes"
+  },
+  {
+    "item_id": 2086152203,
+    "band_name": "Lucy Gooch",
+    "item_title": "Rushing",
+    "item_url": "https://pitp.bandcamp.com/album/rushing"
+  },
+  {
+    "item_id": 2447246638,
+    "band_name": "Bedroom",
+    "item_title": "A Thousand Harmonies in Silence",
+    "item_url": "https://pitp.bandcamp.com/album/a-thousand-harmonies-in-silence"
+  },
+  {
+    "item_id": 2611362315,
+    "band_name": "Slow Dancing Society",
+    "item_title": "The Sound of Lights When Dim",
+    "item_url": "https://pitp.bandcamp.com/album/the-sound-of-lights-when-dim"
+  },
+  {
+    "item_id": 3695475822,
+    "band_name": "Slow Dancing Society",
+    "item_title": "The Disappearing Collective Vol. I",
+    "item_url": "https://pitp.bandcamp.com/album/the-disappearing-collective-vol-i"
+  },
+  {
+    "item_id": 4223864017,
+    "band_name": "T.R. Jordan",
+    "item_title": "Just For You",
+    "item_url": "https://pitp.bandcamp.com/album/just-for-you"
+  },
+  {
+    "item_id": 2675302711,
+    "band_name": "North Atlantic Drift",
+    "item_title": "Pillars",
+    "item_url": "https://polarseasrecordings.bandcamp.com/album/pillars"
+  },
+  {
+    "item_id": 2819523124,
+    "band_name": "Leyland Kirby",
+    "item_title": "We, so tired of all the darkness in our lives",
+    "item_url": "https://leylandkirby.bandcamp.com/album/we-so-tired-of-all-the-darkness-in-our-lives"
+  },
+  {
+    "item_id": 2871320993,
+    "band_name": "Leandro Fresco & Rafael Anton Irisarri",
+    "item_title": "Una Presencia En La Brisa",
+    "item_url": "https://leandrofrescorafaelantonirisarri.bandcamp.com/album/una-presencia-en-la-brisa"
+  },
+  {
+    "item_id": 2800129694,
+    "band_name": "GAS",
+    "item_title": "K\u00f6nigsforst",
+    "item_url": "https://kompakt-gas.bandcamp.com/album/k-nigsforst"
+  },
+  {
+    "item_id": 211175418,
+    "band_name": "Isaac Helsen",
+    "item_title": "Remnants Vol. I",
+    "item_url": "https://pitp.bandcamp.com/album/remnants-vol-i"
+  },
+  {
+    "item_id": 254090496,
+    "band_name": "zak\u00e8",
+    "item_title": "Orchestral Tape Studies II",
+    "item_url": "https://pitp.bandcamp.com/album/orchestral-tape-studies-ii-4"
+  },
+  {
+    "item_id": 255355458,
+    "band_name": "Hotel Neon",
+    "item_title": "Bloom | Fold",
+    "item_url": "https://pitp.bandcamp.com/album/bloom-fold"
+  },
+  {
+    "item_id": 331850690,
+    "band_name": "Phoebe",
+    "item_title": "Reminder | Lucent",
+    "item_url": "https://pitp.bandcamp.com/album/reminder-lucent"
+  },
+  {
+    "item_id": 351901306,
+    "band_name": "Various Artists",
+    "item_title": "Past/Present 2024 Compilation",
+    "item_url": "https://pitp.bandcamp.com/album/past-present-2024-compilation"
+  },
+  {
+    "item_id": 412688540,
+    "band_name": "Amulets",
+    "item_title": "Streaking Light | The Lowest Tide",
+    "item_url": "https://pitp.bandcamp.com/album/streaking-light-the-lowest-tide"
+  },
+  {
+    "item_id": 433919582,
+    "band_name": "Gallery Six",
+    "item_title": "Under the Morning Mist | In This Perfect Dream",
+    "item_url": "https://pitp.bandcamp.com/album/under-the-morning-mist-in-this-perfect-dream"
+  },
+  {
+    "item_id": 497795904,
+    "band_name": "Viul",
+    "item_title": "Seven Fixed Dreams | Seven Ghost Years",
+    "item_url": "https://pitp.bandcamp.com/album/seven-fixed-dreams-seven-ghost-years"
+  },
+  {
+    "item_id": 588732141,
+    "band_name": "Tyresta & zak\u00e8",
+    "item_title": "Orchestral Tape Studies [Tyresta Reworks]",
+    "item_url": "https://pitp.bandcamp.com/album/orchestral-tape-studies-tyresta-reworks"
+  },
+  {
+    "item_id": 684121161,
+    "band_name": "Erinome",
+    "item_title": "Low Priest",
+    "item_url": "https://pitp.bandcamp.com/album/low-priest"
+  },
+  {
+    "item_id": 734978322,
+    "band_name": "Forest Management",
+    "item_title": "Perfect Hour | Sheridan",
+    "item_url": "https://pitp.bandcamp.com/album/perfect-hour-sheridan"
+  },
+  {
+    "item_id": 750938286,
+    "band_name": "Ludvig Cimbrelius",
+    "item_title": "Intimacy",
+    "item_url": "https://pitp.bandcamp.com/album/intimacy"
+  },
+  {
+    "item_id": 792687115,
+    "band_name": "zak\u00e8",
+    "item_title": "Orchestral Tape Studies",
+    "item_url": "https://pitp.bandcamp.com/album/orchestral-tape-studies"
+  },
+  {
+    "item_id": 977559570,
+    "band_name": "Phillip Wilkerson",
+    "item_title": "Sunlight of Oneness | Very Amazing Now",
+    "item_url": "https://pitp.bandcamp.com/album/sunlight-of-oneness-very-amazing-now"
+  },
+  {
+    "item_id": 1039515690,
+    "band_name": "zak\u00e8",
+    "item_title": "Collected Orchestral Works, Vol. I",
+    "item_url": "https://pitp.bandcamp.com/album/collected-orchestral-works-vol-i"
+  },
+  {
+    "item_id": 1041415518,
+    "band_name": "Jack Hyde",
+    "item_title": "Heather | Ebb",
+    "item_url": "https://pitp.bandcamp.com/album/heather-ebb"
+  },
+  {
+    "item_id": 1119145428,
+    "band_name": "Beno\u00eet Pioulard",
+    "item_title": "May / Atra",
+    "item_url": "https://pitp.bandcamp.com/album/may-atra"
+  },
+  {
+    "item_id": 1152632754,
+    "band_name": "Hakobune",
+    "item_title": "The Last of Our Time Together",
+    "item_url": "https://pitp.bandcamp.com/album/the-last-of-our-time-together"
+  },
+  {
+    "item_id": 1189858367,
+    "band_name": "Tyresta",
+    "item_title": "Fallen Moon",
+    "item_url": "https://pitp.bandcamp.com/album/fallen-moon"
+  },
+  {
+    "item_id": 1226039862,
+    "band_name": "Maryam Sirvan",
+    "item_title": "Songs of an Empty Room",
+    "item_url": "https://pitp.bandcamp.com/album/songs-of-an-empty-room"
+  },
+  {
+    "item_id": 1289593787,
+    "band_name": "Sean Curtis Patrick",
+    "item_title": "The Best Driving Music in the World Ever",
+    "item_url": "https://pitp.bandcamp.com/album/the-best-driving-music-in-the-world-ever-2"
+  },
+  {
+    "item_id": 1402879106,
+    "band_name": "PGD/MV",
+    "item_title": "Morvan",
+    "item_url": "https://pitp.bandcamp.com/album/morvan"
+  },
+  {
+    "item_id": 1417400287,
+    "band_name": "Isaac Helsen",
+    "item_title": "Remnants Vol. III",
+    "item_url": "https://pitp.bandcamp.com/album/remnants-vol-iii"
+  },
+  {
+    "item_id": 1482590981,
+    "band_name": "Isaac Helsen",
+    "item_title": "Remnants Vol. II",
+    "item_url": "https://pitp.bandcamp.com/album/remnants-vol-ii"
+  },
+  {
+    "item_id": 1510669661,
+    "band_name": "Isaac Helsen",
+    "item_title": "Remnants Vol. VII",
+    "item_url": "https://pitp.bandcamp.com/album/remnants-vol-vii"
+  },
+  {
+    "item_id": 1784941157,
+    "band_name": "Isaac Helsen",
+    "item_title": "Remnants Series Vol. I-VIII",
+    "item_url": "https://pitp.bandcamp.com/album/remnants-series-vol-i-viii"
+  },
+  {
+    "item_id": 1908277191,
+    "band_name": "Various Artists",
+    "item_title": "Healing Sounds I: A Compilation For Those In Need",
+    "item_url": "https://pitp.bandcamp.com/album/healing-sounds-i-a-compilation-for-those-in-need"
+  },
+  {
+    "item_id": 1929731772,
+    "band_name": "Black Brunswicker",
+    "item_title": "Hidden Amongst the Trees and Foothills",
+    "item_url": "https://pitp.bandcamp.com/album/hidden-amongst-the-trees-and-foothills"
+  },
+  {
+    "item_id": 2038710923,
+    "band_name": "Isaac Helsen",
+    "item_title": "Remnants Vol. IV",
+    "item_url": "https://pitp.bandcamp.com/album/remnants-vol-iv"
+  },
+  {
+    "item_id": 2079547725,
+    "band_name": "Duenn",
+    "item_title": "Pattern",
+    "item_url": "https://pitp.bandcamp.com/album/pattern"
+  },
+  {
+    "item_id": 2269434781,
+    "band_name": "36 & Black Swan",
+    "item_title": "In Four Parts",
+    "item_url": "https://pitp.bandcamp.com/album/in-four-parts"
+  },
+  {
+    "item_id": 2282101201,
+    "band_name": "Endless Melancholy",
+    "item_title": "Moments We Spent Together | Marigold Fields",
+    "item_url": "https://pitp.bandcamp.com/album/moments-we-spent-together-marigold-fields"
+  },
+  {
+    "item_id": 2294188310,
+    "band_name": "36",
+    "item_title": "The Lower Lights",
+    "item_url": "https://pitp.bandcamp.com/album/the-lower-lights"
+  },
+  {
+    "item_id": 2410783028,
+    "band_name": "Isaac Helsen",
+    "item_title": "Remnants Vol. VI",
+    "item_url": "https://pitp.bandcamp.com/album/remnants-vol-vi"
+  },
+  {
+    "item_id": 2544133159,
+    "band_name": "NUM",
+    "item_title": "False Awakening",
+    "item_url": "https://pitp.bandcamp.com/album/false-awakening"
+  },
+  {
+    "item_id": 2578169546,
+    "band_name": "Jordan Christoff",
+    "item_title": "Liminal",
+    "item_url": "https://pitp.bandcamp.com/album/liminal"
+  },
+  {
+    "item_id": 2679612124,
+    "band_name": "Ian Hawgood",
+    "item_title": "Vocalism | Regeneration",
+    "item_url": "https://pitp.bandcamp.com/album/vocalism-regeneration"
+  },
+  {
+    "item_id": 2711960827,
+    "band_name": "Hilyard",
+    "item_title": "Distant | Spirals",
+    "item_url": "https://pitp.bandcamp.com/album/distant-spirals"
+  },
+  {
+    "item_id": 2947070215,
+    "band_name": "36",
+    "item_title": "Beneath The Lower Lights",
+    "item_url": "https://pitp.bandcamp.com/album/beneath-the-lower-lights"
+  },
+  {
+    "item_id": 2965544544,
+    "band_name": "Isaac Helsen",
+    "item_title": "Remnants Vol. V",
+    "item_url": "https://pitp.bandcamp.com/album/remnants-vol-v"
+  },
+  {
+    "item_id": 2992558094,
+    "band_name": "Matthew Prokop",
+    "item_title": "For Tired Souls",
+    "item_url": "https://pitp.bandcamp.com/album/for-tired-souls"
+  },
+  {
+    "item_id": 3023133127,
+    "band_name": "Celer",
+    "item_title": "It's Al-- It's Already Too Late",
+    "item_url": "https://pitp.bandcamp.com/album/its-al-its-already-too-late"
+  },
+  {
+    "item_id": 3030264121,
+    "band_name": "zak\u00e8 & Wayne Robert Thomas",
+    "item_title": "To Those Who Dwelt in a Land of Deep Darkness",
+    "item_url": "https://pitp.bandcamp.com/album/to-those-who-dwelt-in-a-land-of-deep-darkness"
+  },
+  {
+    "item_id": 3167658209,
+    "band_name": "Dawn Chorus and the Infallible Sea",
+    "item_title": "Alpha",
+    "item_url": "https://pitp.bandcamp.com/album/alpha"
+  },
+  {
+    "item_id": 3193495898,
+    "band_name": "Beno\u00eet Pioulard \u2022 Hotel Neon \u2022 Viul",
+    "item_title": "Tour Sampler [2022]",
+    "item_url": "https://pitp.bandcamp.com/album/tour-sampler-2022"
+  },
+  {
+    "item_id": 3253902886,
+    "band_name": "zak\u00e8",
+    "item_title": "zak\u00e8  [20th Anniversary Edition]",
+    "item_url": "https://pitp.bandcamp.com/album/zak-20th-anniversary-edition"
+  },
+  {
+    "item_id": 3517964929,
+    "band_name": "Warmth",
+    "item_title": "Parallel Inflection",
+    "item_url": "https://pitp.bandcamp.com/album/parallel-inflection"
+  },
+  {
+    "item_id": 3542956135,
+    "band_name": "James Bernard",
+    "item_title": "Fragments + Distancing",
+    "item_url": "https://pitp.bandcamp.com/album/fragments-distancing"
+  },
+  {
+    "item_id": 3546601758,
+    "band_name": "Viul",
+    "item_title": "Outside the Dream World",
+    "item_url": "https://pitp.bandcamp.com/album/outside-the-dream-world"
+  },
+  {
+    "item_id": 3750609585,
+    "band_name": "Erinome",
+    "item_title": "A Burning Down I & II",
+    "item_url": "https://pitp.bandcamp.com/album/a-burning-down-i-ii"
+  },
+  {
+    "item_id": 3997480721,
+    "band_name": "Wayne Robert Thomas & Isaac Helsen",
+    "item_title": "R\u00c1S",
+    "item_url": "https://pitp.bandcamp.com/album/r-s"
+  },
+  {
+    "item_id": 4169041892,
+    "band_name": "Isaac Helsen",
+    "item_title": "Remnants Vol. VIII",
+    "item_url": "https://pitp.bandcamp.com/album/remnants-vol-viii"
+  },
+  {
+    "item_id": 4175072258,
+    "band_name": "Gallery Six",
+    "item_title": "Wind Colors",
+    "item_url": "https://pitp.bandcamp.com/album/wind-colors"
+  },
+  {
+    "item_id": 2303878530,
+    "band_name": "GAS",
+    "item_title": "Zauberberg",
+    "item_url": "https://kompakt-gas.bandcamp.com/album/zauberberg"
+  },
+  {
+    "item_id": 672344457,
+    "band_name": "Road Hog",
+    "item_title": "Haul Ass",
+    "item_url": "https://roadhog.bandcamp.com/album/haul-ass"
+  },
+  {
+    "item_id": 805317794,
+    "band_name": "Domenico Crisci",
+    "item_title": "Body Punishment",
+    "item_url": "https://opaltapes.bandcamp.com/album/body-punishment"
+  },
+  {
+    "item_id": 3468123571,
+    "band_name": "Sami%SuYung",
+    "item_title": "Ethics",
+    "item_url": "https://samisuyung.bandcamp.com/album/ethics"
+  },
+  {
+    "item_id": 4061781280,
+    "band_name": "Convextion",
+    "item_title": "2845",
+    "item_url": "https://mojubarecords.bandcamp.com/album/2845"
+  },
+  {
+    "item_id": 4095749933,
+    "band_name": "Road Hog",
+    "item_title": "Tour de Hog",
+    "item_url": "https://roadhog.bandcamp.com/album/tour-de-hog"
+  },
+  {
+    "item_id": 2386600804,
+    "band_name": "Road Hog",
+    "item_title": "D.W.B.",
+    "item_url": "https://roadhog.bandcamp.com/album/d-w-b"
+  },
+  {
+    "item_id": 2443393985,
+    "band_name": "Road Hog",
+    "item_title": "On The Lam",
+    "item_url": "https://roadhog.bandcamp.com/album/on-the-lam"
+  },
+  {
+    "item_id": 1254426195,
+    "band_name": "Martyn",
+    "item_title": "Be My Own Pupil",
+    "item_url": "https://martyn.bandcamp.com/track/be-my-own-pupil"
+  }
 ]

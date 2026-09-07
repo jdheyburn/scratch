@@ -43,7 +43,7 @@ def test_a_title_containing_a_pipe_survives():
 
 def test_a_singleton_track_with_no_album_still_becomes_a_ref():
     """21 of 27 Bandcamp track purchases are singletons with an empty album."""
-    refs = track_refs(runner("Zorrovian@@BIOS@@@@Zorrovian\n"))
+    refs = track_refs(runner("Zorrovian@@BIOS\n"))
     assert [(r.artist, r.album) for r in refs] == [("Zorrovian", "BIOS")]
     assert refs[0].source == "beets-track"
 

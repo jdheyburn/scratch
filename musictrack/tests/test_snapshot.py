@@ -32,7 +32,7 @@ def library():
             albums.append(AlbumRef("beets", parts[0], parts[1], ""))
     for line in (FIXTURES / "beets_tracks.txt").read_text().splitlines():
         parts = line.split(DELIMITER)
-        if len(parts) == 4:
+        if len(parts) == 2:
             tracks.append(AlbumRef("beets-track", parts[0], parts[1], ""))
     return LibraryIndex(albums=albums, tracks=tracks)
 
