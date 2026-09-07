@@ -63,7 +63,11 @@ def test_the_artist_is_read_out_of_the_title_when_band_name_is_a_label(library):
 
 
 def test_a_catalogue_number_prefix_still_finds_the_album(library):
-    assert library.look_up(want("Skee Mask", "ITLP09 - Pool")).verdict in (OWNED, POSSIBLE)
+    """The prefix survives the exact tier but not the loose one, so this is an
+    album-loose hit: worth a look, never owned outright."""
+    found = library.look_up(want("Skee Mask", "ITLP09 - Pool"))
+    assert found.verdict == POSSIBLE
+    assert found.tier == "album-loose"
 
 
 def test_two_compilations_match_each_other(library):

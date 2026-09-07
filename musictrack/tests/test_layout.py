@@ -56,7 +56,7 @@ def test_every_module_can_be_imported_first():
     assert result.returncode == 0, result.stderr
 
 
-def raindrop_commands():
+def all_commands():
     """Every command the CLI exposes, grouped or not, by name."""
     found = {}
     for group in app.registered_groups:
@@ -73,14 +73,14 @@ def raindrop_commands():
 
 @pytest.mark.parametrize("name", COMMANDS)
 def test_every_command_is_reachable_from_the_cli(name):
-    assert name in raindrop_commands()
+    assert name in all_commands()
 
 
 @pytest.mark.parametrize("name", COMMANDS)
 def test_each_command_lives_in_its_own_module(name):
-    assert raindrop_commands()[name].__module__ == f"musictrack.commands.{name}"
+    assert all_commands()[name].__module__ == f"musictrack.commands.{name}"
 
 
 def test_the_cli_exposes_nothing_but_those_commands():
     """A command that isn't in COMMANDS is one this file forgot to describe."""
-    assert sorted(raindrop_commands()) == sorted(COMMANDS)
+    assert sorted(all_commands()) == sorted(COMMANDS)
