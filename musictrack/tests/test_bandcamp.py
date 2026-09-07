@@ -4,7 +4,7 @@ internet."""
 import pytest
 
 from musictrack.errors import BandcampError
-from musictrack.sources.bandcamp import BandcampClient
+from musictrack.sources.bandcamp import BandcampClient, to_ref
 
 
 class FakeTransport:
@@ -116,3 +116,35 @@ def test_the_wishlist_is_read_from_its_own_endpoint():
     client(transport).wishlist()
     _, url, _ = transport.calls[1]
     assert url.endswith("/wishlist_items")
+
+
+def test_a_missing_item_id_becomes_an_empty_ref_not_the_string_none():
+    """A dismissal keyed off the literal text 'None' would hide every item
+    missing an id under one dismissal."""
+    ref = to_ref({"band_name": "An Artist", "item_title": "An Album"}, "bandcamp-collection")
+    assert ref.ref == ""
+
+
+def test_a_single_default_run_reads_the_summary_once():
+    """collection() and wishlist() both need the summary. A default reconcile
+    run calls both, and that must not mean two identical GETs."""
+    transport = FakeTransport(
+        [
+            summary_body(purchased=1, wishlisted=1),
+            page([item(1)], more=False),
+            page([item(2)], more=False),
+        ]
+    )
+    account = client(transport)
+    account.collection()
+    account.wishlist()
+    summary_calls = [call for call in transport.calls if call[1].endswith("collection_summary")]
+    assert len(summary_calls) == 1
+
+
+def test_an_unusable_summary_is_an_error_not_a_silent_zero():
+    """A summary with no tralbum_lookup at all would make `expected` 0, and a
+    lost paged read of 0 never trips the shortfall guard."""
+    transport = FakeTransport([{"fan_id": 4242, "collection_summary": {}}])
+    with pytest.raises(BandcampError):
+        client(transport).summary()

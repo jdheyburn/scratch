@@ -73,11 +73,12 @@ class Summary:
 
 
 def to_ref(item: dict, source: str) -> AlbumRef:
+    item_id = item.get("item_id")
     return AlbumRef(
         source=source,
         artist=item.get("band_name") or "",
         album=item.get("item_title") or "",
-        ref=str(item.get("item_id")),
+        ref=str(item_id) if item_id is not None else "",
         url=item.get("item_url") or "",
     )
 
@@ -94,20 +95,28 @@ class BandcampClient:
         self._cookie = cookie
         self._request = request
         self._pause = pause
+        self._summary: Summary | None = None
 
     def summary(self) -> Summary:
         """Who we are, and how much there is to read.
 
         `tralbum_lookup` holds the collection and the wishlist together, and
-        `purchased` is true for exactly the collection.
+        `purchased` is true for exactly the collection. `collection()` and
+        `wishlist()` both need this, so the read happens once and is reused.
         """
+        if self._summary is not None:
+            return self._summary
         body = self._request("GET", f"{API}/api/fan/2/collection_summary", self._cookie)
         fan_id = body.get("fan_id")
         if not fan_id:
             raise BandcampError(EXPIRED)
-        lookup = (body.get("collection_summary") or {}).get("tralbum_lookup") or {}
+        collection_summary = body.get("collection_summary")
+        if not isinstance(collection_summary, dict) or "tralbum_lookup" not in collection_summary:
+            raise BandcampError("Bandcamp's summary carried no tralbum_lookup to count from")
+        lookup = collection_summary["tralbum_lookup"] or {}
         purchased = sum(1 for entry in lookup.values() if entry.get("purchased"))
-        return Summary(int(fan_id), purchased, len(lookup) - purchased)
+        self._summary = Summary(int(fan_id), purchased, len(lookup) - purchased)
+        return self._summary
 
     def collection(self) -> list[AlbumRef]:
         """Everything bought."""
