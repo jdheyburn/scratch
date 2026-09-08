@@ -363,3 +363,33 @@ def test_a_source_failure_is_a_message_not_a_traceback(monkeypatch, tmp_path):
     result = CliRunner().invoke(app, ["reconcile", "--backlog"], env={"COLUMNS": "200"})
     assert result.exit_code == 1
     assert "503" in result.stdout
+
+
+# --- the age header, through the command -----------------------------------
+
+
+def test_the_command_prints_the_header_before_the_tables(monkeypatch, tmp_path):
+    result, _ = run(monkeypatch, tmp_path, "--wants")
+    assert result.exit_code == 0
+    assert "beets just now" in result.stdout
+    assert result.stdout.index("beets just now") < result.stdout.index("Parallel Dimensions")
+
+
+def test_a_backlog_run_does_not_claim_a_spotify_age(monkeypatch, tmp_path):
+    result, _ = run(monkeypatch, tmp_path, "--backlog")
+    assert result.exit_code == 0
+    assert "spotify" not in result.stdout
+
+
+def test_the_second_run_reports_the_cached_age_not_just_now(monkeypatch, tmp_path):
+    """Proves the header reads the stored time rather than the wall clock."""
+    import sqlite3
+    from datetime import UTC, datetime, timedelta
+
+    run(monkeypatch, tmp_path, "--wants")
+    old = (datetime.now(UTC) - timedelta(days=30)).isoformat()
+    with sqlite3.connect(tmp_path / "db.sqlite") as db:
+        db.execute("UPDATE cache_run SET fetched = ?", (old,))
+    result, _ = run(monkeypatch, tmp_path, "--wants")
+    assert "30 days ago" in result.stdout
+    assert "--refresh" in result.stdout

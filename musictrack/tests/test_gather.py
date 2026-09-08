@@ -1,6 +1,6 @@
 """Which sources a run needs, and where their rows come from."""
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -329,3 +329,62 @@ def test_both_bandcamp_reads_share_one_client(monkeypatch):
     reads["bandcamp-wishlist"]()
     reads["bandcamp-collection"]()
     assert built == ["cookie"]
+
+
+# --- the age header --------------------------------------------------------
+
+
+HEADER_NOW = datetime(2026, 9, 8, 12, 0, tzinfo=UTC)
+
+
+def spans(line):
+    """(text, style) for each styled span of a rich Text."""
+    return [(line.plain[span.start : span.end], span.style) for span in line.spans]
+
+
+def header(ages, now=HEADER_NOW):
+    from rich.console import Console
+
+    from musictrack.gather import age_line
+
+    console = Console(width=200, record=True)
+    console.print(age_line(ages, now))
+    return console.export_text()
+
+
+def test_the_header_names_every_source_the_run_used():
+    ages = [
+        ("beets", HEADER_NOW - timedelta(minutes=20)),
+        ("bandcamp", HEADER_NOW - timedelta(days=4)),
+        ("spotify", HEADER_NOW - timedelta(days=4)),
+    ]
+    rendered = header(ages)
+    assert "beets 20 minutes ago" in rendered
+    assert "bandcamp 4 days ago" in rendered
+    assert "spotify 4 days ago" in rendered
+
+
+def test_a_source_read_this_run_reads_as_just_now():
+    assert "beets just now" in header([("beets", HEADER_NOW)])
+
+
+def test_a_fresh_header_does_not_mention_refresh():
+    ages = [("beets", HEADER_NOW), ("bandcamp", HEADER_NOW - timedelta(days=2))]
+    assert "--refresh" not in header(ages)
+
+
+def test_a_stale_source_puts_refresh_in_the_header():
+    ages = [("beets", HEADER_NOW), ("bandcamp", HEADER_NOW - timedelta(days=30))]
+    rendered = header(ages)
+    assert "bandcamp 30 days ago" in rendered
+    assert "--refresh" in rendered
+
+
+def test_only_the_stale_entry_is_marked():
+    """The warning style belongs to the old source, not to the whole line."""
+    from musictrack.gather import age_line
+
+    ages = [("beets", HEADER_NOW), ("bandcamp", HEADER_NOW - timedelta(days=30))]
+    styled = {text: str(style) for text, style in spans(age_line(ages, HEADER_NOW))}
+    assert "yellow" in styled["bandcamp 30 days ago"]
+    assert "yellow" not in styled["beets just now"]

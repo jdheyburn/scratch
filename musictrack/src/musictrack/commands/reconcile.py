@@ -15,6 +15,7 @@ from __future__ import annotations
 import sqlite3
 from collections.abc import Sequence
 from dataclasses import dataclass, field
+from datetime import UTC, datetime
 
 import typer
 from rich.table import Table
@@ -22,7 +23,7 @@ from rich.table import Table
 from musictrack.cache import SourceCache
 from musictrack.console import console
 from musictrack.errors import MissingToken, SourceError
-from musictrack.gather import Fetchers, UnknownSource, gather, keys_for
+from musictrack.gather import Fetchers, UnknownSource, age_line, gather, keys_for, source_ages
 from musictrack.match import ABSENT, OWNED, LibraryIndex, Match
 from musictrack.models import AlbumRef
 from musictrack.store import DB_PATH, Dismissals
@@ -162,6 +163,8 @@ def reconcile(
     except (OSError, sqlite3.Error) as problem:
         console.print(f"[red]could not open {DB_PATH}: {problem}[/]")
         raise typer.Exit(1) from problem
+
+    console.print(age_line(source_ages(cache, keys), datetime.now(UTC)))
 
     index = LibraryIndex(albums=gathered.rows["beets"], tracks=gathered.rows["beets-track"])
     wishlist = gathered.rows.get("bandcamp-wishlist", [])

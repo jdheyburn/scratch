@@ -12,7 +12,9 @@ from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime
 
-from musictrack.cache import SourceCache
+from rich.text import Text
+
+from musictrack.cache import SourceCache, describe_age, is_stale
 from musictrack.config import load_bandcamp_cookie
 from musictrack.models import AlbumRef
 from musictrack.sources import library as beets
@@ -142,3 +144,22 @@ def gather(
         else:
             result.rows[key] = cache.read(key)
     return result
+
+
+def age_line(ages: Sequence[tuple[str, datetime | None]], now: datetime) -> Text:
+    """One line naming every source the run used and how old its copy is.
+
+    This is what makes the cache safe to have. A stale copy cannot look healthy
+    while its age is on the report it feeds.
+    """
+    line = Text()
+    stale = False
+    for position, (name, when) in enumerate(ages):
+        if position:
+            line.append(" · ", style="dim")
+        old = is_stale(when, now)
+        stale = stale or old
+        line.append(f"{name} {describe_age(when, now)}", style="yellow" if old else "dim")
+    if stale:
+        line.append("   --refresh all to update", style="yellow")
+    return line
