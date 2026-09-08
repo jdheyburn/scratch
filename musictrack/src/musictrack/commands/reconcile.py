@@ -1,7 +1,9 @@
 """What you want against what you have.
 
-Read-only. Every source is read live, the whole comparison happens in memory,
-and nothing is written anywhere except the dismissals you record yourself.
+Read-only against Bandcamp, Spotify, and beets: the comparison happens in
+memory, and nothing changes on any of those three. Reports are served from a
+local copy of each source, whose age is printed on every run, and refreshed on
+demand with `--refresh`.
 
 The three tables are not equally confident. Owned rows are statements: an exact
 title with an agreeing artist was right essentially every time across 338
@@ -15,19 +17,18 @@ from __future__ import annotations
 import sqlite3
 from collections.abc import Sequence
 from dataclasses import dataclass, field
+from datetime import UTC, datetime
 
 import typer
 from rich.table import Table
 
-from musictrack.config import load_bandcamp_cookie
+from musictrack.cache import SourceCache
 from musictrack.console import console
 from musictrack.errors import MissingToken, SourceError
+from musictrack.gather import Fetchers, UnknownSource, age_line, gather, keys_for, source_ages
 from musictrack.match import ABSENT, OWNED, LibraryIndex, Match
 from musictrack.models import AlbumRef
-from musictrack.sources import library as beets
-from musictrack.sources.bandcamp import BandcampClient
-from musictrack.sources.spotify import spotify_client, to_listen
-from musictrack.store import Dismissals
+from musictrack.store import DB_PATH, Dismissals
 
 Row = tuple[AlbumRef, Match]
 
@@ -130,6 +131,12 @@ def reconcile(
         "--include-dismissed",
         help="Show dismissed rows too, marked with their reason.",
     ),
+    refresh: str | None = typer.Option(
+        None,
+        "--refresh",
+        metavar="SOURCE",
+        help="Refetch before reporting: all, beets, bandcamp, or spotify.",
+    ),
 ) -> None:
     """Compare Bandcamp and Spotify against the beets library."""
     show_wants = wants or not backlog
@@ -142,16 +149,14 @@ def reconcile(
         # classifies everything and marks the dismissed ones instead.
         hide = {} if include_dismissed else dismissals
         mark = dismissals if include_dismissed else None
-        with console.status("reading the library"):
-            index = LibraryIndex(albums=beets.album_refs(), tracks=beets.track_refs())
-        bandcamp = BandcampClient(load_bandcamp_cookie())
-        with console.status("reading Bandcamp"):
-            wishlist = bandcamp.wishlist() if show_wants else []
-            collection = bandcamp.collection() if show_backlog else []
-        listening: list[AlbumRef] = []
-        if show_wants:
-            with console.status("reading Spotify"):
-                listening = to_listen(spotify_client())
+        cache = SourceCache()
+        keys = keys_for(show_wants, show_backlog)
+        with console.status("gathering sources"):
+            gathered = gather(cache, Fetchers().as_map(), keys, refresh)
+        console.print(age_line(source_ages(cache, keys), datetime.now(UTC)))
+    except UnknownSource as problem:
+        console.print(f"[red]{problem}[/]")
+        raise typer.Exit(1) from problem
     except MissingToken as problem:
         console.print(f"[red]{problem}[/]")
         raise typer.Exit(1) from problem
@@ -159,8 +164,13 @@ def reconcile(
         console.print(f"[red]{problem}[/]")
         raise typer.Exit(1) from problem
     except (OSError, sqlite3.Error) as problem:
-        console.print(f"[red]could not open the dismissals database: {problem}[/]")
+        console.print(f"[red]could not open {DB_PATH}: {problem}[/]")
         raise typer.Exit(1) from problem
+
+    index = LibraryIndex(albums=gathered.rows["beets"], tracks=gathered.rows["beets-track"])
+    wishlist = gathered.rows.get("bandcamp-wishlist", [])
+    collection = gathered.rows.get("bandcamp-collection", [])
+    listening = gathered.rows.get("spotify", [])
 
     if show_wants:
         report = classify([*wishlist, *listening], index, hide)

@@ -34,9 +34,9 @@ chmod 600 ~/.config/raindrop/token
 ## Commands
 
 ```text
-musictrack raindrop dedupe [--dry-run]   remove duplicate music bookmarks, file the strays
-musictrack reconcile [--wants|--backlog] what you want against what you already have
-musictrack dismiss <source>:<ref>        stop reporting one row
+musictrack raindrop dedupe [--dry-run]               remove duplicate music bookmarks, file the strays
+musictrack reconcile [--wants|--backlog] [--refresh] what you want against what you already have
+musictrack dismiss <source>:<ref>                    stop reporting one row
 ```
 
 ### dedupe
@@ -91,9 +91,15 @@ recoverable in the Raindrop UI.
 
 Reads the Bandcamp wishlist, the Spotify "To Listen" playlist, and the beets
 library, then prints what you want that you already own and what you bought
-that never made it into the library. Nothing is written. `--wants` and
-`--backlog` each print one half of the report on their own; with neither, both
-print.
+that never made it into the library. Read-only against all three: nothing on
+Bandcamp, Spotify, or beets changes. `--wants` and `--backlog` each print one
+half of the report on their own; with neither, both print.
+
+The first run reads every source live and keeps a local copy. Later runs
+answer from that copy instead of reading the accounts again, so every report
+opens with a line naming each source and how old its copy is. `--refresh
+all|beets|bandcamp|spotify` refetches before reporting, either everything or
+just the one named source.
 
 Two credentials, since this reads two accounts beyond Raindrop:
 
@@ -168,6 +174,8 @@ src/musictrack/
   albumkey.py    what makes two releases the same release
   match.py       which library record a candidate is, if any
   store.py       decisions that outlive a run
+  cache.py       a copy of what each source last returned, and its age
+  gather.py      where a run's rows come from: the cache, or a live read
   sources/       one module per place music is tracked
   errors.py      every way this tool gives up, in one place
   console.py     the one console every command prints through

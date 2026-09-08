@@ -5,9 +5,12 @@ real position, and so is an absence that turns out to be a naming difference.
 Without somewhere to record those, every run reports them again until the
 report gets skimmed and stops working.
 
-Decisions only. No copy of any source lives here. A local mirror of the
-wishlist, the playlist or the library would let the tool answer from stale data
-while looking healthy, and every source is a few requests away.
+This module holds decisions. `cache.py` holds copies of the sources, in the
+same database. That split was once a rule that no source copy be stored at all,
+on the grounds that a local mirror lets the tool answer from stale data while
+looking healthy. The objection was right about the danger and wrong about the
+remedy: what makes a cache dangerous is being invisible, so the cache carries a
+fetch time and every report prints its age.
 """
 
 from __future__ import annotations
