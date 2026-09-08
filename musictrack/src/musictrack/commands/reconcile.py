@@ -1,7 +1,9 @@
 """What you want against what you have.
 
-Read-only. Every source is read live, the whole comparison happens in memory,
-and nothing is written anywhere except the dismissals you record yourself.
+Read-only against Bandcamp, Spotify, and beets: the comparison happens in
+memory, and nothing changes on any of those three. Reports are served from a
+local copy of each source, whose age is printed on every run, and refreshed on
+demand with `--refresh`.
 
 The three tables are not equally confident. Owned rows are statements: an exact
 title with an agreeing artist was right essentially every time across 338
