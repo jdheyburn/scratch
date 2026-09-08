@@ -8,10 +8,16 @@ Bandcamp lists from one authenticated client.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Callable, Mapping, Sequence
+from dataclasses import dataclass, field
 from datetime import datetime
 
 from musictrack.cache import SourceCache
+from musictrack.config import load_bandcamp_cookie
+from musictrack.models import AlbumRef
+from musictrack.sources import library as beets
+from musictrack.sources.bandcamp import BandcampClient
+from musictrack.sources.spotify import spotify_client, to_listen
 
 ALL = "all"
 
@@ -75,3 +81,64 @@ def source_ages(cache: SourceCache, keys: Sequence[str]) -> list[tuple[str, date
         known = [stamp for stamp in stamps if stamp is not None]
         ages.append((name, min(known) if len(known) == len(stamps) and known else None))
     return ages
+
+
+Fetcher = Callable[[], list[AlbumRef]]
+
+
+class Fetchers:
+    """One live read per storage key, each built only when it is called.
+
+    Laziness is the point. A fully cached run calls none of these, and so needs
+    no Bandcamp cookie and no Spotify token. A backlog run calls neither of the
+    Spotify or wishlist readers, so it authenticates to neither.
+    """
+
+    def __init__(self) -> None:
+        self._bandcamp: BandcampClient | None = None
+
+    def _client(self) -> BandcampClient:
+        if self._bandcamp is None:
+            self._bandcamp = BandcampClient(load_bandcamp_cookie())
+        return self._bandcamp
+
+    def as_map(self) -> dict[str, Fetcher]:
+        return {
+            "beets": beets.album_refs,
+            "beets-track": beets.track_refs,
+            "bandcamp-wishlist": lambda: self._client().wishlist(),
+            "bandcamp-collection": lambda: self._client().collection(),
+            "spotify": lambda: to_listen(spotify_client()),
+        }
+
+
+@dataclass
+class Gathered:
+    """The rows this run will work from, and which of them were read live."""
+
+    rows: dict[str, list[AlbumRef]] = field(default_factory=dict)
+    fetched: set[str] = field(default_factory=set)
+
+
+def gather(
+    cache: SourceCache,
+    fetchers: Mapping[str, Fetcher],
+    keys: Sequence[str],
+    refresh: str | None = None,
+) -> Gathered:
+    """Rows for every key, from the cache where there is one.
+
+    The refresh name is resolved first, so an unrecognised one costs a message
+    rather than a source read.
+    """
+    refreshing = keys_to_refresh(refresh)
+    result = Gathered()
+    for key in keys:
+        if key in refreshing or not cache.has(key):
+            refs = fetchers[key]()
+            cache.write(key, refs)
+            result.rows[key] = refs
+            result.fetched.add(key)
+        else:
+            result.rows[key] = cache.read(key)
+    return result

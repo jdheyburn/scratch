@@ -12,6 +12,7 @@ from musictrack.gather import (
     keys_to_refresh,
     source_ages,
 )
+from musictrack.models import AlbumRef
 
 EVERY_KEY = {"beets", "beets-track", "bandcamp-wishlist", "bandcamp-collection", "spotify"}
 
@@ -135,3 +136,196 @@ def test_the_row_a_source_age_describes_is_an_album_ref_source(tmp_path):
 
     covered = {key for keys in REFRESH_NAMES.values() for key in keys}
     assert covered == EVERY_KEY
+
+
+# --- read the cache, or the source -----------------------------------------
+
+
+class Recorder:
+    """A stand-in for a source read. Records that it was called, answers a
+    canned list, touches nothing."""
+
+    def __init__(self, refs=None, boom=None):
+        self.calls = 0
+        self._refs = refs if refs is not None else []
+        self._boom = boom
+
+    def __call__(self):
+        self.calls += 1
+        if self._boom is not None:
+            raise self._boom
+        return list(self._refs)
+
+
+def fetchers(**overrides):
+    """A fetcher for every storage key, each recording its own calls."""
+    built = {key: Recorder() for key in EVERY_KEY}
+    built.update(overrides)
+    return built
+
+
+def a_ref(source, album):
+    return AlbumRef(source=source, artist="Theo Parrish", album=album, ref="1")
+
+
+def test_a_source_never_read_is_fetched_and_stored(tmp_path):
+    from musictrack.gather import gather
+
+    cache = SourceCache(tmp_path / "db.sqlite")
+    reads = fetchers(spotify=Recorder([a_ref("spotify", "Ugly Edits")]))
+    result = gather(cache, reads, ("spotify",))
+    assert reads["spotify"].calls == 1
+    assert [r.album for r in result.rows["spotify"]] == ["Ugly Edits"]
+    assert cache.read("spotify")[0].album == "Ugly Edits"
+    assert result.fetched == {"spotify"}
+
+
+def test_a_cached_source_is_not_fetched_again(tmp_path):
+    from musictrack.gather import gather
+
+    cache = SourceCache(tmp_path / "db.sqlite")
+    cache.write("spotify", [a_ref("spotify", "Ugly Edits")])
+    reads = fetchers()
+    result = gather(cache, reads, ("spotify",))
+    assert reads["spotify"].calls == 0
+    assert [r.album for r in result.rows["spotify"]] == ["Ugly Edits"]
+    assert result.fetched == set()
+
+
+def test_a_cached_but_empty_source_is_not_fetched_again(tmp_path):
+    """The bug this design exists to avoid. A wishlist that legitimately came
+    back empty must read as cached, not as never read."""
+    from musictrack.gather import gather
+
+    cache = SourceCache(tmp_path / "db.sqlite")
+    cache.write("bandcamp-wishlist", [])
+    reads = fetchers()
+    result = gather(cache, reads, ("bandcamp-wishlist",))
+    assert reads["bandcamp-wishlist"].calls == 0
+    assert result.rows["bandcamp-wishlist"] == []
+
+
+def test_refreshing_a_name_refetches_only_its_keys(tmp_path):
+    from musictrack.gather import gather
+
+    cache = SourceCache(tmp_path / "db.sqlite")
+    for key in EVERY_KEY:
+        cache.write(key, [])
+    reads = fetchers()
+    gather(cache, reads, keys_for(True, True), refresh="beets")
+    assert reads["beets"].calls == 1
+    assert reads["beets-track"].calls == 1
+    assert reads["bandcamp-wishlist"].calls == 0
+    assert reads["bandcamp-collection"].calls == 0
+    assert reads["spotify"].calls == 0
+
+
+def test_refreshing_all_refetches_every_key_the_run_uses(tmp_path):
+    from musictrack.gather import gather
+
+    cache = SourceCache(tmp_path / "db.sqlite")
+    for key in EVERY_KEY:
+        cache.write(key, [])
+    reads = fetchers()
+    gather(cache, reads, keys_for(True, True), refresh=ALL)
+    assert all(reads[key].calls == 1 for key in EVERY_KEY)
+
+
+def test_refreshing_all_does_not_reach_a_source_the_run_does_not_need(tmp_path):
+    """`--backlog --refresh all` must still not authenticate to Spotify."""
+    from musictrack.gather import gather
+
+    cache = SourceCache(tmp_path / "db.sqlite")
+    for key in EVERY_KEY:
+        cache.write(key, [])
+    reads = fetchers()
+    gather(cache, reads, keys_for(False, True), refresh=ALL)
+    assert reads["spotify"].calls == 0
+    assert reads["bandcamp-wishlist"].calls == 0
+    assert reads["bandcamp-collection"].calls == 1
+
+
+def test_a_refresh_replaces_the_stored_copy(tmp_path):
+    from musictrack.gather import gather
+
+    cache = SourceCache(tmp_path / "db.sqlite")
+    cache.write("spotify", [a_ref("spotify", "Old")])
+    reads = fetchers(spotify=Recorder([a_ref("spotify", "New")]))
+    gather(cache, reads, ("spotify",), refresh="spotify")
+    assert [r.album for r in cache.read("spotify")] == ["New"]
+
+
+def test_a_failed_fetch_leaves_the_previous_copy_untouched(tmp_path):
+    """A Bandcamp read that dies on page four must not replace a good copy
+    with a partial one. Nothing is written until the fetch returns."""
+    from musictrack.errors import BandcampError
+    from musictrack.gather import gather
+
+    cache = SourceCache(tmp_path / "db.sqlite")
+    cache.write("bandcamp-wishlist", [a_ref("bandcamp-wishlist", "Kept")])
+    before = cache.fetched_at("bandcamp-wishlist")
+    reads = fetchers(**{"bandcamp-wishlist": Recorder(boom=BandcampError("page four"))})
+    with pytest.raises(BandcampError):
+        gather(cache, reads, ("bandcamp-wishlist",), refresh="bandcamp")
+    assert [r.album for r in cache.read("bandcamp-wishlist")] == ["Kept"]
+    assert cache.fetched_at("bandcamp-wishlist") == before
+
+
+def test_an_unknown_refresh_name_fetches_nothing(tmp_path):
+    """The name is validated before any source is touched, so a typo costs
+    nothing but the message."""
+    from musictrack.gather import gather
+
+    cache = SourceCache(tmp_path / "db.sqlite")
+    reads = fetchers()
+    with pytest.raises(UnknownSource):
+        gather(cache, reads, keys_for(True, True), refresh="bandacmp")
+    assert all(reader.calls == 0 for reader in reads.values())
+
+
+def test_the_fetchers_map_covers_every_storage_key():
+    """A key with no fetcher would raise KeyError the first time a cold cache
+    met it, which is the one moment the tool has to work."""
+    from musictrack.gather import Fetchers
+
+    assert set(Fetchers().as_map()) == EVERY_KEY
+
+
+def test_building_the_fetchers_reads_no_credentials(monkeypatch):
+    """Construction must be inert. A fully cached run never calls a fetcher,
+    and so must never need the Bandcamp cookie or a Spotify token."""
+    import musictrack.gather as gather_module
+    from musictrack.gather import Fetchers
+
+    def boom():
+        raise AssertionError("credentials read while only building the fetchers")
+
+    monkeypatch.setattr(gather_module, "load_bandcamp_cookie", boom)
+    monkeypatch.setattr(gather_module, "spotify_client", boom)
+    Fetchers().as_map()
+
+
+def test_both_bandcamp_reads_share_one_client(monkeypatch):
+    """Two lists, one authenticated session. Building a second client would
+    mean a second cookie read and a second summary call."""
+    import musictrack.gather as gather_module
+    from musictrack.gather import Fetchers
+
+    built = []
+
+    class FakeClient:
+        def __init__(self, cookie):
+            built.append(cookie)
+
+        def wishlist(self):
+            return []
+
+        def collection(self):
+            return []
+
+    monkeypatch.setattr(gather_module, "load_bandcamp_cookie", lambda: "cookie")
+    monkeypatch.setattr(gather_module, "BandcampClient", FakeClient)
+    reads = Fetchers().as_map()
+    reads["bandcamp-wishlist"]()
+    reads["bandcamp-collection"]()
+    assert built == ["cookie"]
