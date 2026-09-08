@@ -4,6 +4,8 @@ from rich.console import Console
 from typer.testing import CliRunner
 
 import musictrack.commands.reconcile as reconcile_module
+import musictrack.gather as gather_module
+from musictrack.cache import SourceCache
 from musictrack.cli import app
 from musictrack.commands.reconcile import backlog_table, classify, possible_table, wants_table
 from musictrack.match import LibraryIndex
@@ -201,65 +203,68 @@ class RecordingBandcamp:
         return [want("Lucy Gooch", "Rushing", ref="2", source="bandcamp-collection")]
 
 
-def run(monkeypatch, *args, dismissed=None):
-    """Invoke the real `reconcile` command through the CLI, with every source
-    and the dismissals store swapped for a fake, so nothing touches the
-    network, SSH, or the real dismissals database."""
+def run(monkeypatch, tmp_path, *args, dismissed=None):
+    """Invoke the real `reconcile` command through the CLI, with every source,
+    the cache, and the dismissals store swapped for a fake or a temporary file,
+    so nothing touches the network, SSH, or either real database."""
     client = RecordingBandcamp()
-    monkeypatch.setattr(reconcile_module, "load_bandcamp_cookie", lambda: "cookie")
-    monkeypatch.setattr(reconcile_module, "BandcampClient", lambda cookie: client)
+    monkeypatch.setattr(gather_module, "load_bandcamp_cookie", lambda: "cookie")
+    monkeypatch.setattr(gather_module, "BandcampClient", lambda cookie: client)
     monkeypatch.setattr(
-        reconcile_module.beets,
+        gather_module.beets,
         "album_refs",
         lambda: [album("Theo Parrish", "Parallel Dimensions")],
     )
-    monkeypatch.setattr(reconcile_module.beets, "track_refs", lambda: [])
-    monkeypatch.setattr(reconcile_module, "spotify_client", lambda: object())
-    monkeypatch.setattr(reconcile_module, "to_listen", lambda *a, **k: [])
+    monkeypatch.setattr(gather_module.beets, "track_refs", lambda: [])
+    monkeypatch.setattr(gather_module, "spotify_client", lambda: object())
+    monkeypatch.setattr(gather_module, "to_listen", lambda *a, **k: [])
     monkeypatch.setattr(reconcile_module, "Dismissals", lambda: FakeDismissals(dismissed))
+    monkeypatch.setattr(
+        reconcile_module, "SourceCache", lambda: SourceCache(tmp_path / "db.sqlite")
+    )
     result = CliRunner().invoke(app, ["reconcile", *args], env={"COLUMNS": "200"})
     return result, client
 
 
-def test_backlog_only_run_does_not_read_the_wishlist(monkeypatch):
-    _, client = run(monkeypatch, "--backlog")
+def test_backlog_only_run_does_not_read_the_wishlist(monkeypatch, tmp_path):
+    _, client = run(monkeypatch, tmp_path, "--backlog")
     assert client.calls == ["collection"]
 
 
-def test_wants_only_run_does_not_read_the_collection(monkeypatch):
-    _, client = run(monkeypatch, "--wants")
+def test_wants_only_run_does_not_read_the_collection(monkeypatch, tmp_path):
+    _, client = run(monkeypatch, tmp_path, "--wants")
     assert client.calls == ["wishlist"]
 
 
-def test_a_default_run_reads_both(monkeypatch):
-    _, client = run(monkeypatch)
+def test_a_default_run_reads_both(monkeypatch, tmp_path):
+    _, client = run(monkeypatch, tmp_path)
     assert set(client.calls) == {"wishlist", "collection"}
 
 
-def test_a_dismissed_row_is_hidden_by_default_in_the_cli(monkeypatch):
+def test_a_dismissed_row_is_hidden_by_default_in_the_cli(monkeypatch, tmp_path):
     dismissed = {("bandcamp-wishlist", "1"): "own the digital, want the vinyl"}
-    result, _ = run(monkeypatch, "--wants", dismissed=dismissed)
+    result, _ = run(monkeypatch, tmp_path, "--wants", dismissed=dismissed)
     assert result.exit_code == 0
     assert "Parallel Dimensions" not in result.stdout
 
 
-def test_include_dismissed_shows_the_row_marked_with_its_reason(monkeypatch):
+def test_include_dismissed_shows_the_row_marked_with_its_reason(monkeypatch, tmp_path):
     dismissed = {("bandcamp-wishlist", "1"): "own the digital, want the vinyl"}
-    result, _ = run(monkeypatch, "--wants", "--include-dismissed", dismissed=dismissed)
+    result, _ = run(monkeypatch, tmp_path, "--wants", "--include-dismissed", dismissed=dismissed)
     assert result.exit_code == 0
     assert "Parallel Dimensions" in result.stdout
     assert "own the digital, want the vinyl" in result.stdout
 
 
-def test_include_dismissed_marks_a_reasonless_dismissal_too(monkeypatch):
+def test_include_dismissed_marks_a_reasonless_dismissal_too(monkeypatch, tmp_path):
     dismissed = {("bandcamp-wishlist", "1"): ""}
-    result, _ = run(monkeypatch, "--wants", "--include-dismissed", dismissed=dismissed)
+    result, _ = run(monkeypatch, tmp_path, "--wants", "--include-dismissed", dismissed=dismissed)
     assert result.exit_code == 0
     assert "Parallel Dimensions" in result.stdout
     assert "dismissed" in result.stdout
 
 
-def test_an_unwritable_dismissals_store_is_a_message_not_a_traceback(monkeypatch):
+def test_an_unwritable_dismissals_store_is_a_message_not_a_traceback(monkeypatch, tmp_path):
     """`Dismissals()` creates `~/.local/share/musictrack` on construction. An
     unwritable directory must read as a clean failure, not an escaped
     exception."""
@@ -267,7 +272,10 @@ def test_an_unwritable_dismissals_store_is_a_message_not_a_traceback(monkeypatch
     def boom():
         raise OSError("Permission denied")
 
-    monkeypatch.setattr(reconcile_module, "load_bandcamp_cookie", lambda: "cookie")
+    monkeypatch.setattr(gather_module, "load_bandcamp_cookie", lambda: "cookie")
+    monkeypatch.setattr(
+        reconcile_module, "SourceCache", lambda: SourceCache(tmp_path / "db.sqlite")
+    )
     monkeypatch.setattr(reconcile_module, "Dismissals", boom)
     result = CliRunner().invoke(app, ["reconcile"], env={"COLUMNS": "200"})
     assert result.exit_code == 1
@@ -275,9 +283,83 @@ def test_an_unwritable_dismissals_store_is_a_message_not_a_traceback(monkeypatch
     assert "Permission denied" in result.stdout
 
 
-def test_the_backlog_table_carries_a_summary_line_of_the_other_two_buckets(monkeypatch):
+def test_the_backlog_table_carries_a_summary_line_of_the_other_two_buckets(monkeypatch, tmp_path):
     """The backlog table alone doesn't say where the rest of what was read
     ended up; a line under it does, without adding a fourth table."""
-    result, _ = run(monkeypatch, "--backlog")
+    result, _ = run(monkeypatch, tmp_path, "--backlog")
     assert result.exit_code == 0
     assert "0 owned, 0 worth a look" in result.stdout
+
+
+# --- the cache: what a second run costs ------------------------------------
+
+
+def test_a_second_run_reads_no_source(monkeypatch, tmp_path):
+    """The whole point. The first run fills the cache, the second answers from
+    it, and Bandcamp is not asked twice."""
+    run(monkeypatch, tmp_path)
+    _, client = run(monkeypatch, tmp_path)
+    assert client.calls == []
+
+
+def test_a_second_run_reports_the_same_rows(monkeypatch, tmp_path):
+    first, _ = run(monkeypatch, tmp_path, "--wants")
+    second, _ = run(monkeypatch, tmp_path, "--wants")
+    assert first.exit_code == 0
+    assert second.exit_code == 0
+    assert "Parallel Dimensions" in first.stdout
+    assert "Parallel Dimensions" in second.stdout
+
+
+def test_refresh_beets_refetches_the_library_and_no_web_source(monkeypatch, tmp_path):
+    run(monkeypatch, tmp_path)
+    _, client = run(monkeypatch, tmp_path, "--refresh", "beets")
+    assert client.calls == []
+
+
+def test_refresh_bandcamp_refetches_both_lists(monkeypatch, tmp_path):
+    run(monkeypatch, tmp_path)
+    _, client = run(monkeypatch, tmp_path, "--refresh", "bandcamp")
+    assert set(client.calls) == {"wishlist", "collection"}
+
+
+def test_refresh_all_on_a_backlog_run_does_not_reach_the_wishlist(monkeypatch, tmp_path):
+    run(monkeypatch, tmp_path)
+    _, client = run(monkeypatch, tmp_path, "--backlog", "--refresh", "all")
+    assert client.calls == ["collection"]
+
+
+def test_an_unknown_refresh_name_is_a_message_not_a_traceback(monkeypatch, tmp_path):
+    result, client = run(monkeypatch, tmp_path, "--refresh", "bandacmp")
+    assert result.exit_code == 1
+    assert "bandacmp" in result.stdout
+    assert "beets" in result.stdout
+    assert client.calls == []
+
+
+def test_a_source_failure_is_a_message_not_a_traceback(monkeypatch, tmp_path):
+    """A cold cache plus a source that refuses must still exit cleanly."""
+    from musictrack.errors import BandcampError
+
+    def boom():
+        raise BandcampError("Bandcamp returned 503")
+
+    monkeypatch.setattr(gather_module, "load_bandcamp_cookie", lambda: "cookie")
+    monkeypatch.setattr(gather_module.beets, "album_refs", lambda: [])
+    monkeypatch.setattr(gather_module.beets, "track_refs", lambda: [])
+    monkeypatch.setattr(
+        reconcile_module, "SourceCache", lambda: SourceCache(tmp_path / "db.sqlite")
+    )
+    monkeypatch.setattr(reconcile_module, "Dismissals", lambda: FakeDismissals(None))
+
+    class Refusing:
+        def wishlist(self):
+            boom()
+
+        def collection(self):
+            boom()
+
+    monkeypatch.setattr(gather_module, "BandcampClient", lambda cookie: Refusing())
+    result = CliRunner().invoke(app, ["reconcile", "--backlog"], env={"COLUMNS": "200"})
+    assert result.exit_code == 1
+    assert "503" in result.stdout
