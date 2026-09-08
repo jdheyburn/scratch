@@ -283,6 +283,52 @@ def test_an_unwritable_dismissals_store_is_a_message_not_a_traceback(monkeypatch
     assert "Permission denied" in result.stdout
 
 
+def test_a_locked_database_on_the_header_read_is_a_message_not_a_traceback(monkeypatch, tmp_path):
+    """`gather` can succeed and still leave the header's own reads to fail:
+    `source_ages` issues its own `SELECT`s against the same database, after
+    the point where a plain `gather` failure would already have been caught."""
+    import sqlite3
+
+    class LockedOnFetchedAt:
+        """Delegates to a real `SourceCache` for everything but `fetched_at`,
+        which is where `source_ages` reads land, after `gather` has already
+        succeeded and written its rows through the same delegate."""
+
+        def __init__(self, path):
+            self._real = SourceCache(path)
+
+        def has(self, source):
+            return self._real.has(source)
+
+        def read(self, source):
+            return self._real.read(source)
+
+        def write(self, source, refs):
+            return self._real.write(source, refs)
+
+        def fetched_at(self, source):
+            raise sqlite3.OperationalError("database is locked")
+
+    monkeypatch.setattr(gather_module, "load_bandcamp_cookie", lambda: "cookie")
+    monkeypatch.setattr(gather_module, "BandcampClient", lambda cookie: RecordingBandcamp())
+    monkeypatch.setattr(
+        gather_module.beets,
+        "album_refs",
+        lambda: [album("Theo Parrish", "Parallel Dimensions")],
+    )
+    monkeypatch.setattr(gather_module.beets, "track_refs", lambda: [])
+    monkeypatch.setattr(gather_module, "spotify_client", lambda: object())
+    monkeypatch.setattr(gather_module, "to_listen", lambda *a, **k: [])
+    monkeypatch.setattr(reconcile_module, "Dismissals", lambda: FakeDismissals(None))
+    monkeypatch.setattr(
+        reconcile_module, "SourceCache", lambda: LockedOnFetchedAt(tmp_path / "db.sqlite")
+    )
+    result = CliRunner().invoke(app, ["reconcile", "--wants"], env={"COLUMNS": "200"})
+    assert result.exit_code == 1
+    assert not isinstance(result.exception, sqlite3.OperationalError)
+    assert "database is locked" in result.stdout
+
+
 def test_the_backlog_table_carries_a_summary_line_of_the_other_two_buckets(monkeypatch, tmp_path):
     """The backlog table alone doesn't say where the rest of what was read
     ended up; a line under it does, without adding a fourth table."""

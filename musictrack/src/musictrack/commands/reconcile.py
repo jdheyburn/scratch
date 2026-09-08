@@ -151,6 +151,7 @@ def reconcile(
         keys = keys_for(show_wants, show_backlog)
         with console.status("gathering sources"):
             gathered = gather(cache, Fetchers().as_map(), keys, refresh)
+        console.print(age_line(source_ages(cache, keys), datetime.now(UTC)))
     except UnknownSource as problem:
         console.print(f"[red]{problem}[/]")
         raise typer.Exit(1) from problem
@@ -163,8 +164,6 @@ def reconcile(
     except (OSError, sqlite3.Error) as problem:
         console.print(f"[red]could not open {DB_PATH}: {problem}[/]")
         raise typer.Exit(1) from problem
-
-    console.print(age_line(source_ages(cache, keys), datetime.now(UTC)))
 
     index = LibraryIndex(albums=gathered.rows["beets"], tracks=gathered.rows["beets-track"])
     wishlist = gathered.rows.get("bandcamp-wishlist", [])
