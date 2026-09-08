@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import sqlite3
 from collections.abc import Sequence
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from musictrack.models import AlbumRef
@@ -41,6 +41,36 @@ SCHEMA = (
     """,
     "CREATE INDEX IF NOT EXISTS cached_ref_source ON cached_ref (source)",
 )
+
+# A display threshold, not an expiry. Nothing changes about what the tool reads
+# at eight days; the header gets louder and the decision stays with the user.
+STALE_DAYS = 7
+
+
+def describe_age(then: datetime | None, now: datetime) -> str:
+    """How long ago a source was read, in the units a person would use."""
+    if then is None:
+        return "never"
+    seconds = (now - then).total_seconds()
+    if seconds < 90:
+        return "just now"
+    minutes = seconds / 60
+    if minutes < 90:
+        return f"{round(minutes)} minutes ago"
+    hours = minutes / 60
+    if hours < 36:
+        return f"{round(hours)} hours ago"
+    return f"{round(hours / 24)} days ago"
+
+
+def is_stale(then: datetime | None, now: datetime) -> bool:
+    """Whether a copy is old enough to say so loudly.
+
+    A source with no fetch time was read live this run, so it is not stale.
+    """
+    if then is None:
+        return False
+    return now - then > timedelta(days=STALE_DAYS)
 
 
 class SourceCache:

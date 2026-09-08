@@ -1,8 +1,10 @@
 """A copy of what each source last said."""
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
-from musictrack.cache import SourceCache
+import pytest
+
+from musictrack.cache import SourceCache, describe_age, is_stale
 from musictrack.models import AlbumRef
 
 
@@ -117,3 +119,44 @@ def test_the_cache_shares_a_database_with_dismissals_without_disturbing_them(tmp
     cache.write("spotify", [ref(source="spotify")])
     assert Dismissals(path).hidden() == {("spotify", "abc"): "own the digital"}
     assert len(cache.read("spotify")) == 1
+
+
+# --- how old the copy is ---------------------------------------------------
+
+NOW = datetime(2026, 9, 8, 12, 0, tzinfo=UTC)
+
+
+@pytest.mark.parametrize(
+    "delta, expected",
+    [
+        (timedelta(seconds=0), "just now"),
+        (timedelta(seconds=45), "just now"),
+        (timedelta(minutes=20), "20 minutes ago"),
+        (timedelta(minutes=80), "80 minutes ago"),
+        (timedelta(hours=5), "5 hours ago"),
+        (timedelta(hours=30), "30 hours ago"),
+        (timedelta(days=4), "4 days ago"),
+        (timedelta(days=40), "40 days ago"),
+    ],
+)
+def test_an_age_reads_the_way_a_person_would_say_it(delta, expected):
+    assert describe_age(NOW - delta, NOW) == expected
+
+
+def test_a_source_that_was_never_read_has_no_age():
+    assert describe_age(None, NOW) == "never"
+
+
+def test_a_copy_younger_than_the_threshold_is_not_stale():
+    assert is_stale(NOW - timedelta(days=6, hours=23), NOW) is False
+
+
+def test_a_copy_older_than_the_threshold_is_stale():
+    assert is_stale(NOW - timedelta(days=7, minutes=1), NOW) is True
+
+
+def test_an_unread_source_is_not_reported_as_stale():
+    """`is_stale` is only ever asked about sources a run actually used, and
+    those have just been read if they had no copy. Answering True here would
+    put a warning on a source that is as fresh as it can be."""
+    assert is_stale(None, NOW) is False
