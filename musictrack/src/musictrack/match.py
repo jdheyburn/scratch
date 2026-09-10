@@ -74,13 +74,19 @@ class LibraryIndex:
         for artist_text, album_text in variants(candidate.artist, candidate.album):
             wanted = artists(artist_text)
             for index, make_key, verdict, tier in tiers:
-                for found in index.get(make_key(album_text), ()):
+                album_key = make_key(album_text)
+                if not album_key:
+                    continue
+                for found in index.get(album_key, ()):
                     if agree(wanted, artists(found.artist)):
                         return Match(verdict, found, tier)
         # The title is in the library but under a different artist. Worth
-        # showing: it is how a mis-credited release surfaces.
+        # showing: it is how a mis-credited release surfaces. Skipped when the
+        # title folds to nothing — a title with no ASCII equivalent and a
+        # genuinely blank library title would otherwise collide on "".
         for index, make_key in ((self._album_exact, key), (self._album_loose, loose)):
-            hits = index.get(make_key(candidate.album))
+            album_key = make_key(candidate.album)
+            hits = index.get(album_key) if album_key else None
             if hits:
                 return Match(POSSIBLE, hits[0], "title-only")
         return Match(ABSENT)

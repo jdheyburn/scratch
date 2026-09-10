@@ -124,12 +124,17 @@ Measured 2026-09-03 against the live accounts and library:
 ```text
 source                n     owned   worth a look   absent
 Bandcamp wishlist      845      6             19       820
-Spotify "To Listen"    675     19             15       641
-Bandcamp collection    377    338             29        10
+Spotify "To Listen"    675     19             14       642
+Bandcamp collection    377    338             28        11
 ```
 
-Of the 10 absent collection items, five were genuinely missing from the
-library and five were sitting under a different title. `musictrack dismiss
+Of the original 10 absent collection items, five were genuinely missing from
+the library and five were sitting under a different title. An eleventh title
+turned out to be a matcher bug rather than a real absence: a title with no
+ASCII equivalent folds to the same empty key as a genuinely blank library
+title, so a symbol-only Bandcamp title was matching a library album with an
+untagged name. Fixed by refusing to match on an empty folded key; the same bug
+moved one Spotify row from "worth a look" to absent. `musictrack dismiss
 <source>:<ref> [--reason]` files a false absence away for good, using the id
 from the report's first column. `reconcile --include-dismissed` shows those
 rows again, marked with their reason.
