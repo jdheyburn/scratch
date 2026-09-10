@@ -16,8 +16,10 @@ from rich.table import Table
 from musictrack.config import load_token
 from musictrack.console import console
 from musictrack.errors import MissingToken, RaindropError
-from musictrack.plan import MUSIC_COLLECTION, Plan, build_plan
+from musictrack.models import Raindrop
+from musictrack.plan import MUSIC_COLLECTION, Group, Plan, build_plan
 from musictrack.raindrop import RaindropClient
+from musictrack.raindrop_identity import parse_release
 
 
 class WriteClient(Protocol):
@@ -42,6 +44,46 @@ def summary(plan: Plan) -> Table:
     table.add_row("survivors gaining tags", str(len(plan.retags)))
     table.add_row("survivors to file", str(len(plan.survivor_moves)))
     table.add_row("stray links to file", str(len(plan.stray_moves)))
+    return table
+
+
+def _member_cell(raindrop: Raindrop, fallback: tuple[str, str]) -> str:
+    """A raindrop's link next to what its own title actually parsed to.
+
+    Falls back to the group's shared `matched_as` only if re-parsing this
+    member somehow fails, which shouldn't happen for anything `group_by_release`
+    already accepted — but a display fallback is safer than a crash."""
+    parsed = parse_release(raindrop) or fallback
+    return f"{raindrop.link}\n[dim]{parsed[0]} — {parsed[1]}[/]"
+
+
+def fuzzy_preview(plan: Plan) -> Table | None:
+    """One row per fuzzy-matched group, showing why it was proposed. `None`
+    when the plan has no fuzzy groups — printed only when there is something
+    worth a second look, since a shared loose title and an agreeing artist is
+    weaker evidence than a shared URL.
+
+    Each raindrop's own parsed (artist, album) is shown next to its link, not
+    just the seed's — so a human can see what every member actually said,
+    rather than trusting one shared label."""
+    rows: list[tuple[Group, tuple[str, str]]] = []
+    for group in plan.groups:
+        if group.matched_as is None:
+            continue
+        rows.append((group, group.matched_as))
+    if not rows:
+        return None
+    table = Table(title="worth a look before confirming: matched by title, not URL")
+    table.add_column("keep", overflow="fold")
+    table.add_column("remove", overflow="fold")
+    table.add_column("matched as")
+    for group, matched_as in rows:
+        artist, album = matched_as
+        table.add_row(
+            _member_cell(group.survivor, matched_as),
+            "\n\n".join(_member_cell(extra, matched_as) for extra in group.extras),
+            f"{artist} — {album}",
+        )
     return table
 
 
@@ -83,6 +125,10 @@ def dedupe(
     plan = build_plan(raindrops)
     console.print(f"[dim]{len(raindrops)} raindrops read[/]")
     console.print(summary(plan))
+
+    preview = fuzzy_preview(plan)
+    if preview is not None:
+        console.print(preview)
 
     if plan.held_back_tags:
         # The date-tag format has changed once before. These carry a year but

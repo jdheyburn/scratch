@@ -170,3 +170,53 @@ def test_the_same_raindrop_twice_is_never_deleted_as_its_own_duplicate(make_rain
     assert not set(plan.deletions) & set(plan.survivor_moves)
     # The one real copy is still a stray in Unsorted, and still gets filed.
     assert plan.stray_moves == (42,)
+
+
+def test_a_bandcamp_and_a_different_domain_release_are_grouped(make_raindrop):
+    bandcamp = make_raindrop(
+        link="https://hektttt.bandcamp.com/album/forever",
+        title="Forever | Hekt",
+        created="2025-06-01T00:00:00.000Z",
+    )
+    boomkat = make_raindrop(
+        link="https://boomkat.com/products/forever-hekt",
+        title="Hekt - Forever - Boomkat",
+        created="2025-01-01T00:00:00.000Z",  # earlier, but not Bandcamp
+    )
+    plan = build_plan([bandcamp, boomkat])
+    [group] = plan.groups
+    assert group.survivor.id == bandcamp.id
+    assert group.matched_as == ("Hekt", "Forever")
+    assert plan.deletions == (boomkat.id,)
+
+
+def test_the_same_loose_title_different_artist_is_not_fuzzy_grouped(make_raindrop):
+    one = make_raindrop(link="https://a.bandcamp.com/album/untitled", title="Untitled | Artist One")
+    other = make_raindrop(
+        link="https://b.bandcamp.com/album/untitled", title="Untitled | Artist Two"
+    )
+    plan = build_plan([one, other])
+    assert plan.groups == ()
+
+
+def test_a_fuzzy_group_merges_tags_like_an_exact_group(make_raindrop):
+    bandcamp = make_raindrop(
+        link="https://hektttt.bandcamp.com/album/forever",
+        title="Forever | Hekt",
+        tags=(),
+    )
+    boomkat = make_raindrop(
+        link="https://boomkat.com/products/forever-hekt",
+        title="Hekt - Forever - Boomkat",
+        tags=("music", "to-read"),
+    )
+    plan = build_plan([bandcamp, boomkat])
+    assert plan.retags == ((bandcamp.id, ("music", "to-read")),)
+
+
+def test_an_exact_url_group_still_reports_no_matched_as(make_raindrop):
+    old = make_raindrop(link=ALBUM, created="2025-01-01T00:00:00.000Z")
+    new = make_raindrop(link=ALBUM, created="2025-02-01T00:00:00.000Z")
+    plan = build_plan([old, new])
+    [group] = plan.groups
+    assert group.matched_as is None
