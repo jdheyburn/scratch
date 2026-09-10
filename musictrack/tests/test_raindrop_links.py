@@ -9,7 +9,7 @@ def test_the_raindrop_url_points_at_the_entry_not_the_shop(make_raindrop):
     """The tool already knows the shop link (`.link`) — this is the other
     URL, the one that opens the bookmark itself in the Raindrop app."""
     raindrop = make_raindrop(link=ALBUM, collection_id=29207263)
-    assert raindrop_url(raindrop) == f"https://app.raindrop.io/my/29207263/item/{raindrop.id}/web"
+    assert raindrop_url(raindrop) == f"https://app.raindrop.io/my/29207263/item/{raindrop.id}/edit"
 
 
 def test_the_linked_cell_shows_the_shop_link_as_the_label(make_raindrop):

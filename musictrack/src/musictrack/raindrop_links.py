@@ -8,7 +8,7 @@ from musictrack.models import Raindrop
 def raindrop_url(raindrop: Raindrop) -> str:
     """The Raindrop app's own page for this bookmark, not the shop page it
     points to — so a human reviewing a group can open the actual entry."""
-    return f"https://app.raindrop.io/my/{raindrop.collection_id}/item/{raindrop.id}/web"
+    return f"https://app.raindrop.io/my/{raindrop.collection_id}/item/{raindrop.id}/edit"
 
 
 def linked(raindrop: Raindrop) -> str:
