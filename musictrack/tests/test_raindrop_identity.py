@@ -5,7 +5,7 @@ correctly return nothing."""
 import pytest
 
 from musictrack.models import Raindrop
-from musictrack.raindrop_identity import is_bandcamp, parse_release
+from musictrack.raindrop_identity import group_by_release, is_bandcamp, parse_release
 
 
 def raindrop(link: str, title: str) -> Raindrop:
@@ -107,3 +107,52 @@ def test_html_entities_in_the_title_are_unescaped():
 def test_bandcamp_is_recognised_regardless_of_subdomain():
     assert is_bandcamp(raindrop("https://hektttt.bandcamp.com/album/forever", "x"))
     assert not is_bandcamp(raindrop("https://boomkat.com/products/x", "x"))
+
+
+def rd(id, link, title, created="2026-01-01T00:00:00.000Z"):
+    return Raindrop(id=id, link=link, title=title, tags=(), collection_id=1, created=created)
+
+
+def test_two_domains_with_the_same_release_cluster():
+    bandcamp = rd(1, "https://hektttt.bandcamp.com/album/forever", "Forever | Hekt")
+    boomkat = rd(2, "https://boomkat.com/products/forever-hekt", "Hekt - Forever - Boomkat")
+    [cluster] = group_by_release([bandcamp, boomkat])
+    assert cluster.matched_as == ("Hekt", "Forever")
+    assert set(cluster.raindrops) == {bandcamp, boomkat}
+
+
+def test_a_release_with_no_match_is_not_a_cluster():
+    lone = rd(1, "https://hektttt.bandcamp.com/album/forever", "Forever | Hekt")
+    assert group_by_release([lone]) == []
+
+
+def test_the_same_loose_title_with_different_artists_does_not_cluster():
+    one = rd(1, "https://a.bandcamp.com/album/untitled", "Untitled | Artist One")
+    other = rd(2, "https://b.bandcamp.com/album/untitled", "Untitled | Artist Two")
+    assert group_by_release([one, other]) == []
+
+
+def test_a_shared_collaborator_is_enough_to_agree():
+    """`agree()` needs only one shared name — the same rule `match.py` uses
+    against beets applies here too."""
+    one = rd(1, "https://a.bandcamp.com/album/split", "Split | Artist A, Artist B")
+    other = rd(2, "https://boomkat.com/products/split", "Artist B - Split - Boomkat")
+    [cluster] = group_by_release([one, other])
+    assert set(cluster.raindrops) == {one, other}
+
+
+def test_loose_matching_absorbs_a_format_or_label_tail():
+    bandcamp = rd(1, "https://a.bandcamp.com/album/chapter-1", "Chapter 1 | SAULT")
+    phonica = rd(
+        2,
+        "https://www.phonicarecords.com/product/view/1",
+        "SAULT/Chapter 1 LP/Forever Living - Vinyl Records Specialists",
+    )
+    [cluster] = group_by_release([bandcamp, phonica])
+    assert set(cluster.raindrops) == {bandcamp, phonica}
+
+
+def test_a_raindrop_that_does_not_parse_is_never_in_a_cluster():
+    bandcamp = rd(1, "https://a.bandcamp.com/album/x", "X | Artist")
+    unparsed = rd(2, "https://a.bandcamp.com/album/x2", "An unrelated chart page")
+    assert group_by_release([bandcamp, unparsed]) == []
