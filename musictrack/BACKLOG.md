@@ -27,7 +27,7 @@ reasoning can be checked rather than taken on faith.
   grouping, and three same-artist releases (a two-part release, a remix,
   a reconfiguration) were being wrongly merged by the same bracket-stripping
   that lets format tags like "LP" match across shops.
-- **Interactive `dedupe` confirms** (2026-09-10). Raised after PR #7 shipped
+- **Interactive `dedupe` confirms** (PR #9, 2026-09-10). Raised after PR #7 shipped
   fuzzy matching, which carries more false-positive risk per group than the
   exact-URL case — a single bulk "Delete N duplicates?" made it easy to
   approve well over a hundred deletions on the strength of skimming one
