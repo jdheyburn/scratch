@@ -29,6 +29,7 @@ def library():
             album("Various Artists", "Pop Ambient 2026"),
             album("Skee Mask", "Pool"),
             album("Blue Channel", "Dubplate Vibing Part I"),
+            album("Aaliyah feat. Drake", ""),
         ],
         tracks=[track("Zorrovian", "BIOS")],
     )
@@ -76,6 +77,17 @@ def test_two_compilations_match_each_other(library):
 
 def test_nothing_like_it_is_absent(library):
     assert library.look_up(want("Lucy Gooch", "Rushing")).verdict == ABSENT
+
+
+def test_a_title_with_no_ascii_equivalent_never_matches_a_blank_library_title(library):
+    """`_fold` drops anything with no ASCII equivalent, so a title written
+    entirely in another script collapses to the same empty key as a genuinely
+    blank library title. Empty is not a title either side owns."""
+    assert library.look_up(want("Some Artist", "キャット")).verdict == ABSENT
+
+
+def test_a_symbol_only_title_never_matches_a_blank_library_title(library):
+    assert library.look_up(want("Some Artist", "( ͡° ͜ʖ ͡°)")).verdict == ABSENT
 
 
 def test_variants_offers_the_label_reading_second():

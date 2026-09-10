@@ -41,7 +41,7 @@ def library():
     "name, source, expected",
     [
         ("bandcamp_wishlist.json", "bandcamp-wishlist", (845, 6, 19, 820)),
-        ("bandcamp_collection.json", "bandcamp-collection", (377, 338, 29, 10)),
+        ("bandcamp_collection.json", "bandcamp-collection", (377, 338, 28, 11)),
     ],
 )
 def test_the_bandcamp_buckets_are_where_the_spec_says(library, name, source, expected):
@@ -60,4 +60,4 @@ def test_the_spotify_buckets_are_where_the_spec_says(library):
     refs = album_blocks(load("spotify_tolisten.json"))
     report = classify(refs, library, {})
     assert len(refs) == 675
-    assert (len(report.owned), len(report.possible), len(report.absent)) == (19, 15, 641)
+    assert (len(report.owned), len(report.possible), len(report.absent)) == (19, 14, 642)
