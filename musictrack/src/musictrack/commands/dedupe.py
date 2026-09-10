@@ -45,6 +45,29 @@ def summary(plan: Plan) -> Table:
     return table
 
 
+def fuzzy_preview(plan: Plan) -> Table | None:
+    """One row per fuzzy-matched group, showing why it was proposed. `None`
+    when the plan has no fuzzy groups — printed only when there is something
+    worth a second look, since a shared loose title and an agreeing artist is
+    weaker evidence than a shared URL."""
+    fuzzy = [g for g in plan.groups if g.matched_as is not None]
+    if not fuzzy:
+        return None
+    table = Table(title="worth a look before confirming: matched by title, not URL")
+    table.add_column("keep")
+    table.add_column("remove")
+    table.add_column("matched as")
+    for group in fuzzy:
+        assert group.matched_as is not None
+        artist, album = group.matched_as
+        table.add_row(
+            group.survivor.link,
+            "\n".join(extra.link for extra in group.extras),
+            f"{artist} — {album}",
+        )
+    return table
+
+
 def apply_dedupe(client: WriteClient, plan: Plan) -> None:
     """Merge, move, then delete.
 
@@ -83,6 +106,10 @@ def dedupe(
     plan = build_plan(raindrops)
     console.print(f"[dim]{len(raindrops)} raindrops read[/]")
     console.print(summary(plan))
+
+    preview = fuzzy_preview(plan)
+    if preview is not None:
+        console.print(preview)
 
     if plan.held_back_tags:
         # The date-tag format has changed once before. These carry a year but

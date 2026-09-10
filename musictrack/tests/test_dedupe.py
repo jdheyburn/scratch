@@ -8,7 +8,7 @@ from typer.testing import CliRunner
 
 import musictrack.commands.dedupe as dedupe_module
 from musictrack.cli import app
-from musictrack.commands.dedupe import apply_dedupe, apply_filing, summary
+from musictrack.commands.dedupe import apply_dedupe, apply_filing, fuzzy_preview, summary
 from musictrack.errors import MissingToken, RaindropError
 from musictrack.plan import MUSIC_COLLECTION, UNSORTED, build_plan
 from musictrack.raindrop import to_raindrop
@@ -151,6 +151,42 @@ def test_the_summary_of_an_empty_plan_is_all_zeroes(make_raindrop):
     console.print(summary(build_plan([make_raindrop(collection_id=MUSIC_COLLECTION)])))
     rendered = console.export_text()
     assert "1" not in rendered
+
+
+def test_fuzzy_preview_is_none_without_a_fuzzy_group(make_raindrop):
+    old = make_raindrop(link=ALBUM, created="2025-01-01T00:00:00.000Z")
+    new = make_raindrop(link=ALBUM, created="2025-02-01T00:00:00.000Z")
+    assert fuzzy_preview(build_plan([old, new])) is None
+
+
+def test_a_fuzzy_match_is_shown_before_the_confirm(make_raindrop, monkeypatch):
+    bandcamp = make_raindrop(
+        link="https://hektttt.bandcamp.com/album/forever",
+        title="Forever | Hekt",
+        collection_id=MUSIC_COLLECTION,
+    )
+    boomkat = make_raindrop(
+        link="https://boomkat.com/products/forever-hekt",
+        title="Hekt - Forever - Boomkat",
+        collection_id=MUSIC_COLLECTION,
+    )
+    client = FakeClient([bandcamp, boomkat])
+
+    result = invoke(monkeypatch, client, "--dry-run")
+
+    assert "matched by title" in result.stdout
+    assert "Hekt" in result.stdout
+    assert "Forever" in result.stdout
+
+
+def test_no_fuzzy_block_when_every_group_is_exact(make_raindrop, monkeypatch):
+    old = make_raindrop(link=ALBUM, collection_id=UNSORTED, created="2025-01-01T00:00:00.000Z")
+    new = make_raindrop(link=ALBUM, collection_id=UNSORTED, created="2025-06-01T00:00:00.000Z")
+    client = FakeClient([old, new])
+
+    result = invoke(monkeypatch, client, "--dry-run")
+
+    assert "matched by title" not in result.stdout
 
 
 class FakeClient:
