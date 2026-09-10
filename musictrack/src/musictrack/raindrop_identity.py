@@ -79,7 +79,8 @@ def _rubadub(title: str) -> tuple[str, str] | None:
     Less uniform than the other four — a few titles pack a second
     ` - `-separated segment in before the label. Splitting on the first
     ` - ` still returns a usable artist; a messy album half costs a missed
-    grouping, never a wrong one.
+    grouping, never a wrong one. The label sits last, in parens, before the
+    optional site suffix — stripped here, not misread as an edition bracket.
     """
     body = title
     if body.startswith("Pre-Order: "):
@@ -89,7 +90,8 @@ def _rubadub(title: str) -> tuple[str, str] | None:
     if " - " not in body:
         return None
     artist, album = body.split(" - ", 1)
-    return artist.strip(), album.strip()
+    album = re.sub(r"\s*\([^()]*\)$", "", album.strip())
+    return artist.strip(), album
 
 
 _PARSERS = {

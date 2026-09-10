@@ -52,12 +52,12 @@ def raindrop(link: str, title: str) -> Raindrop:
         (
             "https://rubadub.co.uk/products/peace-portal",
             "Khotin - Peace Portal (Khotin Industries)",
-            ("Khotin", "Peace Portal (Khotin Industries)"),
+            ("Khotin", "Peace Portal"),
         ),
         (
             "https://rubadub.co.uk/products/faith-1",
             "Pre-Order: Purelink - Faith (Peak Oil)",
-            ("Purelink", "Faith (Peak Oil)"),
+            ("Purelink", "Faith"),
         ),
         (
             "https://rubadub.co.uk/products/detwat",
@@ -175,6 +175,23 @@ def test_a_raindrop_that_does_not_parse_is_never_in_a_cluster():
     bandcamp = rd(1, "https://a.bandcamp.com/album/x", "X | Artist")
     unparsed = rd(2, "https://a.bandcamp.com/album/x2", "An unrelated chart page")
     assert group_by_release([bandcamp, unparsed]) == []
+
+
+def test_a_rubadub_label_suffix_does_not_block_a_cross_shop_match():
+    """Rubadub bakes its own label into the title as a trailing `(Label)`,
+    e.g. `Khotin - Peace Portal (Khotin Industries)`. That must not be
+    mistaken for a genuine edition-distinguishing bracket like `(Part 2)` —
+    the label is stripped in `_rubadub` so this still clusters with a plain
+    same-artist, same-album title from another shop."""
+    rubadub = rd(
+        1,
+        "https://rubadub.co.uk/products/peace-portal",
+        "Khotin - Peace Portal (Khotin Industries)",
+    )
+    boomkat = rd(2, "https://boomkat.com/products/peace-portal", "Khotin - Peace Portal - Boomkat")
+    [cluster] = group_by_release([rubadub, boomkat])
+    assert cluster.matched_as == ("Khotin", "Peace Portal")
+    assert set(cluster.raindrops) == {rubadub, boomkat}
 
 
 def test_a_same_artist_release_distinguished_only_by_a_bracket_does_not_cluster():

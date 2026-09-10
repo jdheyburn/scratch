@@ -49,14 +49,14 @@ one table before writing anything.
 ┏━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┓
 ┃ action                 ┃ count ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━┩
-│ duplicate groups       │   152 │
-│ raindrops to delete    │   155 │
+│ duplicate groups       │   146 │
+│ raindrops to delete    │   149 │
 │ survivors gaining tags │     1 │
-│ survivors to file      │    74 │
-│ stray links to file    │   575 │
+│ survivors to file      │    69 │
+│ stray links to file    │   582 │
 └────────────────────────┴───────┘
 
-Delete 155 duplicate(s)? [y/N]:
+Delete 149 duplicate(s)? [y/N]:
 ```
 
 Deduping and filing are confirmed separately, so you can take one and decline

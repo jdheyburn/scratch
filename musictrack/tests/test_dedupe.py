@@ -325,11 +325,11 @@ def test_the_plan_holds_against_the_real_account():
     """
     raindrops = [to_raindrop(item) for item in json.loads(FIXTURE.read_text())]
     plan = build_plan(raindrops)
-    assert len(plan.groups) == 152
-    assert len(plan.deletions) == 155
+    assert len(plan.groups) == 146
+    assert len(plan.deletions) == 149
     assert len(plan.retags) == 1
-    assert len(plan.survivor_moves) == 74
-    assert len(plan.stray_moves) == 575
+    assert len(plan.survivor_moves) == 69
+    assert len(plan.stray_moves) == 582
 
 
 def test_nothing_is_both_deleted_and_moved():
