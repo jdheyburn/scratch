@@ -1,8 +1,9 @@
 """Remove duplicate music bookmarks, then file what's left.
 
 One read-only pass builds the whole plan, which is shown as a table before
-anything is written. Deduping and filing are confirmed separately, so you can
-take one and decline the other.
+anything is written. Each duplicate group is then confirmed on its own, so
+approving one doesn't drag the rest along with it; filing the strays is a
+separate confirmation after that.
 """
 
 from __future__ import annotations
@@ -20,6 +21,7 @@ from musictrack.models import Raindrop
 from musictrack.plan import MUSIC_COLLECTION, Group, Plan, build_plan
 from musictrack.raindrop import RaindropClient
 from musictrack.raindrop_identity import parse_release
+from musictrack.raindrop_links import linked
 
 
 class WriteClient(Protocol):
@@ -54,7 +56,7 @@ def _member_cell(raindrop: Raindrop, fallback: tuple[str, str]) -> str:
     member somehow fails, which shouldn't happen for anything `group_by_release`
     already accepted — but a display fallback is safer than a crash."""
     parsed = parse_release(raindrop) or fallback
-    return f"{raindrop.link}\n[dim]{parsed[0]} — {parsed[1]}[/]"
+    return f"{linked(raindrop)}\n[dim]{parsed[0]} — {parsed[1]}[/]"
 
 
 def fuzzy_preview(plan: Plan) -> Table | None:
@@ -85,6 +87,34 @@ def fuzzy_preview(plan: Plan) -> Table | None:
             f"{artist} — {album}",
         )
     return table
+
+
+def _group_panel(group: Group) -> Table:
+    """What a group looks like before it's decided: what survives, what
+    doesn't, and why the tool thinks they're the same release."""
+    title = (
+        f"fuzzy match: {group.matched_as[0]} — {group.matched_as[1]}"
+        if group.matched_as is not None
+        else "exact URL match"
+    )
+    table = Table(title=title)
+    table.add_column("keep")
+    table.add_column("remove")
+    table.add_row(linked(group.survivor), "\n".join(linked(extra) for extra in group.extras))
+    return table
+
+
+def _walk_groups(groups: Sequence[Group]) -> tuple[Group, ...]:
+    """Ask about each duplicate group on its own, so approving one doesn't
+    silently carry the rest along with it."""
+    approved: list[Group] = []
+    for group in groups:
+        console.print(_group_panel(group))
+        if typer.confirm("Apply this group?"):
+            approved.append(group)
+        else:
+            console.print("[dim]left alone[/]")
+    return tuple(approved)
 
 
 def apply_dedupe(client: WriteClient, plan: Plan) -> None:
@@ -142,10 +172,11 @@ def dedupe(
         console.print("[dim]dry run: nothing written[/]")
         return
 
-    if plan.deletions or plan.retags or plan.survivor_moves:
-        if typer.confirm(f"Delete {len(plan.deletions)} duplicate(s)?"):
+    if plan.groups:
+        approved = _walk_groups(plan.groups)
+        if approved:
             try:
-                apply_dedupe(client, plan)
+                apply_dedupe(client, Plan(groups=approved, strays=()))
             except RaindropError as problem:
                 console.print(f"[red]{problem}[/]")
                 console.print(

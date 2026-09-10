@@ -316,6 +316,65 @@ def test_declining_the_delete_prompt_still_offers_filing(make_raindrop, monkeypa
     assert "strays filed" in result.stdout
 
 
+def test_each_group_is_confirmed_on_its_own(make_raindrop, monkeypatch):
+    """Approving one group and declining another must not be all-or-nothing:
+    the approved group's extra goes, the declined group's extra stays."""
+    kept_old = make_raindrop(link=ALBUM, created="2025-01-01T00:00:00.000Z")
+    kept_new = make_raindrop(link=ALBUM, created="2025-02-01T00:00:00.000Z")
+    spared_old = make_raindrop(link=OTHER, created="2025-01-01T00:00:00.000Z")
+    spared_new = make_raindrop(link=OTHER, created="2025-02-01T00:00:00.000Z")
+    client = FakeClient([kept_old, kept_new, spared_old, spared_new])
+
+    result = invoke(monkeypatch, client, input="y\nn\n")
+
+    assert result.exit_code == 0
+    assert ("delete", (kept_new.id,)) in client.actions
+    deletes = [action[1] for action in client.actions if action[0] == "delete"]
+    assert not any(spared_new.id in ids for ids in deletes)
+
+
+def test_a_group_panel_names_an_exact_match(make_raindrop, monkeypatch):
+    old = make_raindrop(link=ALBUM, created="2025-01-01T00:00:00.000Z")
+    new = make_raindrop(link=ALBUM, created="2025-02-01T00:00:00.000Z")
+    client = FakeClient([old, new])
+
+    result = invoke(monkeypatch, client, input="n\n")
+
+    assert "exact URL" in result.stdout
+
+
+def test_a_group_panel_names_a_fuzzy_match(make_raindrop, monkeypatch):
+    bandcamp = make_raindrop(
+        link="https://hektttt.bandcamp.com/album/forever",
+        title="Forever | Hekt",
+        collection_id=MUSIC_COLLECTION,
+    )
+    boomkat = make_raindrop(
+        link="https://boomkat.com/products/forever-hekt",
+        title="Hekt - Forever - Boomkat",
+        collection_id=MUSIC_COLLECTION,
+    )
+    client = FakeClient([bandcamp, boomkat])
+
+    result = invoke(monkeypatch, client, input="n\n")
+
+    assert "fuzzy match" in result.stdout
+    assert "Hekt" in result.stdout
+    assert "Forever" in result.stdout
+
+
+def test_declining_every_group_writes_nothing_and_says_so(make_raindrop, monkeypatch):
+    old = make_raindrop(link=ALBUM, created="2025-01-01T00:00:00.000Z")
+    new = make_raindrop(link=ALBUM, created="2025-02-01T00:00:00.000Z")
+    client = FakeClient([old, new])
+
+    result = invoke(monkeypatch, client, input="n\n")
+
+    assert result.exit_code == 0
+    assert client.actions == []
+    assert "duplicates left alone" in result.stdout
+
+
 def test_the_plan_holds_against_the_real_account():
     """The numbers the design was argued from. If a change moves any of these,
     it should be because the rules changed, not by accident.
