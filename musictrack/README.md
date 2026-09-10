@@ -49,14 +49,14 @@ one table before writing anything.
 ┏━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┓
 ┃ action                 ┃ count ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━┩
-│ duplicate groups       │   100 │
-│ raindrops to delete    │   102 │
+│ duplicate groups       │   152 │
+│ raindrops to delete    │   155 │
 │ survivors gaining tags │     1 │
-│ survivors to file      │    48 │
-│ stray links to file    │   620 │
+│ survivors to file      │    74 │
+│ stray links to file    │   575 │
 └────────────────────────┴───────┘
 
-Delete 102 duplicate(s)? [y/N]:
+Delete 155 duplicate(s)? [y/N]:
 ```
 
 Deduping and filing are confirmed separately, so you can take one and decline
@@ -77,9 +77,19 @@ params dropped, remaining params sorted. Only the last of those rules currently
 finds anything — bleep.com sends the same release with and without a `_kx`
 param — but the rest cost nothing.
 
-**Which copy survives.** The oldest. Then its tags absorb any real tag its
-duplicates carried, and if it was in Unsorted it moves to `music`. A survivor
-already filed in some other collection is left where it is.
+**What counts as the same release, across shops.** Bandcamp, Boomkat, Bleep,
+Phonica, and Rubadub each write the page title in a fixed shape (`Album |
+Artist` on Bandcamp, `Artist - Album - Boomkat` on Boomkat, and so on), so an
+artist and album can be read out of it without fetching anything beyond what
+Raindrop already fetched. Two raindrops with a loosely matching album and an
+agreeing artist are treated as the same release, wherever they were saved
+from. This is weaker evidence than a shared URL, so the table gets a second
+block naming what matched before you're asked to confirm.
+
+**Which copy survives.** A Bandcamp copy if the group has one, otherwise the
+oldest. Then its tags absorb any real tag its duplicates carried, and if it
+was in Unsorted it moves to `music`. A survivor already filed in some other
+collection is left where it is.
 
 Date tags — `12/07/2026`, `June 25 2024` — record when a batch was saved, so
 they are never copied from one bookmark onto another.

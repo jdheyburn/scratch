@@ -17,18 +17,20 @@ reasoning can be checked rather than taken on faith.
   equivalent folded to the same key as a genuinely blank library title,
   producing false "worth a look" matches. Fixed by refusing to match on an
   empty folded key.
+- **Raindrop fuzzy dedupe** (2026-09-10). Cross-shop duplicates — the same
+  album bookmarked on Bandcamp and also Boomkat, Bleep, Phonica, or Rubadub —
+  are found by parsing each shop's page-title shape and matched with the
+  same loose-album, agreeing-artist rules `reconcile` already uses against
+  beets. A Bandcamp copy is kept when a group has one.
 
 ## Open
 
 ### Raindrop
 
-1. **Bookmark → album identity.** Raindrop bookmarks carry no structured
-   artist or album, so linking them into `reconcile` needs its own matching
-   design — deferred since Part A's spec, and again in Part B's.
-2. **A count-vs-records-read check in `raindrop.py`.** Makes a mid-read page
+1. **A count-vs-records-read check in `raindrop.py`.** Makes a mid-read page
    skip visible instead of silent. Blocked on the file sitting at 198 of its
    200-line layout cap — something else has to move out first.
-3. **~20 Raindrop links filed as "music" are articles, not releases**
+2. **~20 Raindrop links filed as "music" are articles, not releases**
    (Bandcamp Daily pieces, best-of lists). The tool can't currently tell an
    album from an article about albums.
 
