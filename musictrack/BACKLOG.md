@@ -59,6 +59,16 @@ reasoning can be checked rather than taken on faith.
    Accepted as-is (three known misses on the real account) rather than
    building a list of "noise" words to special-case, matching how
    `reconcile`'s own matching already accepts this exact tension elsewhere.
+5. **Some shop links have gone dead (404) since they were saved** — seen on
+   Phonica, where a product page's URL scheme changed and the old link no
+   longer resolves. `dedupe` has no way to notice today: it never fetches a
+   link, only reads the title Raindrop already cached at save time. Idea
+   floated: when a dead link surfaces in a group, look the album up on
+   Bandcamp and replace it with a fresh Bandcamp bookmark rather than leaving
+   the 404 behind. Not scoped — needs a design for detecting "dead" (a fetch
+   per link is new I/O this tool has avoided so far) and for the Bandcamp
+   lookup (search by parsed artist/album, confidence threshold, what happens
+   on no match).
 
 ### Matching
 
