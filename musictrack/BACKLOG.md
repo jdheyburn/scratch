@@ -27,6 +27,14 @@ reasoning can be checked rather than taken on faith.
   grouping, and three same-artist releases (a two-part release, a remix,
   a reconfiguration) were being wrongly merged by the same bracket-stripping
   that lets format tags like "LP" match across shops.
+- **Interactive `dedupe` confirms** (2026-09-10). Raised after PR #7 shipped
+  fuzzy matching, which carries more false-positive risk per group than the
+  exact-URL case — a single bulk "Delete N duplicates?" made it easy to
+  approve well over a hundred deletions on the strength of skimming one
+  table. Replaced with a walk that confirms each duplicate group on its own;
+  there was no remaining use for the bulk confirm, so it was removed rather
+  than kept behind a flag. Stray filing still gets one confirm at the end,
+  since strays aren't duplicate groups and don't carry that risk.
 
 ## Open
 
@@ -51,14 +59,6 @@ reasoning can be checked rather than taken on faith.
    Accepted as-is (three known misses on the real account) rather than
    building a list of "noise" words to special-case, matching how
    `reconcile`'s own matching already accepts this exact tension elsewhere.
-5. **An interactive `dedupe` mode: step through each proposed action and
-   approve it individually**, rather than one bulk confirm covering every
-   group. Raised after PR #7 shipped fuzzy matching, which carries more
-   false-positive risk per group than the exact-URL case — a bulk confirm
-   makes it easy to approve well over a hundred deletions on the strength of
-   skimming one table. `--dry-run` and the fuzzy-match preview table cover
-   read-only inspection today; this would add a real per-group `y/n/skip`
-   loop before any write.
 
 ### Matching
 
