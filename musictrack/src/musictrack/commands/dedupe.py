@@ -21,6 +21,7 @@ from musictrack.models import Raindrop
 from musictrack.plan import MUSIC_COLLECTION, Group, Plan, build_plan
 from musictrack.raindrop import RaindropClient
 from musictrack.raindrop_identity import parse_release
+from musictrack.raindrop_links import linked
 
 
 class WriteClient(Protocol):
@@ -55,7 +56,7 @@ def _member_cell(raindrop: Raindrop, fallback: tuple[str, str]) -> str:
     member somehow fails, which shouldn't happen for anything `group_by_release`
     already accepted — but a display fallback is safer than a crash."""
     parsed = parse_release(raindrop) or fallback
-    return f"{raindrop.link}\n[dim]{parsed[0]} — {parsed[1]}[/]"
+    return f"{linked(raindrop)}\n[dim]{parsed[0]} — {parsed[1]}[/]"
 
 
 def fuzzy_preview(plan: Plan) -> Table | None:
@@ -99,7 +100,7 @@ def _group_panel(group: Group) -> Table:
     table = Table(title=title)
     table.add_column("keep")
     table.add_column("remove")
-    table.add_row(group.survivor.link, "\n".join(extra.link for extra in group.extras))
+    table.add_row(linked(group.survivor), "\n".join(linked(extra) for extra in group.extras))
     return table
 
 
