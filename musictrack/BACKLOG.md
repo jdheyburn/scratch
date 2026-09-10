@@ -33,6 +33,10 @@ reasoning can be checked rather than taken on faith.
 2. **~20 Raindrop links filed as "music" are articles, not releases**
    (Bandcamp Daily pieces, best-of lists). The tool can't currently tell an
    album from an article about albums.
+3. **Feed raindrop-derived (artist, album) identity into `reconcile` as a
+   source.** This dedupe work gives structured identity for Raindrop
+   bookmarks, but nothing feeds it into the beets/Bandcamp/Spotify comparison
+   yet.
 
 ### Matching
 

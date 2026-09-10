@@ -109,6 +109,25 @@ def test_bandcamp_is_recognised_regardless_of_subdomain():
     assert not is_bandcamp(raindrop("https://boomkat.com/products/x", "x"))
 
 
+def test_a_lookalike_domain_is_not_bandcamp():
+    assert not is_bandcamp(raindrop("https://notbandcamp.com/album/x", "x"))
+
+
+def test_bandcamp_daily_articles_do_not_parse_as_a_release():
+    """`daily.bandcamp.com` is an article page, not a release page — every
+    headline happens to share Bandcamp's `{Album} | {Artist}` release shape,
+    which would parse every article as the same fake artist."""
+    assert (
+        parse_release(
+            raindrop(
+                "https://daily.bandcamp.com/best-of/some-headline",
+                "Some Headline | Bandcamp Daily",
+            )
+        )
+        is None
+    )
+
+
 def rd(id, link, title, created="2026-01-01T00:00:00.000Z"):
     return Raindrop(id=id, link=link, title=title, tags=(), collection_id=1, created=created)
 
@@ -156,3 +175,16 @@ def test_a_raindrop_that_does_not_parse_is_never_in_a_cluster():
     bandcamp = rd(1, "https://a.bandcamp.com/album/x", "X | Artist")
     unparsed = rd(2, "https://a.bandcamp.com/album/x2", "An unrelated chart page")
     assert group_by_release([bandcamp, unparsed]) == []
+
+
+def test_a_same_artist_release_distinguished_only_by_a_bracket_does_not_cluster():
+    """`loose()` strips the trailing parenthetical from both titles down to
+    the same base, but `(Part 1)` and `(Part 2)` name different records —
+    same artist, same loose title, must not merge."""
+    one = rd(1, "https://a.bandcamp.com/album/x", "White Line Sunrise III (Part 1) | Artist")
+    other = rd(
+        2,
+        "https://boomkat.com/products/y",
+        "Artist - White Line Sunrise III (Part 2) - Boomkat",
+    )
+    assert group_by_release([one, other]) == []

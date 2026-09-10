@@ -16,12 +16,14 @@ from musictrack.raindrop import to_raindrop
 ALBUM = "https://homenormal.bandcamp.com/album/pola"
 OTHER = "https://stroomtv.bandcamp.com/album/other"
 
-# This repo is public, so the fixture is trimmed to music links only (plus
-# titles stripped, since the tool never reads them) and does not carry the
-# real account's non-music bookmarks, which are personal — finance, journal,
-# notes. `test_no_non_music_link_is_touched` needs some non-music records to
-# stay meaningful, so it carries ~20 fabricated ones instead (900000xxx ids,
-# example.com links, no `music` tag, not in the music collection).
+# This repo is public, so the fixture is trimmed to music links only and does
+# not carry the real account's non-music bookmarks, which are personal —
+# finance, journal, notes. Titles are real, not stripped: the fuzzy dedupe
+# reads them to parse artist/album, so a stripped title would silently break
+# every fuzzy group with no obvious cause. `test_no_non_music_link_is_touched`
+# needs some non-music records to stay meaningful, so it carries ~20
+# fabricated ones instead (900000xxx ids, example.com links, no `music` tag,
+# not in the music collection).
 FIXTURE = Path(__file__).parent / "fixtures" / "raindrops.json"
 
 

@@ -15,12 +15,14 @@ the wrong bookmark.
 from __future__ import annotations
 
 import html
+import re
+import unicodedata
 from collections import defaultdict
 from collections.abc import Sequence
 from dataclasses import dataclass
 from urllib.parse import urlparse
 
-from musictrack.albumkey import agree, artists, loose
+from musictrack.albumkey import CATALOGUE, CATALOGUE_COLON, FORMAT_TAIL, agree, artists, loose
 from musictrack.models import Raindrop
 
 
@@ -29,7 +31,8 @@ def _domain_of(link: str) -> str:
 
 
 def is_bandcamp(raindrop: Raindrop) -> bool:
-    return _domain_of(raindrop.link).endswith("bandcamp.com")
+    domain = _domain_of(raindrop.link)
+    return domain == "bandcamp.com" or domain.endswith(".bandcamp.com")
 
 
 def _bandcamp(title: str) -> tuple[str, str] | None:
@@ -102,9 +105,15 @@ def parse_release(raindrop: Raindrop) -> tuple[str, str] | None:
     if not raindrop.title:
         return None
     title = html.unescape(raindrop.title)
+    domain = _domain_of(raindrop.link)
+    if domain == "daily.bandcamp.com":
+        # An article page, not a release page. It happens to share the
+        # `{Headline} | Bandcamp Daily` shape with `{Album} | {Artist}`, which
+        # would parse every article as the same fake artist, "Bandcamp Daily".
+        return None
     if is_bandcamp(raindrop):
         return _bandcamp(title)
-    parser = _PARSERS.get(_domain_of(raindrop.link))
+    parser = _PARSERS.get(domain)
     if parser is None:
         return None
     return parser(title)
@@ -118,6 +127,25 @@ class Cluster:
     raindrops: tuple[Raindrop, ...]
 
 
+def _tail_kept(text: str) -> str:
+    """What `loose()` does, minus its bracket and edition-tail stripping.
+
+    `loose()` strips a catalogue-number prefix, an edition tail (`- Remaster`),
+    a bracketed suffix, and a trailing format tag (`LP`, `EP`) — useful for
+    matching against beets, but a bracket or edition tail is often the one
+    thing distinguishing two different releases by the same artist
+    (`White Line Sunrise III (Part 1)` vs `(Part 2)`; `Municipal Dreams` vs
+    `Municipal Dreams (Remixes)`). This keeps that part in, so two album
+    texts that agree here but disagree once fully loosened are disagreeing
+    on something real, not on catalogue-prefix or format-tag noise.
+    """
+    folded = unicodedata.normalize("NFKD", text or "").encode("ascii", "ignore").decode()
+    working = folded.lower()
+    working = CATALOGUE.sub("", CATALOGUE_COLON.sub("", working))
+    plain = re.sub(r"[^a-z0-9]+", " ", working).strip().removeprefix("the ")
+    return FORMAT_TAIL.sub("", plain).strip()
+
+
 def group_by_release(raindrops: Sequence[Raindrop]) -> list[Cluster]:
     """Cluster raindrops that look like the same release, across domains.
 
@@ -126,8 +154,15 @@ def group_by_release(raindrops: Sequence[Raindrop]) -> list[Cluster]:
     can in theory hold two different releases that coincidentally
     loose-match on title, and agreement is what keeps them apart
     (`albumkey.py`'s own docstring: loose matching "merges 39 albums that
-    are different records" when used for beets matching). A cluster of size
-    one — nothing else agreed — is dropped.
+    are different records" when used for beets matching).
+
+    Artist agreement alone isn't enough, though: `loose()`'s bracket and
+    edition-tail stripping can erase the one thing telling two same-artist
+    releases apart. `_tail_kept` keeps that part in, so a candidate only
+    joins a cluster if it agrees with the seed there too — a real difference
+    in the stripped part refuses the pair, while a difference that's only
+    catalogue-prefix or format-tag noise still clusters normally. A cluster
+    of size one — nothing else agreed — is dropped.
     """
     parsed: dict[int, tuple[str, str]] = {}
     for raindrop in raindrops:
@@ -148,9 +183,13 @@ def group_by_release(raindrops: Sequence[Raindrop]) -> list[Cluster]:
         while unclaimed:
             seed, *rest = unclaimed
             seed_artist = artists(parsed[seed.id][0])
+            seed_tail = _tail_kept(parsed[seed.id][1])
             joined, unclaimed = [seed], []
             for candidate in rest:
-                if agree(seed_artist, artists(parsed[candidate.id][0])):
+                candidate_artist, candidate_album = parsed[candidate.id]
+                if agree(seed_artist, artists(candidate_artist)) and (
+                    _tail_kept(candidate_album) == seed_tail
+                ):
                     joined.append(candidate)
                 else:
                     unclaimed.append(candidate)
