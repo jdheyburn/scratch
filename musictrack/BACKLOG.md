@@ -17,11 +17,16 @@ reasoning can be checked rather than taken on faith.
   equivalent folded to the same key as a genuinely blank library title,
   producing false "worth a look" matches. Fixed by refusing to match on an
   empty folded key.
-- **Raindrop fuzzy dedupe** (2026-09-10). Cross-shop duplicates — the same
-  album bookmarked on Bandcamp and also Boomkat, Bleep, Phonica, or Rubadub —
-  are found by parsing each shop's page-title shape and matched with the
-  same loose-album, agreeing-artist rules `reconcile` already uses against
-  beets. A Bandcamp copy is kept when a group has one.
+- **Raindrop fuzzy dedupe** (PR #7, 2026-09-10). Cross-shop duplicates — the
+  same album bookmarked on Bandcamp and also Boomkat, Bleep, Phonica, or
+  Rubadub — are found by parsing each shop's page-title shape and matched
+  with the same loose-album, agreeing-artist rules `reconcile` already uses
+  against beets. A Bandcamp copy is kept when a group has one. The final
+  review caught and fixed two real problems before merge: the confirm
+  table was truncating the shop URLs a human needs to catch a wrong
+  grouping, and three same-artist releases (a two-part release, a remix,
+  a reconfiguration) were being wrongly merged by the same bracket-stripping
+  that lets format tags like "LP" match across shops.
 
 ## Open
 
@@ -37,6 +42,23 @@ reasoning can be checked rather than taken on faith.
    source.** This dedupe work gives structured identity for Raindrop
    bookmarks, but nothing feeds it into the beets/Bandcamp/Spotify comparison
    yet.
+4. **Same-artist reissue/remaster/pre-order titles aren't fuzzy-matched, by
+   design.** The bracket-stripping that lets `Album LP` match `Album` across
+   shops also strips genuine edition differences, so the guard added after
+   PR #7's final review refuses any pair where that stripped text differs —
+   which correctly keeps `(Part 1)` away from `(Part 2)`, but also keeps a
+   `(Remastered)` or `(Reissue)` copy from matching its plain counterpart.
+   Accepted as-is (three known misses on the real account) rather than
+   building a list of "noise" words to special-case, matching how
+   `reconcile`'s own matching already accepts this exact tension elsewhere.
+5. **An interactive `dedupe` mode: step through each proposed action and
+   approve it individually**, rather than one bulk confirm covering every
+   group. Raised after PR #7 shipped fuzzy matching, which carries more
+   false-positive risk per group than the exact-URL case — a bulk confirm
+   makes it easy to approve well over a hundred deletions on the strength of
+   skimming one table. `--dry-run` and the fuzzy-match preview table cover
+   read-only inspection today; this would add a real per-group `y/n/skip`
+   loop before any write.
 
 ### Matching
 
