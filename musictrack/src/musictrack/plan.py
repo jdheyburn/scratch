@@ -12,6 +12,7 @@ from dataclasses import dataclass
 
 from musictrack.identity import normalise
 from musictrack.models import Raindrop
+from musictrack.raindrop_identity import group_by_release, is_bandcamp
 from musictrack.tags import held_back, merge_tags
 
 MUSIC_COLLECTION = 29207263
@@ -26,12 +27,18 @@ def is_music(raindrop: Raindrop) -> bool:
 
 @dataclass(frozen=True)
 class Group:
-    """One bookmark saved more than once, and what becomes of each copy."""
+    """One bookmark saved more than once, and what becomes of each copy.
+
+    `matched_as` is the (artist, album) that justified a fuzzy group, and
+    `None` for an exact-URL group, where the shared URL is justification
+    enough.
+    """
 
     survivor: Raindrop
     extras: tuple[Raindrop, ...]
     merged_tags: tuple[str, ...]
     held_back_tags: tuple[str, ...]
+    matched_as: tuple[str, str] | None = None
 
     @property
     def needs_retag(self) -> bool:
@@ -78,6 +85,25 @@ class Plan:
         return tuple(sorted({t for g in self.groups for t in g.held_back_tags}))
 
 
+def _survivor_priority(raindrop: Raindrop) -> tuple[int, str, int]:
+    """Sort key for picking which copy of a group survives: a Bandcamp link
+    first, then the earliest created, then the lowest id to break a tie. A
+    no-op for an exact-URL group — every member already shares one domain,
+    so the Bandcamp-preference clause never has anything to prefer between."""
+    return (0 if is_bandcamp(raindrop) else 1, raindrop.created, raindrop.id)
+
+
+def _build_group(copies: Sequence[Raindrop], matched_as: tuple[str, str] | None = None) -> Group:
+    survivor, *extras = sorted(copies, key=_survivor_priority)
+    return Group(
+        survivor=survivor,
+        extras=tuple(extras),
+        merged_tags=merge_tags(survivor.tags, [e.tags for e in extras]),
+        held_back_tags=held_back([e.tags for e in extras]),
+        matched_as=matched_as,
+    )
+
+
 def build_plan(raindrops: Sequence[Raindrop]) -> Plan:
     """Music links in, every intended write out.
 
@@ -106,18 +132,13 @@ def build_plan(raindrops: Sequence[Raindrop]) -> Plan:
         copies = by_url[url]
         if len(copies) < 2:
             continue
-        # `created` is ISO 8601, so text order is chronological order. The id
-        # breaks ties between two saves in the same millisecond.
-        survivor, *extras = sorted(copies, key=lambda r: (r.created, r.id))
-        groups.append(
-            Group(
-                survivor=survivor,
-                extras=tuple(extras),
-                merged_tags=merge_tags(survivor.tags, [e.tags for e in extras]),
-                held_back_tags=held_back([e.tags for e in extras]),
-            )
-        )
+        groups.append(_build_group(copies))
         spoken_for.update(r.id for r in copies)
+
+    remaining = [r for r in music if r.id not in spoken_for]
+    for cluster in group_by_release(remaining):
+        groups.append(_build_group(cluster.raindrops, matched_as=cluster.matched_as))
+        spoken_for.update(r.id for r in cluster.raindrops)
 
     strays = tuple(r for r in music if r.collection_id == UNSORTED and r.id not in spoken_for)
     return Plan(groups=tuple(groups), strays=strays)
