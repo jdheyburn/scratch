@@ -60,13 +60,13 @@ one table before writing anything.
 Then it walks the 146 groups one at a time: each gets its own small panel
 (what survives, what would be removed, and whether the match is an exact URL
 or a fuzzy title match) and its own `Apply this group? [y/N]` prompt. Each
-link shown is hyperlinked to that raindrop's own entry in the Raindrop app
-(not the shop page), so a terminal with hyperlink support lets you open the
-actual bookmark straight from the table. Approving one group doesn't drag the
-rest along with it, and declining one leaves just that group's extras in
-place. Filing the strays is a separate confirmation after every group has
-been walked. `--dry-run` prints the table and the fuzzy-match preview, then
-stops before any of that.
+shop link sits next to its own `raindrop` column — an `open ↗` link, in a
+terminal with hyperlink support, straight to that bookmark's entry in the
+Raindrop app, kept apart from the shop link so each URL opens what it says it
+does. Approving one group doesn't drag the rest along with it, and declining
+one leaves just that group's extras in place. Filing the strays is a separate
+confirmation after every group has been walked. `--dry-run` prints the table
+and the fuzzy-match preview, then stops before any of that.
 
 **What counts as a music link.** Anything tagged `music`, or filed in the
 `music` collection. Roughly half the music bookmarks are tagged but sitting in

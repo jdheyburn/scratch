@@ -1,6 +1,6 @@
-"""Turning a raindrop's shop link into something that opens the entry itself."""
+"""Turning a raindrop into the two links a human might click through on."""
 
-from musictrack.raindrop_links import linked, raindrop_url
+from musictrack.raindrop_links import entry_link, raindrop_url, shop_link
 
 ALBUM = "https://homenormal.bandcamp.com/album/pola"
 
@@ -12,8 +12,13 @@ def test_the_raindrop_url_points_at_the_entry_not_the_shop(make_raindrop):
     assert raindrop_url(raindrop) == f"https://app.raindrop.io/my/29207263/item/{raindrop.id}/edit"
 
 
-def test_the_linked_cell_shows_the_shop_link_as_the_label(make_raindrop):
-    """The visible text stays the shop link a human recognises; only the
-    hyperlink target changes to the raindrop entry."""
+def test_the_shop_link_is_hyperlinked_to_itself(make_raindrop):
     raindrop = make_raindrop(link=ALBUM)
-    assert linked(raindrop) == f"[link={raindrop_url(raindrop)}]{ALBUM}[/link]"
+    assert shop_link(raindrop) == f"[link={ALBUM}]{ALBUM}[/link]"
+
+
+def test_the_entry_link_points_at_the_raindrop_not_the_shop(make_raindrop):
+    """A short label, not the raw URL, so the column stays narrow — the href
+    is what matters, not the displayed text."""
+    raindrop = make_raindrop(link=ALBUM)
+    assert entry_link(raindrop) == f"[link={raindrop_url(raindrop)}]open ↗[/link]"

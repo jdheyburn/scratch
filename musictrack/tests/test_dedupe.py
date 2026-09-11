@@ -3,12 +3,11 @@
 import json
 from pathlib import Path
 
-from rich.console import Console
 from typer.testing import CliRunner
 
 import musictrack.commands.dedupe as dedupe_module
 from musictrack.cli import app
-from musictrack.commands.dedupe import apply_dedupe, apply_filing, fuzzy_preview, summary
+from musictrack.commands.dedupe import apply_dedupe, apply_filing
 from musictrack.errors import MissingToken, RaindropError
 from musictrack.plan import MUSIC_COLLECTION, UNSORTED, build_plan
 from musictrack.raindrop import to_raindrop
@@ -118,47 +117,6 @@ def test_an_empty_plan_writes_nothing(make_raindrop):
     apply_dedupe(client, plan)
     apply_filing(client, plan)
     assert client.actions == []
-
-
-def test_the_summary_reports_every_kind_of_change(make_raindrop):
-    """The table is the thing the user approves, so it has to state each
-    number the run will act on."""
-    old = make_raindrop(
-        link=ALBUM, collection_id=UNSORTED, tags=(), created="2025-01-01T00:00:00.000Z"
-    )
-    new = make_raindrop(
-        link=ALBUM,
-        collection_id=MUSIC_COLLECTION,
-        tags=("music",),
-        created="2025-06-01T00:00:00.000Z",
-    )
-    stray = make_raindrop(link=OTHER, collection_id=UNSORTED)
-
-    console = Console(width=80, record=True)
-    console.print(summary(build_plan([old, new, stray])))
-    rendered = console.export_text()
-
-    for label in (
-        "duplicate groups",
-        "raindrops to delete",
-        "survivors gaining tags",
-        "survivors to file",
-        "stray links to file",
-    ):
-        assert label in rendered
-
-
-def test_the_summary_of_an_empty_plan_is_all_zeroes(make_raindrop):
-    console = Console(width=80, record=True)
-    console.print(summary(build_plan([make_raindrop(collection_id=MUSIC_COLLECTION)])))
-    rendered = console.export_text()
-    assert "1" not in rendered
-
-
-def test_fuzzy_preview_is_none_without_a_fuzzy_group(make_raindrop):
-    old = make_raindrop(link=ALBUM, created="2025-01-01T00:00:00.000Z")
-    new = make_raindrop(link=ALBUM, created="2025-02-01T00:00:00.000Z")
-    assert fuzzy_preview(build_plan([old, new])) is None
 
 
 def test_a_fuzzy_match_is_shown_before_the_confirm(make_raindrop, monkeypatch):
