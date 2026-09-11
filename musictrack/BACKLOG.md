@@ -41,6 +41,12 @@ reasoning can be checked rather than taken on faith.
   columns in the confirm panel and the fuzzy-match preview: the shop link
   opens the shop page it names, and a new `raindrop` column carries a short
   `open ↗` link straight to the entry.
+- **Raindrop as a reconcile want source** (PR #13, 2026-09-11). Raindrop
+  bookmarks (tagged `music`, minus anything `parse_release` can't identify)
+  join the Bandcamp wishlist and Spotify "To Listen" as a third want,
+  compared against beets and the Bandcamp collection the same way. Live-run
+  on the real account: 83 Raindrop bookmarks correctly surfaced as already-
+  owned wants.
 
 ## Open
 
@@ -56,11 +62,7 @@ reasoning can be checked rather than taken on faith.
    `reconcile`'s Raindrop source. What's still open is `dedupe`, which has
    no way to tell one of these from a real release and files them as
    ordinary stray music links.
-3. **Feed raindrop-derived (artist, album) identity into `reconcile` as a
-   source.** This dedupe work gives structured identity for Raindrop
-   bookmarks, but nothing feeds it into the beets/Bandcamp/Spotify comparison
-   yet.
-4. **Same-artist reissue/remaster/pre-order titles aren't fuzzy-matched, by
+3. **Same-artist reissue/remaster/pre-order titles aren't fuzzy-matched, by
    design.** The bracket-stripping that lets `Album LP` match `Album` across
    shops also strips genuine edition differences, so the guard added after
    PR #7's final review refuses any pair where that stripped text differs —
@@ -69,7 +71,7 @@ reasoning can be checked rather than taken on faith.
    Accepted as-is (three known misses on the real account) rather than
    building a list of "noise" words to special-case, matching how
    `reconcile`'s own matching already accepts this exact tension elsewhere.
-5. **Some shop links have gone dead (404) since they were saved** — seen on
+4. **Some shop links have gone dead (404) since they were saved** — seen on
    Phonica, where a product page's URL scheme changed and the old link no
    longer resolves. `dedupe` has no way to notice today: it never fetches a
    link, only reads the title Raindrop already cached at save time. Idea
@@ -79,6 +81,20 @@ reasoning can be checked rather than taken on faith.
    per link is new I/O this tool has avoided so far) and for the Bandcamp
    lookup (search by parsed artist/album, confidence threshold, what happens
    on no match).
+
+### Reconcile
+
+1. **Make `reconcile`'s report interactive, the way `dedupe`'s per-group
+   confirm walk replaced its single bulk prompt.** Today `reconcile` prints
+   the whole table at once, and marking a row as a false absence means a
+   separate `musictrack dismiss <source>:<ref>` call after the fact —
+   two commands and a copy-pasted id instead of one pass. Walking the
+   uncertain rows one at a time (the "worth a look" tier at least; the
+   absent table plausibly too) and offering a dismiss right there would
+   fold review and dismissal into a single interactive pass. Not scoped:
+   whether the high-confidence "owned" rows need this at all, what unit
+   walks (per-row vs per-tier), and how `--include-dismissed` and
+   `--wants`/`--backlog` interact with a walk instead of a static table.
 
 ### Matching
 
