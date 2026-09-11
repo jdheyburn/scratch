@@ -1,8 +1,8 @@
 """Where a run's rows come from.
 
 Two vocabularies meet here. Rows are stored under the `AlbumRef.source` value
-that produced them, five of those. The user names sources the way they go
-stale, three of those: both beets dumps come from one SSH session, both
+that produced them, six of those. The user names sources the way they go
+stale, four of those: both beets dumps come from one SSH session, both
 Bandcamp lists from one authenticated client.
 """
 
@@ -15,10 +15,12 @@ from datetime import datetime
 from rich.text import Text
 
 from musictrack.cache import SourceCache, describe_age, is_stale
-from musictrack.config import load_bandcamp_cookie
+from musictrack.config import load_bandcamp_cookie, load_token
 from musictrack.models import AlbumRef
+from musictrack.raindrop import RaindropClient
 from musictrack.sources import library as beets
 from musictrack.sources.bandcamp import BandcampClient
+from musictrack.sources.raindrop import to_listen as raindrop_to_listen
 from musictrack.sources.spotify import spotify_client, to_listen
 
 ALL = "all"
@@ -26,15 +28,17 @@ ALL = "all"
 BEETS = ("beets", "beets-track")
 BANDCAMP = ("bandcamp-wishlist", "bandcamp-collection")
 SPOTIFY = ("spotify",)
+RAINDROP = ("raindrop",)
 
 # Ordered, because this is also the order the age header prints in.
 REFRESH_NAMES: dict[str, tuple[str, ...]] = {
     "beets": BEETS,
     "bandcamp": BANDCAMP,
     "spotify": SPOTIFY,
+    "raindrop": RAINDROP,
 }
 
-WANTS_KEYS = (*BEETS, "bandcamp-wishlist", "spotify")
+WANTS_KEYS = (*BEETS, "bandcamp-wishlist", "spotify", "raindrop")
 BACKLOG_KEYS = (*BEETS, "bandcamp-collection")
 
 
@@ -92,17 +96,24 @@ class Fetchers:
     """One live read per storage key, each built only when it is called.
 
     Laziness is the point. A fully cached run calls none of these, and so needs
-    no Bandcamp cookie and no Spotify token. A backlog run calls neither of the
-    Spotify or wishlist readers, so it authenticates to neither.
+    no Bandcamp cookie, no Spotify token, and no Raindrop token. A backlog run
+    calls neither the Spotify, wishlist, nor Raindrop readers, so it
+    authenticates to none of them.
     """
 
     def __init__(self) -> None:
         self._bandcamp: BandcampClient | None = None
+        self._raindrop_client: RaindropClient | None = None
 
     def _client(self) -> BandcampClient:
         if self._bandcamp is None:
             self._bandcamp = BandcampClient(load_bandcamp_cookie())
         return self._bandcamp
+
+    def _raindrop(self) -> RaindropClient:
+        if self._raindrop_client is None:
+            self._raindrop_client = RaindropClient(load_token())
+        return self._raindrop_client
 
     def as_map(self) -> dict[str, Fetcher]:
         return {
@@ -111,6 +122,7 @@ class Fetchers:
             "bandcamp-wishlist": lambda: self._client().wishlist(),
             "bandcamp-collection": lambda: self._client().collection(),
             "spotify": lambda: to_listen(spotify_client()),
+            "raindrop": lambda: raindrop_to_listen(self._raindrop()),
         }
 
 
