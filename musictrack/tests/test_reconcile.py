@@ -203,7 +203,7 @@ class RecordingBandcamp:
         return [want("Lucy Gooch", "Rushing", ref="2", source="bandcamp-collection")]
 
 
-def run(monkeypatch, tmp_path, *args, dismissed=None):
+def run(monkeypatch, tmp_path, *args, dismissed=None, raindrop_wants=None):
     """Invoke the real `reconcile` command through the CLI, with every source,
     the cache, and the dismissals store swapped for a fake or a temporary file,
     so nothing touches the network, SSH, or either real database."""
@@ -218,6 +218,10 @@ def run(monkeypatch, tmp_path, *args, dismissed=None):
     monkeypatch.setattr(gather_module.beets, "track_refs", lambda: [])
     monkeypatch.setattr(gather_module, "spotify_client", lambda: object())
     monkeypatch.setattr(gather_module, "to_listen", lambda *a, **k: [])
+    monkeypatch.setattr(gather_module, "load_token", lambda: "token")
+    monkeypatch.setattr(
+        gather_module, "raindrop_to_listen", lambda client: list(raindrop_wants or [])
+    )
     monkeypatch.setattr(reconcile_module, "Dismissals", lambda: FakeDismissals(dismissed))
     monkeypatch.setattr(
         reconcile_module, "SourceCache", lambda: SourceCache(tmp_path / "db.sqlite")
@@ -239,6 +243,14 @@ def test_wants_only_run_does_not_read_the_collection(monkeypatch, tmp_path):
 def test_a_default_run_reads_both(monkeypatch, tmp_path):
     _, client = run(monkeypatch, tmp_path)
     assert set(client.calls) == {"wishlist", "collection"}
+
+
+def test_a_raindrop_bookmark_is_included_in_the_wants_report(monkeypatch, tmp_path):
+    raindrop_want = want("Theo Parrish", "Parallel Dimensions", ref="9", source="raindrop")
+    result, _ = run(monkeypatch, tmp_path, "--wants", raindrop_wants=[raindrop_want])
+    assert result.exit_code == 0
+    assert "raindrop:9" in result.stdout
+    assert "Parallel Dimensions" in result.stdout
 
 
 def test_a_dismissed_row_is_hidden_by_default_in_the_cli(monkeypatch, tmp_path):
@@ -319,6 +331,8 @@ def test_a_locked_database_on_the_header_read_is_a_message_not_a_traceback(monke
     monkeypatch.setattr(gather_module.beets, "track_refs", lambda: [])
     monkeypatch.setattr(gather_module, "spotify_client", lambda: object())
     monkeypatch.setattr(gather_module, "to_listen", lambda *a, **k: [])
+    monkeypatch.setattr(gather_module, "load_token", lambda: "token")
+    monkeypatch.setattr(gather_module, "raindrop_to_listen", lambda client: [])
     monkeypatch.setattr(reconcile_module, "Dismissals", lambda: FakeDismissals(None))
     monkeypatch.setattr(
         reconcile_module, "SourceCache", lambda: LockedOnFetchedAt(tmp_path / "db.sqlite")
@@ -407,6 +421,29 @@ def test_a_source_failure_is_a_message_not_a_traceback(monkeypatch, tmp_path):
 
     monkeypatch.setattr(gather_module, "BandcampClient", lambda cookie: Refusing())
     result = CliRunner().invoke(app, ["reconcile", "--backlog"], env={"COLUMNS": "200"})
+    assert result.exit_code == 1
+    assert "503" in result.stdout
+
+
+def test_a_raindrop_failure_is_a_message_not_a_traceback(monkeypatch, tmp_path):
+    from musictrack.errors import RaindropError
+
+    def boom(client):
+        raise RaindropError("Raindrop returned 503")
+
+    monkeypatch.setattr(gather_module, "load_bandcamp_cookie", lambda: "cookie")
+    monkeypatch.setattr(gather_module, "BandcampClient", lambda cookie: RecordingBandcamp())
+    monkeypatch.setattr(gather_module.beets, "album_refs", lambda: [])
+    monkeypatch.setattr(gather_module.beets, "track_refs", lambda: [])
+    monkeypatch.setattr(gather_module, "spotify_client", lambda: object())
+    monkeypatch.setattr(gather_module, "to_listen", lambda *a, **k: [])
+    monkeypatch.setattr(gather_module, "load_token", lambda: "token")
+    monkeypatch.setattr(gather_module, "raindrop_to_listen", boom)
+    monkeypatch.setattr(
+        reconcile_module, "SourceCache", lambda: SourceCache(tmp_path / "db.sqlite")
+    )
+    monkeypatch.setattr(reconcile_module, "Dismissals", lambda: FakeDismissals(None))
+    result = CliRunner().invoke(app, ["reconcile", "--wants"], env={"COLUMNS": "200"})
     assert result.exit_code == 1
     assert "503" in result.stdout
 
