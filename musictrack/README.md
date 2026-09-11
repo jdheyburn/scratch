@@ -105,19 +105,22 @@ recoverable in the Raindrop UI.
 
 ### reconcile
 
-Reads the Bandcamp wishlist, the Spotify "To Listen" playlist, and the beets
-library, then prints what you want that you already own and what you bought
-that never made it into the library. Read-only against all three: nothing on
-Bandcamp, Spotify, or beets changes. `--wants` and `--backlog` each print one
-half of the report on their own; with neither, both print.
+Reads the Bandcamp wishlist, the Spotify "To Listen" playlist, Raindrop
+bookmarks, and the beets library, then prints what you want that you already
+own and what you bought that never made it into the library. Read-only
+against all four: nothing on Bandcamp, Spotify, Raindrop, or beets changes.
+`--wants` and `--backlog` each print one half of the report on their own;
+with neither, both print.
 
 The first run reads every source live and keeps a local copy. Later runs
 answer from that copy instead of reading the accounts again, so every report
 opens with a line naming each source and how old its copy is. `--refresh
-all|beets|bandcamp|spotify` refetches before reporting, either everything or
-just the one named source.
+all|beets|bandcamp|spotify|raindrop` refetches before reporting, either
+everything or just the one named source.
 
-Two credentials, since this reads two accounts beyond Raindrop:
+The Raindrop token from [the token setup above](#the-token) is reused here.
+Two more credentials are needed, since this also reads two accounts beyond
+Raindrop:
 
 - A Bandcamp cookie jar at `~/.config/bandcamp/cookie`, mode 600. Log in at
   bandcamp.com in Firefox, then copy the whole jar; the `identity` cookie on

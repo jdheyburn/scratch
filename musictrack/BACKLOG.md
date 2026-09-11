@@ -49,9 +49,13 @@ reasoning can be checked rather than taken on faith.
 1. **A count-vs-records-read check in `raindrop.py`.** Makes a mid-read page
    skip visible instead of silent. Blocked on the file sitting at 198 of its
    200-line layout cap — something else has to move out first.
-2. **~20 Raindrop links filed as "music" are articles, not releases**
-   (Bandcamp Daily pieces, best-of lists). The tool can't currently tell an
-   album from an article about albums.
+2. **50 Raindrop links filed as "music" are Bandcamp Daily articles, not
+   releases** (best-of lists, scene reports, album-of-the-day reviews — all
+   on `daily.bandcamp.com`, counted live 2026-09-11). `parse_release`
+   already refuses that whole domain, so these produce no false identity for
+   `reconcile`'s Raindrop source. What's still open is `dedupe`, which has
+   no way to tell one of these from a real release and files them as
+   ordinary stray music links.
 3. **Feed raindrop-derived (artist, album) identity into `reconcile` as a
    source.** This dedupe work gives structured identity for Raindrop
    bookmarks, but nothing feeds it into the beets/Bandcamp/Spotify comparison

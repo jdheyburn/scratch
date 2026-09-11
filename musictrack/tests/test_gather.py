@@ -14,7 +14,14 @@ from musictrack.gather import (
 )
 from musictrack.models import AlbumRef
 
-EVERY_KEY = {"beets", "beets-track", "bandcamp-wishlist", "bandcamp-collection", "spotify"}
+EVERY_KEY = {
+    "beets",
+    "beets-track",
+    "bandcamp-wishlist",
+    "bandcamp-collection",
+    "spotify",
+    "raindrop",
+}
 
 
 # --- which keys a run needs ------------------------------------------------
@@ -27,7 +34,7 @@ def test_a_default_run_needs_every_source():
 def test_a_wants_run_does_not_need_the_collection():
     keys = keys_for(True, False)
     assert "bandcamp-collection" not in keys
-    assert {"beets", "beets-track", "bandcamp-wishlist", "spotify"} == set(keys)
+    assert {"beets", "beets-track", "bandcamp-wishlist", "spotify", "raindrop"} == set(keys)
 
 
 def test_a_backlog_run_does_not_need_spotify_or_the_wishlist():
@@ -36,6 +43,7 @@ def test_a_backlog_run_does_not_need_spotify_or_the_wishlist():
     keys = keys_for(False, True)
     assert "spotify" not in keys
     assert "bandcamp-wishlist" not in keys
+    assert "raindrop" not in keys
     assert {"beets", "beets-track", "bandcamp-collection"} == set(keys)
 
 
@@ -68,6 +76,10 @@ def test_refreshing_spotify_covers_only_spotify():
     assert keys_to_refresh("spotify") == {"spotify"}
 
 
+def test_refreshing_raindrop_covers_only_raindrop():
+    assert keys_to_refresh("raindrop") == {"raindrop"}
+
+
 def test_an_unknown_name_is_an_error_that_names_the_valid_ones():
     """It must not fall back to refreshing everything. A full refetch is what
     someone who typed `--refresh bandacmp` would least expect to wait for."""
@@ -75,7 +87,7 @@ def test_an_unknown_name_is_an_error_that_names_the_valid_ones():
         keys_to_refresh("bandacmp")
     message = str(problem.value)
     assert "bandacmp" in message
-    for name in ("all", "beets", "bandcamp", "spotify"):
+    for name in ("all", "beets", "bandcamp", "spotify", "raindrop"):
         assert name in message
 
 
@@ -93,7 +105,7 @@ def test_ages_are_reported_per_refresh_name_not_per_storage_key(tmp_path):
     for key in EVERY_KEY:
         cache.write(key, [])
     names = [name for name, _ in source_ages(cache, keys_for(True, True))]
-    assert names == ["beets", "bandcamp", "spotify"]
+    assert names == ["beets", "bandcamp", "spotify", "raindrop"]
 
 
 def test_a_name_whose_keys_the_run_did_not_use_is_left_out(tmp_path):
@@ -293,7 +305,8 @@ def test_the_fetchers_map_covers_every_storage_key():
 
 def test_building_the_fetchers_reads_no_credentials(monkeypatch):
     """Construction must be inert. A fully cached run never calls a fetcher,
-    and so must never need the Bandcamp cookie or a Spotify token."""
+    and so must never need the Bandcamp cookie, a Spotify token, or the
+    Raindrop token."""
     import musictrack.gather as gather_module
     from musictrack.gather import Fetchers
 
@@ -302,6 +315,7 @@ def test_building_the_fetchers_reads_no_credentials(monkeypatch):
 
     monkeypatch.setattr(gather_module, "load_bandcamp_cookie", boom)
     monkeypatch.setattr(gather_module, "spotify_client", boom)
+    monkeypatch.setattr(gather_module, "load_token", boom)
     Fetchers().as_map()
 
 
@@ -329,6 +343,25 @@ def test_both_bandcamp_reads_share_one_client(monkeypatch):
     reads["bandcamp-wishlist"]()
     reads["bandcamp-collection"]()
     assert built == ["cookie"]
+
+
+def test_the_raindrop_fetcher_is_wired_to_the_lazy_client(monkeypatch):
+    """A wiring regression here would silently drop every Raindrop want."""
+    import musictrack.gather as gather_module
+    from musictrack.gather import Fetchers
+
+    built = []
+
+    class FakeClient:
+        def __init__(self, token):
+            built.append(token)
+
+    monkeypatch.setattr(gather_module, "load_token", lambda: "a-token")
+    monkeypatch.setattr(gather_module, "RaindropClient", FakeClient)
+    monkeypatch.setattr(gather_module, "raindrop_to_listen", lambda client: ["sentinel"])
+    reads = Fetchers().as_map()
+    assert reads["raindrop"]() == ["sentinel"]
+    assert built == ["a-token"]
 
 
 # --- the age header --------------------------------------------------------

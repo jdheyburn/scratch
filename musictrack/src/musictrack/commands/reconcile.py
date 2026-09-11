@@ -1,9 +1,9 @@
 """What you want against what you have.
 
-Read-only against Bandcamp, Spotify, and beets: the comparison happens in
-memory, and nothing changes on any of those three. Reports are served from a
-local copy of each source, whose age is printed on every run, and refreshed on
-demand with `--refresh`.
+Read-only against Bandcamp, Spotify, Raindrop, and beets: the comparison
+happens in memory, and nothing changes on any of those four. Reports are
+served from a local copy of each source, whose age is printed on every run,
+and refreshed on demand with `--refresh`.
 
 The three tables are not equally confident. Owned rows are statements: an exact
 title with an agreeing artist was right essentially every time across 338
@@ -24,7 +24,7 @@ from rich.table import Table
 
 from musictrack.cache import SourceCache
 from musictrack.console import console
-from musictrack.errors import MissingToken, SourceError
+from musictrack.errors import MissingToken, RaindropError, SourceError
 from musictrack.gather import Fetchers, UnknownSource, age_line, gather, keys_for, source_ages
 from musictrack.match import ABSENT, OWNED, LibraryIndex, Match
 from musictrack.models import AlbumRef
@@ -135,10 +135,11 @@ def reconcile(
         None,
         "--refresh",
         metavar="SOURCE",
-        help="Refetch before reporting: all, beets, bandcamp, or spotify.",
+        help="Refetch before reporting: all, beets, bandcamp, spotify, or raindrop.",
     ),
 ) -> None:
-    """Compare Bandcamp and Spotify against the beets library."""
+    """Compare the Bandcamp wishlist, Spotify "To Listen", and Raindrop
+    bookmarks against the beets library."""
     show_wants = wants or not backlog
     show_backlog = backlog or not wants
 
@@ -160,7 +161,7 @@ def reconcile(
     except MissingToken as problem:
         console.print(f"[red]{problem}[/]")
         raise typer.Exit(1) from problem
-    except SourceError as problem:
+    except (RaindropError, SourceError) as problem:
         console.print(f"[red]{problem}[/]")
         raise typer.Exit(1) from problem
     except (OSError, sqlite3.Error) as problem:
@@ -171,10 +172,11 @@ def reconcile(
     wishlist = gathered.rows.get("bandcamp-wishlist", [])
     collection = gathered.rows.get("bandcamp-collection", [])
     listening = gathered.rows.get("spotify", [])
+    raindrop_wants = gathered.rows.get("raindrop", [])
 
     if show_wants:
-        report = classify([*wishlist, *listening], index, hide)
-        console.print(f"[dim]{len(wishlist) + len(listening)} wants read[/]")
+        report = classify([*wishlist, *listening, *raindrop_wants], index, hide)
+        console.print(f"[dim]{len(wishlist) + len(listening) + len(raindrop_wants)} wants read[/]")
         console.print(wants_table(report, mark))
         console.print(possible_table(report, mark))
 
