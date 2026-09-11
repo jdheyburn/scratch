@@ -35,6 +35,12 @@ reasoning can be checked rather than taken on faith.
   there was no remaining use for the bulk confirm, so it was removed rather
   than kept behind a flag. Stray filing still gets one confirm at the end,
   since strays aren't duplicate groups and don't carry that risk.
+- **Separate raindrop-entry links** (PR #11, 2026-09-11). The shop link and
+  the raindrop-entry link were sharing one cell — visible text was the shop
+  URL, but the href pointed at the Raindrop entry. Split into two hyperlinked
+  columns in the confirm panel and the fuzzy-match preview: the shop link
+  opens the shop page it names, and a new `raindrop` column carries a short
+  `open ↗` link straight to the entry.
 
 ## Open
 
