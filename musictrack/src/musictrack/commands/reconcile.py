@@ -108,8 +108,12 @@ def reconcile(
         mark = dismissed if include_dismissed else None
         cache = SourceCache()
         keys = keys_for(show_wants, show_backlog)
-        with console.status("gathering sources"):
-            gathered = gather(cache, Fetchers().as_map(), keys, refresh)
+        # A live spinner here would fight over the terminal with Spotify's own
+        # OAuth login prompt, which reads a pasted URL via a plain input() the
+        # first time a scope change invalidates the cached token — a static
+        # line costs nothing and never blocks that.
+        console.print("[dim]gathering sources…[/]")
+        gathered = gather(cache, Fetchers().as_map(), keys, refresh)
         console.print(age_line(source_ages(cache, keys), datetime.now(UTC)))
     except UnknownSource as problem:
         console.print(f"[red]{problem}[/]")
