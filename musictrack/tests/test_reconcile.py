@@ -1,13 +1,14 @@
 """Turning verdicts into a report."""
 
-from rich.console import Console
 from typer.testing import CliRunner
 
 import musictrack.commands.reconcile as reconcile_module
 import musictrack.gather as gather_module
 from musictrack.cache import SourceCache
 from musictrack.cli import app
-from musictrack.commands.reconcile import backlog_table, classify, possible_table, wants_table
+from musictrack.commands.reconcile import classify
+from musictrack.commands.reconcile_views import row_table
+from musictrack.console import console
 from musictrack.match import LibraryIndex
 from musictrack.models import AlbumRef
 
@@ -22,13 +23,6 @@ def want(artist, title, ref="1", source="bandcamp-wishlist"):
 
 def library():
     return LibraryIndex(albums=[album("Theo Parrish", "Parallel Dimensions")], tracks=[])
-
-
-def render(table):
-    """A table's cell text, wide enough that nothing wraps and hides a match."""
-    console = Console(width=200, record=True)
-    console.print(table)
-    return console.export_text()
 
 
 def test_each_candidate_lands_in_exactly_one_bucket():
@@ -61,130 +55,29 @@ def test_the_report_keeps_the_library_album_that_matched():
     assert match.library.album == "Parallel Dimensions"
 
 
-# --- the tier that hit, shown only on the needs-a-look table ---------------
-
-
-def test_the_possible_table_names_the_tier_that_matched():
-    # "LP" survives the exact key but not the loose one, so this is an
-    # album-loose hit: worth a look, not owned outright.
-    report = classify([want("Theo Parrish", "Parallel Dimensions LP")], library(), {})
-    assert len(report.possible) == 1
-    rendered = render(possible_table(report))
-    assert "album-loose" in rendered
-
-
-def test_the_wants_table_has_no_tier_column():
-    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
-    rendered = render(wants_table(report))
-    assert "tier" not in rendered
-
-
-def test_the_backlog_table_has_no_tier_column():
-    report = classify([want("Lucy Gooch", "Rushing")], library(), {})
-    rendered = render(backlog_table(report))
-    assert "tier" not in rendered
-
-
-# --- marking a dismissed row when it is shown anyway ------------------------
-
-
-def test_a_table_without_marking_carries_no_dismissed_column():
-    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
-    rendered = render(wants_table(report))
-    assert "dismissed" not in rendered
-
-
-def test_a_shown_dismissed_row_is_marked_with_its_reason():
-    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
-    dismissed = {("bandcamp-wishlist", "1"): "own the digital, want the vinyl"}
-    rendered = render(wants_table(report, dismissed))
-    assert "own the digital, want the vinyl" in rendered
-
-
-def test_a_row_that_was_never_dismissed_stays_unmarked():
-    lib = LibraryIndex(
-        albums=[album("Theo Parrish", "Parallel Dimensions"), album("Lucy Gooch", "Rushing")],
-        tracks=[],
-    )
-    report = classify(
-        [
-            want("Theo Parrish", "Parallel Dimensions", ref="1"),
-            want("Lucy Gooch", "Rushing", ref="2"),
-        ],
-        lib,
-        {},
-    )
-    assert len(report.owned) == 2
-    dismissed = {("bandcamp-wishlist", "1"): "own the digital, want the vinyl"}
-    rendered = render(wants_table(report, dismissed))
-    lucy_lines = [line for line in rendered.splitlines() if "Lucy Gooch" in line]
-    assert lucy_lines
-    assert "dismissed:" not in lucy_lines[0]
-
-
-def test_a_dismissal_with_no_reason_is_still_marked():
-    """`Dismissals.add` and `musictrack dismiss --reason` both default the
-    reason to an empty string, so a plain dismissal is the ordinary case, not
-    an edge case. The table marks a row by whether its key is present in
-    `dismissed`, not by whether the reason is truthy, so an empty reason still
-    reads as dismissed rather than as never dismissed."""
-    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
-    dismissed = {("bandcamp-wishlist", "1"): ""}
-    rendered = render(wants_table(report, dismissed))
-    lines = [line for line in rendered.splitlines() if "Theo Parrish" in line]
-    assert lines
-    assert "dismissed" in lines[0]
-
-
-def test_the_three_dismissal_states_are_distinguishable():
-    """Never dismissed, dismissed with a reason, and dismissed with the
-    empty-reason default must each render differently in the same table."""
-    lib = LibraryIndex(
-        albums=[
-            album("Theo Parrish", "Parallel Dimensions"),
-            album("Lucy Gooch", "Rushing"),
-            album("Overmono", "Good Lies"),
-        ],
-        tracks=[],
-    )
-    report = classify(
-        [
-            want("Theo Parrish", "Parallel Dimensions", ref="1"),
-            want("Lucy Gooch", "Rushing", ref="2"),
-            want("Overmono", "Good Lies", ref="3"),
-        ],
-        lib,
-        {},
-    )
-    assert len(report.owned) == 3
-    dismissed = {
-        ("bandcamp-wishlist", "1"): "duplicate",
-        ("bandcamp-wishlist", "2"): "",
-    }
-    rendered = render(wants_table(report, dismissed))
-
-    def line_for(artist):
-        [found] = [line for line in rendered.splitlines() if artist in line]
-        return found
-
-    assert "dismissed: duplicate" in line_for("Theo Parrish")
-    reasonless = line_for("Lucy Gooch")
-    assert "dismissed" in reasonless
-    assert "dismissed:" not in reasonless
-    assert "dismissed" not in line_for("Overmono")
-
-
 # --- the command: each report reads only what it needs, and honours dismissals
 
 
 class FakeDismissals:
-    """Stands in for `Dismissals`: canned answers, no sqlite file touched."""
+    """Stands in for `Dismissals`: canned answers, no sqlite file touched.
+    Records every `add`, so a walk's dismissals can be asserted on."""
 
     def __init__(self, hidden=None):
         self._hidden = hidden or {}
+        self.added: list[tuple[str, str, str]] = []
 
     def hidden(self):
         return self._hidden
+
+    def add(self, source, ref, reason):
+        self.added.append((source, ref, reason))
+
+
+def _static_walk(dismissals, title, rows, show_library, show_tier=False):
+    """A `_walk` stand-in for tests that aren't about walking: prints the same
+    rows as a plain table instead of prompting, so the CLI stays runnable
+    without feeding stdin input."""
+    console.print(row_table(title, rows, show_library, show_tier))
 
 
 class RecordingBandcamp:
@@ -226,6 +119,7 @@ def run(monkeypatch, tmp_path, *args, dismissed=None, raindrop_wants=None):
     monkeypatch.setattr(
         reconcile_module, "SourceCache", lambda: SourceCache(tmp_path / "db.sqlite")
     )
+    monkeypatch.setattr(reconcile_module, "_walk", _static_walk)
     result = CliRunner().invoke(app, ["reconcile", *args], env={"COLUMNS": "200"})
     return result, client
 
@@ -476,3 +370,67 @@ def test_the_second_run_reports_the_cached_age_not_just_now(monkeypatch, tmp_pat
     result, _ = run(monkeypatch, tmp_path, "--wants")
     assert "30 days ago" in result.stdout
     assert "--refresh" in result.stdout
+
+
+# --- the walk: every row is a decision, not just a line in a table ----------
+
+
+def _run_walking(monkeypatch, tmp_path, *args, dismissed=None, input=None):
+    """Like `run`, but leaves the real `_walk` in place so a test can drive
+    its prompts with `input`."""
+    client = RecordingBandcamp()
+    monkeypatch.setattr(gather_module, "load_bandcamp_cookie", lambda: "cookie")
+    monkeypatch.setattr(gather_module, "BandcampClient", lambda cookie: client)
+    monkeypatch.setattr(
+        gather_module.beets, "album_refs", lambda: [album("Theo Parrish", "Parallel Dimensions")]
+    )
+    monkeypatch.setattr(gather_module.beets, "track_refs", lambda: [])
+    monkeypatch.setattr(gather_module, "spotify_client", lambda: object())
+    monkeypatch.setattr(gather_module, "to_listen", lambda *a, **k: [])
+    monkeypatch.setattr(gather_module, "load_token", lambda: "token")
+    monkeypatch.setattr(gather_module, "raindrop_to_listen", lambda client: [])
+    dismissals = FakeDismissals(dismissed)
+    monkeypatch.setattr(reconcile_module, "Dismissals", lambda: dismissals)
+    monkeypatch.setattr(
+        reconcile_module, "SourceCache", lambda: SourceCache(tmp_path / "db.sqlite")
+    )
+    result = CliRunner().invoke(app, ["reconcile", *args], input=input, env={"COLUMNS": "200"})
+    return result, dismissals
+
+
+def test_confirming_a_row_dismisses_it_with_the_given_reason(monkeypatch, tmp_path):
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="y\nduplicate\n")
+    assert result.exit_code == 0
+    assert dismissals.added == [("bandcamp-wishlist", "1", "duplicate")]
+    assert "dismissed" in result.stdout
+
+
+def test_declining_a_row_leaves_it_alone(monkeypatch, tmp_path):
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="n\n")
+    assert result.exit_code == 0
+    assert dismissals.added == []
+    assert "left alone" in result.stdout
+
+
+def test_a_reasonless_confirm_dismisses_with_an_empty_reason(monkeypatch, tmp_path):
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="y\n\n")
+    assert result.exit_code == 0
+    assert dismissals.added == [("bandcamp-wishlist", "1", "")]
+
+
+def test_the_backlog_row_is_walked_too(monkeypatch, tmp_path):
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--backlog", input="y\ngot it\n")
+    assert result.exit_code == 0
+    assert dismissals.added == [("bandcamp-collection", "2", "got it")]
+
+
+def test_include_dismissed_never_prompts(monkeypatch, tmp_path):
+    """The audit view marks what's already decided; it must not ask for a new
+    decision, so it needs no stdin input at all to complete."""
+    dismissed = {("bandcamp-wishlist", "1"): "own the digital, want the vinyl"}
+    result, dismissals = _run_walking(
+        monkeypatch, tmp_path, "--wants", "--include-dismissed", dismissed=dismissed, input=""
+    )
+    assert result.exit_code == 0
+    assert dismissals.added == []
+    assert "own the digital, want the vinyl" in result.stdout

@@ -20,17 +20,24 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 
 import typer
-from rich.table import Table
 
 from musictrack.cache import SourceCache
+from musictrack.commands.reconcile_views import (
+    BACKLOG_TITLE,
+    POSSIBLE_TITLE,
+    WANTS_TITLE,
+    Row,
+    backlog_table,
+    possible_table,
+    row_table,
+    wants_table,
+)
 from musictrack.console import console
 from musictrack.errors import MissingToken, RaindropError, SourceError
 from musictrack.gather import Fetchers, UnknownSource, age_line, gather, keys_for, source_ages
-from musictrack.match import ABSENT, OWNED, LibraryIndex, Match
+from musictrack.match import ABSENT, OWNED, LibraryIndex
 from musictrack.models import AlbumRef
 from musictrack.store import DB_PATH, Dismissals
-
-Row = tuple[AlbumRef, Match]
 
 
 @dataclass
@@ -62,65 +69,23 @@ def classify(
     return report
 
 
-Dismissed = dict[tuple[str, str], str]
-
-
-def _table(
+def _walk(
+    dismissals: Dismissals,
     title: str,
     rows: list[Row],
     show_library: bool,
     show_tier: bool = False,
-    dismissed: Dismissed | None = None,
-) -> Table:
-    table = Table(title=title)
-    table.add_column("id", style="dim")
-    table.add_column("artist")
-    table.add_column("release")
-    if show_library:
-        table.add_column("in the library as")
-    if show_tier:
-        table.add_column("tier")
-    if dismissed is not None:
-        table.add_column("dismissed")
+) -> None:
+    """Ask about each row on its own, offering an inline dismiss instead of a
+    separate `dismiss <source>:<ref>` call after the fact."""
     for candidate, match in rows:
-        cells = [f"{candidate.source}:{candidate.ref}", candidate.artist, candidate.album]
-        if show_library:
-            found = match.library
-            cells.append(f"{found.artist} / {found.album}" if found else "")
-        if show_tier:
-            cells.append(match.tier)
-        if dismissed is not None:
-            key = (candidate.source, candidate.ref)
-            if key in dismissed:
-                reason = dismissed[key]
-                cells.append(f"dismissed: {reason}" if reason else "dismissed")
-            else:
-                cells.append("")
-        table.add_row(*cells)
-    return table
-
-
-def wants_table(report: Report, dismissed: Dismissed | None = None) -> Table:
-    return _table("wants you already have", report.owned, show_library=True, dismissed=dismissed)
-
-
-def possible_table(report: Report, dismissed: Dismissed | None = None) -> Table:
-    return _table(
-        "worth a look: not a certain match, tier says why",
-        report.possible,
-        True,
-        show_tier=True,
-        dismissed=dismissed,
-    )
-
-
-def backlog_table(report: Report, dismissed: Dismissed | None = None) -> Table:
-    return _table(
-        "bought, not found in the library (check before importing)",
-        report.absent,
-        False,
-        dismissed=dismissed,
-    )
+        console.print(row_table(title, [(candidate, match)], show_library, show_tier))
+        if typer.confirm("Dismiss this?", default=False):
+            reason = typer.prompt("reason", default="", show_default=False)
+            dismissals.add(candidate.source, candidate.ref, reason)
+            console.print("[green]dismissed[/]")
+        else:
+            console.print("[dim]left alone[/]")
 
 
 def reconcile(
@@ -144,12 +109,13 @@ def reconcile(
     show_backlog = backlog or not wants
 
     try:
-        dismissals = Dismissals().hidden()
+        store = Dismissals()
+        dismissed = store.hidden()
         # Hiding and marking are opposites of the same lookup: the default run
         # filters candidates out before they are classified, --include-dismissed
         # classifies everything and marks the dismissed ones instead.
-        hide = {} if include_dismissed else dismissals
-        mark = dismissals if include_dismissed else None
+        hide = {} if include_dismissed else dismissed
+        mark = dismissed if include_dismissed else None
         cache = SourceCache()
         keys = keys_for(show_wants, show_backlog)
         with console.status("gathering sources"):
@@ -177,13 +143,20 @@ def reconcile(
     if show_wants:
         report = classify([*wishlist, *listening, *raindrop_wants], index, hide)
         console.print(f"[dim]{len(wishlist) + len(listening) + len(raindrop_wants)} wants read[/]")
-        console.print(wants_table(report, mark))
-        console.print(possible_table(report, mark))
+        if include_dismissed:
+            console.print(wants_table(report.owned, mark))
+            console.print(possible_table(report.possible, mark))
+        else:
+            _walk(store, WANTS_TITLE, report.owned, show_library=True)
+            _walk(store, POSSIBLE_TITLE, report.possible, show_library=True, show_tier=True)
 
     if show_backlog:
         report = classify(collection, index, hide)
         console.print(f"[dim]{len(collection)} purchases read[/]")
-        console.print(backlog_table(report, mark))
+        if include_dismissed:
+            console.print(backlog_table(report.absent, mark))
+        else:
+            _walk(store, BACKLOG_TITLE, report.absent, show_library=False)
         console.print(
             "[dim]a row here means no title matched, which is usually a naming "
             "difference rather than a missing record[/]"
