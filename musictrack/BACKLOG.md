@@ -47,6 +47,14 @@ reasoning can be checked rather than taken on faith.
   compared against beets and the Bandcamp collection the same way. Live-run
   on the real account: 83 Raindrop bookmarks correctly surfaced as already-
   owned wants.
+- **Interactive `reconcile`** (2026-09-13). Every row `reconcile` shows —
+  wants you already have, worth a look, and the backlog's not-found rows —
+  is now walked one at a time with an inline confirm-to-dismiss (optional
+  reason), the same pattern `dedupe` already used for duplicate groups.
+  Replaces the old flow of reading a static table and then running a
+  separate `dismiss <source>:<ref>` for anything wrong. `--include-dismissed`
+  keeps the old static table, since it's an audit view rather than a place
+  to make new decisions.
 
 ## Open
 
@@ -81,20 +89,6 @@ reasoning can be checked rather than taken on faith.
    per link is new I/O this tool has avoided so far) and for the Bandcamp
    lookup (search by parsed artist/album, confidence threshold, what happens
    on no match).
-
-### Reconcile
-
-1. **Make `reconcile`'s report interactive, the way `dedupe`'s per-group
-   confirm walk replaced its single bulk prompt.** Today `reconcile` prints
-   the whole table at once, and marking a row as a false absence means a
-   separate `musictrack dismiss <source>:<ref>` call after the fact —
-   two commands and a copy-pasted id instead of one pass. Walking the
-   uncertain rows one at a time (the "worth a look" tier at least; the
-   absent table plausibly too) and offering a dismiss right there would
-   fold review and dismissal into a single interactive pass. Not scoped:
-   whether the high-confidence "owned" rows need this at all, what unit
-   walks (per-row vs per-tier), and how `--include-dismissed` and
-   `--wants`/`--backlog` interact with a walk instead of a static table.
 
 ### Matching
 
