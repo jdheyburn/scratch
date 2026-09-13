@@ -202,3 +202,29 @@ def test_no_link_line_without_one():
     [(candidate, match)] = report.owned
     rendered = render(row_listing(candidate, match, show_library=True))
     assert "link:" not in rendered
+
+
+# --- a title with literal brackets must survive, not be read as markup -----
+
+
+def test_a_bracketed_library_title_is_shown_literally_in_the_listing():
+    """Rich reads `[...]` as a style tag. A library title like `[untitled]`
+    (a real beets track title) must print as text, not vanish."""
+    lib = LibraryIndex(
+        albums=[AlbumRef(source="beets", artist="Huerco S.", album="[untitled]", ref="")],
+        tracks=[],
+    )
+    report = classify([want("Huerco S.", "Untitled")], lib, {})
+    [(candidate, match)] = report.owned
+    rendered = render(row_listing(candidate, match, show_library=True))
+    assert "[untitled]" in rendered
+
+
+def test_a_bracketed_library_title_is_shown_literally_in_the_bulk_table():
+    lib = LibraryIndex(
+        albums=[AlbumRef(source="beets", artist="Huerco S.", album="[untitled]", ref="")],
+        tracks=[],
+    )
+    report = classify([want("Huerco S.", "Untitled")], lib, {})
+    rendered = render(wants_table(report.owned))
+    assert "[untitled]" in rendered
