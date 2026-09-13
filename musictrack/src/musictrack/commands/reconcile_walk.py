@@ -6,6 +6,7 @@ fact — the one write `reconcile` makes, against Raindrop only."""
 from __future__ import annotations
 
 import typer
+from rich.prompt import Prompt
 
 from musictrack.commands.reconcile_views import Row, row_table
 from musictrack.config import load_token
@@ -14,12 +15,19 @@ from musictrack.errors import MissingToken, RaindropError
 from musictrack.raindrop import RaindropClient
 from musictrack.store import Dismissals
 
+SKIP = "[bold cyan]S[/bold cyan]kip"
+DISMISS = "[bold cyan]D[/bold cyan]ismiss"
+DELETE = "delete the raindrop bookmar[bold cyan]X[/bold cyan]"
+
 
 def _choose(prompt: str, letters: str, default: str) -> str:
     """A beets-import-style choice: type one letter (case-insensitive) or
-    press enter for the default. Re-prompts on anything else."""
+    press enter for the default. Re-prompts on anything else. The prompt
+    carries Rich markup, colouring each shortcut letter the way beets
+    highlights its own import-time choices."""
     while True:
-        answer = typer.prompt(prompt, default=default, show_default=False).strip().lower()
+        answer = Prompt.ask(prompt, console=console, default=default, show_default=False)
+        answer = answer.strip().lower()
         if answer in letters:
             return answer
 
@@ -48,11 +56,7 @@ def walk(
     for candidate, match in rows:
         console.print(row_table(title, [(candidate, match)], show_library, show_tier))
         is_raindrop = candidate.source == "raindrop"
-        prompt = (
-            "(S)kip, (D)ismiss, delete the raindrop bookmar(X)"
-            if is_raindrop
-            else "(S)kip, (D)ismiss"
-        )
+        prompt = f"{SKIP}, {DISMISS}, {DELETE}" if is_raindrop else f"{SKIP}, {DISMISS}"
         choice = _choose(prompt, "sdx" if is_raindrop else "sd", "s")
         if choice == "d":
             reason = typer.prompt("reason", default="", show_default=False)
