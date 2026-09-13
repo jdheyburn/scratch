@@ -18,8 +18,8 @@ def album(artist, title):
     return AlbumRef(source="beets", artist=artist, album=title, ref="")
 
 
-def want(artist, title, ref="1", source="bandcamp-wishlist"):
-    return AlbumRef(source=source, artist=artist, album=title, ref=ref)
+def want(artist, title, ref="1", source="bandcamp-wishlist", url=""):
+    return AlbumRef(source=source, artist=artist, album=title, ref=ref, url=url)
 
 
 def library():
@@ -184,3 +184,21 @@ def test_the_id_always_appears():
     [(candidate, match)] = report.owned
     rendered = render(row_listing(candidate, match, show_library=True))
     assert "id: bandcamp-wishlist:42" in rendered
+
+
+def test_a_link_is_shown_when_the_row_carries_one():
+    report = classify(
+        [want("Theo Parrish", "Parallel Dimensions", url="https://x.bandcamp.com/album/y")],
+        library(),
+        {},
+    )
+    [(candidate, match)] = report.owned
+    rendered = render(row_listing(candidate, match, show_library=True))
+    assert "https://x.bandcamp.com/album/y" in rendered
+
+
+def test_no_link_line_without_one():
+    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
+    [(candidate, match)] = report.owned
+    rendered = render(row_listing(candidate, match, show_library=True))
+    assert "link:" not in rendered

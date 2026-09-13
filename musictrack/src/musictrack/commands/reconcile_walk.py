@@ -99,11 +99,10 @@ def spotify_deleter(client: LazySpotifyClient) -> Deleter:
 
 
 def _confirm_bandcamp_removal(candidate: AlbumRef) -> bool:
-    """Bandcamp has no published write API, so there is nothing to call —
-    show the wishlist page and ask whether the human removed it there."""
-    if candidate.url:
-        console.print(f"  {candidate.url}")
-    else:
+    """Bandcamp has no published write API, so there is nothing to call — the
+    row's own listing already showed the link (or its absence); this just
+    asks whether the human removed it there themselves."""
+    if not candidate.url:
         console.print("[yellow]no Bandcamp link on this row[/]")
     return typer.confirm("Removed it from the Bandcamp wishlist?", default=False)
 

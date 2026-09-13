@@ -62,6 +62,8 @@ def row_listing(
         lines.append(f"  in the library as: {found.artist} / {found.album}")
     if show_tier:
         lines.append(f"  tier: {match.tier}")
+    if candidate.url:
+        lines.append(f"  link: [link={candidate.url}]{candidate.url}[/link]")
     lines.append(f"  [dim]id: {candidate.source}:{candidate.ref}[/dim]")
     return "\n".join(lines)
 

@@ -603,3 +603,17 @@ def test_declining_bandcamp_removal_leaves_it_alone(monkeypatch, tmp_path):
     assert dismissals.added == []
     assert "no Bandcamp link on this row" in result.stdout
     assert "left alone" in result.stdout
+
+
+def test_the_bandcamp_link_is_shown_up_front_not_only_after_choosing_delete(monkeypatch, tmp_path):
+    """A link a human has to press (X) to reveal is a link they might never
+    see if they meant to skip. The row's own listing carries it instead."""
+    result, _ = _run_walking(
+        monkeypatch,
+        tmp_path,
+        "--wants",
+        bandcamp_url="https://artist.bandcamp.com/album/deep-rays",
+        input="s\n",
+    )
+    assert result.exit_code == 0
+    assert "https://artist.bandcamp.com/album/deep-rays" in result.stdout
