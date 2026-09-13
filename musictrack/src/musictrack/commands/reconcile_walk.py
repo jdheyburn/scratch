@@ -11,7 +11,7 @@ from dataclasses import dataclass
 import typer
 from rich.prompt import Prompt
 
-from musictrack.commands.reconcile_views import Row, row_table
+from musictrack.commands.reconcile_views import Row, row_listing
 from musictrack.config import load_token
 from musictrack.console import console
 from musictrack.errors import MissingToken, RaindropError, SpotifyError
@@ -103,8 +103,11 @@ def walk(
     show_library: bool,
     show_tier: bool = False,
 ) -> None:
+    if not rows:
+        return
+    console.print(f"[bold underline]{title}[/bold underline]")
     for candidate, match in rows:
-        console.print(row_table(title, [(candidate, match)], show_library, show_tier))
+        console.print(row_listing(candidate, match, show_library, show_tier))
         deleter = deleters.get(candidate.source)
         prompt = f"{SKIP}, {DISMISS}"
         if deleter is not None:
@@ -121,8 +124,10 @@ def walk(
             except DELETE_ERRORS as problem:
                 console.print(f"[red]{problem}[/]")
                 console.print("[dim]left alone[/]")
+                console.print()
                 continue
             dismissals.add(candidate.source, candidate.ref, "deleted")
             console.print(f"[green]{deleter.done_label}[/]")
         else:
             console.print("[dim]left alone[/]")
+        console.print()

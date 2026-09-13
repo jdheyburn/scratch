@@ -1,9 +1,15 @@
-"""The tables `reconcile` shows, whether walking them or printing them whole."""
+"""How `reconcile` shows a row: the bulk table and the walk's single-row
+listing."""
 
 from rich.console import Console
 
 from musictrack.commands.reconcile import classify
-from musictrack.commands.reconcile_views import backlog_table, possible_table, wants_table
+from musictrack.commands.reconcile_views import (
+    backlog_table,
+    possible_table,
+    row_listing,
+    wants_table,
+)
 from musictrack.match import LibraryIndex
 from musictrack.models import AlbumRef
 
@@ -138,3 +144,43 @@ def test_the_three_dismissal_states_are_distinguishable():
     assert "dismissed" in reasonless
     assert "dismissed:" not in reasonless
     assert "dismissed" not in line_for("Overmono")
+
+
+# --- the walk's single-row listing, beets-import style ----------------------
+
+
+def test_the_listing_headlines_artist_and_album():
+    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
+    [(candidate, match)] = report.owned
+    rendered = render(row_listing(candidate, match, show_library=True))
+    assert "Theo Parrish - Parallel Dimensions" in rendered
+
+
+def test_a_library_match_is_shown_when_asked_for():
+    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
+    [(candidate, match)] = report.owned
+    rendered = render(row_listing(candidate, match, show_library=True))
+    assert "in the library as: Theo Parrish / Parallel Dimensions" in rendered
+
+
+def test_no_library_line_without_a_match():
+    report = classify([want("Lucy Gooch", "Rushing")], library(), {})
+    [(candidate, match)] = report.absent
+    rendered = render(row_listing(candidate, match, show_library=False))
+    assert "in the library as" not in rendered
+
+
+def test_the_tier_only_appears_when_asked_for():
+    report = classify([want("Theo Parrish", "Parallel Dimensions LP")], library(), {})
+    [(candidate, match)] = report.possible
+    with_tier = render(row_listing(candidate, match, show_library=True, show_tier=True))
+    without_tier = render(row_listing(candidate, match, show_library=True, show_tier=False))
+    assert "tier: album-loose" in with_tier
+    assert "tier:" not in without_tier
+
+
+def test_the_id_always_appears():
+    report = classify([want("Theo Parrish", "Parallel Dimensions", ref="42")], library(), {})
+    [(candidate, match)] = report.owned
+    rendered = render(row_listing(candidate, match, show_library=True))
+    assert "id: bandcamp-wishlist:42" in rendered

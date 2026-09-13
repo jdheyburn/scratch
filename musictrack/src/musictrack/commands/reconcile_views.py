@@ -1,4 +1,5 @@
-"""The tables `reconcile` shows, whether walking them or printing them whole."""
+"""How `reconcile` shows a row: `row_table` for the bulk `--include-dismissed`
+report, `row_listing` for one row at a time in the walk, beets-import style."""
 
 from __future__ import annotations
 
@@ -48,6 +49,21 @@ def row_table(
                 cells.append("")
         table.add_row(*cells)
     return table
+
+
+def row_listing(
+    candidate: AlbumRef, match: Match, show_library: bool, show_tier: bool = False
+) -> str:
+    """One row, beets-import style: a plain `Artist - Album` line with a few
+    indented details underneath, rather than a bordered single-row table."""
+    lines = [f"[bold]{candidate.artist} - {candidate.album}[/bold]"]
+    if show_library and match.library is not None:
+        found = match.library
+        lines.append(f"  in the library as: {found.artist} / {found.album}")
+    if show_tier:
+        lines.append(f"  tier: {match.tier}")
+    lines.append(f"  [dim]id: {candidate.source}:{candidate.ref}[/dim]")
+    return "\n".join(lines)
 
 
 def wants_table(rows: list[Row], dismissed: Dismissed | None = None) -> Table:
