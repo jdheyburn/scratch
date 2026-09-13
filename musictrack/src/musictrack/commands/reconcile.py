@@ -1,8 +1,9 @@
 """What you want against what you have.
 
-Read-only against Bandcamp and beets: nothing changes on either. Raindrop
-bookmarks and Spotify playlist entries can both be deleted from the walk
-below, since both have a real API to do it, and Bandcamp does not. Reports
+Read-only against beets: nothing this tool does changes the library. The
+other three sources can all be cleared from the walk below: Raindrop and
+Spotify for real, through their own APIs; Bandcamp has none, so its entry
+opens a link and takes the human's word for it once they've used it. Reports
 are served from a local copy of each source, whose age is printed on every
 run, and refreshed on demand with `--refresh`.
 
@@ -35,6 +36,7 @@ from musictrack.commands.reconcile_views import (
 from musictrack.commands.reconcile_walk import (
     LazyRaindropClient,
     LazySpotifyClient,
+    bandcamp_deleter,
     raindrop_deleter,
     spotify_deleter,
     walk,
@@ -130,6 +132,7 @@ def reconcile(
     deleters = {
         "raindrop": raindrop_deleter(LazyRaindropClient()),
         "spotify": spotify_deleter(LazySpotifyClient()),
+        "bandcamp-wishlist": bandcamp_deleter(),
     }
 
     if show_wants:

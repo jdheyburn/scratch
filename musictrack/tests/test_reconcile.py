@@ -18,8 +18,8 @@ def album(artist, title):
     return AlbumRef(source="beets", artist=artist, album=title, ref="")
 
 
-def want(artist, title, ref="1", source="bandcamp-wishlist"):
-    return AlbumRef(source=source, artist=artist, album=title, ref=ref)
+def want(artist, title, ref="1", source="bandcamp-wishlist", url=""):
+    return AlbumRef(source=source, artist=artist, album=title, ref=ref, url=url)
 
 
 def library():
@@ -85,12 +85,13 @@ class RecordingBandcamp:
     """Stands in for `BandcampClient`: records which reads happened, answers
     canned lists, touches no network."""
 
-    def __init__(self):
+    def __init__(self, url=""):
         self.calls: list[str] = []
+        self._url = url
 
     def wishlist(self):
         self.calls.append("wishlist")
-        return [want("Theo Parrish", "Parallel Dimensions", ref="1")]
+        return [want("Theo Parrish", "Parallel Dimensions", ref="1", url=self._url)]
 
     def collection(self):
         self.calls.append("collection")
@@ -414,11 +415,12 @@ def _run_walking(
     raindrop_client=None,
     spotify_wants=None,
     spotify_remove=None,
+    bandcamp_url="",
     input=None,
 ):
     """Like `run`, but leaves the real `walk` in place so a test can drive
     its prompts with `input`."""
-    client = RecordingBandcamp()
+    client = RecordingBandcamp(url=bandcamp_url)
     monkeypatch.setattr(gather_module, "load_bandcamp_cookie", lambda: "cookie")
     monkeypatch.setattr(gather_module, "BandcampClient", lambda cookie: client)
     monkeypatch.setattr(
@@ -504,14 +506,7 @@ def test_include_dismissed_never_prompts(monkeypatch, tmp_path):
     assert "own the digital, want the vinyl" in result.stdout
 
 
-# --- the walk's delete option: Raindrop and Spotify only, Bandcamp never ---
-
-
-def test_a_bandcamp_row_is_never_offered_delete(monkeypatch, tmp_path):
-    """Bandcamp has no published write API, so a bandcamp-wishlist row must
-    never grow an (X) option the way a raindrop or spotify row does."""
-    result, _ = _run_walking(monkeypatch, tmp_path, "--wants", input="x\ns\n")
-    assert "delete" not in result.stdout.lower()
+# --- the walk's delete option: real for Raindrop/Spotify, manual for Bandcamp
 
 
 def test_deleting_a_raindrop_bookmark_also_dismisses_it(monkeypatch, tmp_path):
@@ -583,4 +578,28 @@ def test_a_failed_spotify_removal_leaves_the_row_alone(monkeypatch, tmp_path):
     assert result.exit_code == 0
     assert dismissals.added == []
     assert "refused to remove tracks" in result.stdout
+    assert "left alone" in result.stdout
+
+
+def test_confirming_bandcamp_removal_dismisses_it_with_a_manual_reason(monkeypatch, tmp_path):
+    result, dismissals = _run_walking(
+        monkeypatch,
+        tmp_path,
+        "--wants",
+        bandcamp_url="https://artist.bandcamp.com/album/deep-rays",
+        input="x\ny\n",
+    )
+    assert result.exit_code == 0
+    assert dismissals.added == [("bandcamp-wishlist", "1", "removed manually on Bandcamp")]
+    assert "https://artist.bandcamp.com/album/deep-rays" in result.stdout
+    assert "removed from the Bandcamp wishlist" in result.stdout
+
+
+def test_declining_bandcamp_removal_leaves_it_alone(monkeypatch, tmp_path):
+    """Also covers a row with no link at all: the flow must say so rather
+    than silently offering nothing to click."""
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="x\nn\n")
+    assert result.exit_code == 0
+    assert dismissals.added == []
+    assert "no Bandcamp link on this row" in result.stdout
     assert "left alone" in result.stdout

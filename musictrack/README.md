@@ -109,11 +109,12 @@ Reads the Bandcamp wishlist, the Spotify "To Listen" playlist, Raindrop
 bookmarks, and the beets library, then walks what you want that you already
 own and what you bought that never made it into the library, one row at a
 time: (S)kip leaves it for next time, (D)ismiss hides it from future
-reports, and a Raindrop or Spotify row also offers (X) to delete the entry
-itself — a Raindrop bookmark, or the track(s) an album placed in the "To
-Listen" playlist. Bandcamp and beets are never written to; Bandcamp has no
-published write API at all. `--wants` and `--backlog` each walk one half of
-the report on their own; with neither, both walk.
+reports, and every row also offers (X) to clear the entry itself — a
+Raindrop bookmark and a Spotify playlist entry are deleted for real, through
+their own APIs; Bandcamp has none, so its (X) prints the wishlist page and
+asks you to confirm you removed it there yourself. beets is never written
+to. `--wants` and `--backlog` each walk one half of the report on their
+own; with neither, both walk.
 
 The first run reads every source live and keeps a local copy. Later runs
 answer from that copy instead of reading the accounts again, so every report

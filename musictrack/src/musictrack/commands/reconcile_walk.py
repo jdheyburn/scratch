@@ -1,7 +1,8 @@
 """Walking `reconcile`'s rows one at a time: skip, dismiss, or (for a source
-that supports it) delete the underlying entry outright, folding review and
-cleanup into a single pass instead of a separate `dismiss <source>:<ref>`
-call after the fact — the only writes `reconcile` makes."""
+that supports it) delete the underlying entry, folding review and cleanup
+into a single pass instead of a separate `dismiss <source>:<ref>` call after
+the fact. Raindrop and Spotify delete for real; Bandcamp has no write API,
+so its delete shows a link and takes the human's word that they used it."""
 
 from __future__ import annotations
 
@@ -28,13 +29,19 @@ DELETE_ERRORS = (MissingToken, RaindropError, SpotifyError)
 
 @dataclass
 class Deleter:
-    """One source's delete action: what to call, and how to describe it
-    before and after — a source with no delete action is simply absent from
-    the table `walk` is given."""
+    """One source's delete action: what to call, how to describe it before
+    and after, and what reason to record locally — a source with no delete
+    action is simply absent from the table `walk` is given.
+
+    `action` returns whether the delete actually happened: always `True` for
+    a source with a real write API, but Bandcamp has none, so its action
+    shows a link and asks the human to confirm they did it themselves —
+    `False` on a decline means the row is left alone, not dismissed."""
 
     prompt_label: str
     done_label: str
-    action: Callable[[AlbumRef], None]
+    dismiss_reason: str
+    action: Callable[[AlbumRef], bool]
 
 
 class LazyRaindropClient:
@@ -63,23 +70,50 @@ class LazySpotifyClient:
         return self._client
 
 
+def _delete_raindrop(client: LazyRaindropClient, candidate: AlbumRef) -> bool:
+    client.get().delete([int(candidate.ref)])
+    return True
+
+
 def raindrop_deleter(client: LazyRaindropClient) -> Deleter:
     return Deleter(
         prompt_label="the Raindrop bookmark",
         done_label="raindrop bookmark deleted",
-        action=lambda candidate: client.get().delete([int(candidate.ref)]),
+        dismiss_reason="deleted",
+        action=lambda candidate: _delete_raindrop(client, candidate),
     )
 
 
-def _remove_from_playlist(client: LazySpotifyClient, candidate: AlbumRef) -> None:
+def _remove_from_playlist(client: LazySpotifyClient, candidate: AlbumRef) -> bool:
     remove_from_playlist(client.get(), candidate.ref)
+    return True
 
 
 def spotify_deleter(client: LazySpotifyClient) -> Deleter:
     return Deleter(
         prompt_label="from the Spotify playlist",
         done_label="removed from the Spotify playlist",
+        dismiss_reason="deleted",
         action=lambda candidate: _remove_from_playlist(client, candidate),
+    )
+
+
+def _confirm_bandcamp_removal(candidate: AlbumRef) -> bool:
+    """Bandcamp has no published write API, so there is nothing to call —
+    show the wishlist page and ask whether the human removed it there."""
+    if candidate.url:
+        console.print(f"  {candidate.url}")
+    else:
+        console.print("[yellow]no Bandcamp link on this row[/]")
+    return typer.confirm("Removed it from the Bandcamp wishlist?", default=False)
+
+
+def bandcamp_deleter() -> Deleter:
+    return Deleter(
+        prompt_label="from Bandcamp (manual)",
+        done_label="removed from the Bandcamp wishlist",
+        dismiss_reason="removed manually on Bandcamp",
+        action=_confirm_bandcamp_removal,
     )
 
 
@@ -120,14 +154,17 @@ def walk(
         elif choice == "x":
             assert deleter is not None
             try:
-                deleter.action(candidate)
+                done = deleter.action(candidate)
             except DELETE_ERRORS as problem:
                 console.print(f"[red]{problem}[/]")
                 console.print("[dim]left alone[/]")
                 console.print()
                 continue
-            dismissals.add(candidate.source, candidate.ref, "deleted")
-            console.print(f"[green]{deleter.done_label}[/]")
+            if done:
+                dismissals.add(candidate.source, candidate.ref, deleter.dismiss_reason)
+                console.print(f"[green]{deleter.done_label}[/]")
+            else:
+                console.print("[dim]left alone[/]")
         else:
             console.print("[dim]left alone[/]")
         console.print()
