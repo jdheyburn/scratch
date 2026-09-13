@@ -109,10 +109,11 @@ Reads the Bandcamp wishlist, the Spotify "To Listen" playlist, Raindrop
 bookmarks, and the beets library, then walks what you want that you already
 own and what you bought that never made it into the library, one row at a
 time: (S)kip leaves it for next time, (D)ismiss hides it from future
-reports, and a Raindrop-sourced row also offers (X) to delete the bookmark
-itself — the one write this command makes, against Raindrop only; Bandcamp,
-Spotify, and beets are never touched. `--wants` and `--backlog` each walk
-one half of the report on their own; with neither, both walk.
+reports, and a Raindrop or Spotify row also offers (X) to delete the entry
+itself — a Raindrop bookmark, or the track(s) an album placed in the "To
+Listen" playlist. Bandcamp and beets are never written to; Bandcamp has no
+published write API at all. `--wants` and `--backlog` each walk one half of
+the report on their own; with neither, both walk.
 
 The first run reads every source live and keeps a local copy. Later runs
 answer from that copy instead of reading the accounts again, so every report
@@ -131,7 +132,11 @@ Raindrop:
 - A Spotify client id and secret, at `~/.config/spotify/client_id` and
   `~/.config/spotify/client_secret`, both mode 600, from an app registered at
   the [Spotify developer dashboard](https://developer.spotify.com/dashboard)
-  with redirect URI `http://127.0.0.1:8888/callback`.
+  with redirect URI `http://127.0.0.1:8888/callback`. The playlist-modify
+  scope needed for (X) means the cached login no longer matches what's
+  requested, so the next run that touches Spotify at all re-triggers the
+  same one-time browser login as the very first run, not just a run that
+  deletes something.
 
 The two reports carry different weight. Owned rows are statements: an exact
 title with an agreeing artist was right in essentially every one of 338

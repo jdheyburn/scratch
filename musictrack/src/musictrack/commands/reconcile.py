@@ -1,10 +1,10 @@
 """What you want against what you have.
 
-Read-only against Bandcamp, Spotify, and beets: the comparison happens in
-memory, and nothing changes on any of those three. The one exception is
-Raindrop, whose bookmarks can be deleted from the walk below. Reports are
-served from a local copy of each source, whose age is printed on every run,
-and refreshed on demand with `--refresh`.
+Read-only against Bandcamp and beets: nothing changes on either. Raindrop
+bookmarks and Spotify playlist entries can both be deleted from the walk
+below, since both have a real API to do it, and Bandcamp does not. Reports
+are served from a local copy of each source, whose age is printed on every
+run, and refreshed on demand with `--refresh`.
 
 The three tables are not equally confident. Owned rows are statements: an exact
 title with an agreeing artist was right essentially every time across 338
@@ -32,7 +32,13 @@ from musictrack.commands.reconcile_views import (
     possible_table,
     wants_table,
 )
-from musictrack.commands.reconcile_walk import LazyRaindropClient, walk
+from musictrack.commands.reconcile_walk import (
+    LazyRaindropClient,
+    LazySpotifyClient,
+    raindrop_deleter,
+    spotify_deleter,
+    walk,
+)
 from musictrack.console import console
 from musictrack.errors import MissingToken, RaindropError, SourceError
 from musictrack.gather import Fetchers, UnknownSource, age_line, gather, keys_for, source_ages
@@ -121,7 +127,10 @@ def reconcile(
     collection = gathered.rows.get("bandcamp-collection", [])
     listening = gathered.rows.get("spotify", [])
     raindrop_wants = gathered.rows.get("raindrop", [])
-    raindrop_client = LazyRaindropClient()
+    deleters = {
+        "raindrop": raindrop_deleter(LazyRaindropClient()),
+        "spotify": spotify_deleter(LazySpotifyClient()),
+    }
 
     if show_wants:
         report = classify([*wishlist, *listening, *raindrop_wants], index, hide)
@@ -130,10 +139,10 @@ def reconcile(
             console.print(wants_table(report.owned, mark))
             console.print(possible_table(report.possible, mark))
         else:
-            walk(store, raindrop_client, WANTS_TITLE, report.owned, show_library=True)
+            walk(store, deleters, WANTS_TITLE, report.owned, show_library=True)
             walk(
                 store,
-                raindrop_client,
+                deleters,
                 POSSIBLE_TITLE,
                 report.possible,
                 show_library=True,
@@ -146,7 +155,7 @@ def reconcile(
         if include_dismissed:
             console.print(backlog_table(report.absent, mark))
         else:
-            walk(store, raindrop_client, BACKLOG_TITLE, report.absent, show_library=False)
+            walk(store, deleters, BACKLOG_TITLE, report.absent, show_library=False)
         console.print(
             "[dim]a row here means no title matched, which is usually a naming "
             "difference rather than a missing record[/]"

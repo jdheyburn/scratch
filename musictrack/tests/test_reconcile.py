@@ -74,7 +74,7 @@ class FakeDismissals:
         self.added.append((source, ref, reason))
 
 
-def _static_walk(dismissals, raindrop, title, rows, show_library, show_tier=False):
+def _static_walk(dismissals, deleters, title, rows, show_library, show_tier=False):
     """A `walk` stand-in for tests that aren't about walking: prints the same
     rows as a plain table instead of prompting, so the CLI stays runnable
     without feeding stdin input."""
@@ -390,6 +390,21 @@ class FakeRaindropClient:
         self.deleted.extend(ids)
 
 
+class RecordingSpotifyRemove:
+    """Stands in for `remove_from_playlist`: records calls, answers canned
+    failures, touches no network."""
+
+    def __init__(self, fail=None):
+        self.removed: list[str] = []
+        self._fail = fail
+
+    def __call__(self, client, album_id):
+        if self._fail is not None:
+            raise self._fail
+        self.removed.append(album_id)
+        return 1
+
+
 def _run_walking(
     monkeypatch,
     tmp_path,
@@ -397,6 +412,8 @@ def _run_walking(
     dismissed=None,
     raindrop_wants=None,
     raindrop_client=None,
+    spotify_wants=None,
+    spotify_remove=None,
     input=None,
 ):
     """Like `run`, but leaves the real `walk` in place so a test can drive
@@ -409,7 +426,7 @@ def _run_walking(
     )
     monkeypatch.setattr(gather_module.beets, "track_refs", lambda: [])
     monkeypatch.setattr(gather_module, "spotify_client", lambda: object())
-    monkeypatch.setattr(gather_module, "to_listen", lambda *a, **k: [])
+    monkeypatch.setattr(gather_module, "to_listen", lambda *a, **k: list(spotify_wants or []))
     monkeypatch.setattr(gather_module, "load_token", lambda: "token")
     monkeypatch.setattr(
         gather_module, "raindrop_to_listen", lambda client: list(raindrop_wants or [])
@@ -424,6 +441,12 @@ def _run_walking(
         reconcile_walk_module,
         "RaindropClient",
         lambda token: raindrop_client or FakeRaindropClient(),
+    )
+    monkeypatch.setattr(reconcile_walk_module, "_spotify_client", lambda: object())
+    monkeypatch.setattr(
+        reconcile_walk_module,
+        "remove_from_playlist",
+        spotify_remove or RecordingSpotifyRemove(),
     )
     result = CliRunner().invoke(app, ["reconcile", *args], input=input, env={"COLUMNS": "200"})
     return result, dismissals
@@ -481,10 +504,12 @@ def test_include_dismissed_never_prompts(monkeypatch, tmp_path):
     assert "own the digital, want the vinyl" in result.stdout
 
 
-# --- the walk's Raindrop-only option: delete the bookmark itself -----------
+# --- the walk's delete option: Raindrop and Spotify only, Bandcamp never ---
 
 
-def test_a_non_raindrop_row_is_never_offered_delete(monkeypatch, tmp_path):
+def test_a_bandcamp_row_is_never_offered_delete(monkeypatch, tmp_path):
+    """Bandcamp has no published write API, so a bandcamp-wishlist row must
+    never grow an (X) option the way a raindrop or spotify row does."""
     result, _ = _run_walking(monkeypatch, tmp_path, "--wants", input="x\ns\n")
     assert "delete" not in result.stdout.lower()
 
@@ -506,7 +531,7 @@ def test_deleting_a_raindrop_bookmark_also_dismisses_it(monkeypatch, tmp_path):
     assert "deleted" in result.stdout
 
 
-def test_a_failed_delete_leaves_the_row_alone(monkeypatch, tmp_path):
+def test_a_failed_raindrop_delete_leaves_the_row_alone(monkeypatch, tmp_path):
     from musictrack.errors import RaindropError
 
     raindrop_want = want("Theo Parrish", "Parallel Dimensions", ref="9", source="raindrop")
@@ -522,4 +547,40 @@ def test_a_failed_delete_leaves_the_row_alone(monkeypatch, tmp_path):
     assert result.exit_code == 0
     assert dismissals.added == []
     assert "503" in result.stdout
+    assert "left alone" in result.stdout
+
+
+def test_deleting_a_spotify_want_also_dismisses_it(monkeypatch, tmp_path):
+    spotify_want = want("Theo Parrish", "Parallel Dimensions", ref="album123", source="spotify")
+    remover = RecordingSpotifyRemove()
+    result, dismissals = _run_walking(
+        monkeypatch,
+        tmp_path,
+        "--wants",
+        spotify_wants=[spotify_want],
+        spotify_remove=remover,
+        input="s\nx\n",
+    )
+    assert result.exit_code == 0
+    assert remover.removed == ["album123"]
+    assert dismissals.added == [("spotify", "album123", "deleted")]
+    assert "removed from the Spotify playlist" in result.stdout
+
+
+def test_a_failed_spotify_removal_leaves_the_row_alone(monkeypatch, tmp_path):
+    from musictrack.errors import SpotifyError
+
+    spotify_want = want("Theo Parrish", "Parallel Dimensions", ref="album123", source="spotify")
+    remover = RecordingSpotifyRemove(fail=SpotifyError("Spotify refused to remove tracks"))
+    result, dismissals = _run_walking(
+        monkeypatch,
+        tmp_path,
+        "--wants",
+        spotify_wants=[spotify_want],
+        spotify_remove=remover,
+        input="s\nx\n",
+    )
+    assert result.exit_code == 0
+    assert dismissals.added == []
+    assert "refused to remove tracks" in result.stdout
     assert "left alone" in result.stdout

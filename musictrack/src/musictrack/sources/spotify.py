@@ -21,7 +21,7 @@ from musictrack.models import AlbumRef
 
 PLAYLIST_NAME = "To Listen"
 REDIRECT_URI = "http://127.0.0.1:8888/callback"
-SCOPE = "playlist-read-private playlist-read-collaborative"
+SCOPE = "playlist-read-private playlist-read-collaborative playlist-modify-private"
 PAGE_SIZE = 100
 
 # 6359 playlist entries at 100 a page is 64 pages. This bounds a misbehaving
@@ -63,14 +63,15 @@ def spotify_client(cache_path: Path | None = None):
     return spotipy.Spotify(auth_manager=auth_manager)
 
 
-def entry_album(entry: dict) -> dict | None:
-    """The album an entry belongs to, or nothing if it has none.
+def _holder(entry: dict) -> dict:
+    """Spotify serves the entry under `item`. Its own documentation, and
+    spotipy, still say `track`, so both are read and whichever exists wins."""
+    return (entry or {}).get("item") or (entry or {}).get("track") or {}
 
-    Spotify serves the entry under `item`. Its own documentation, and spotipy,
-    still say `track`, so both are read and whichever exists wins.
-    """
-    holder = (entry or {}).get("item") or (entry or {}).get("track") or {}
-    album = holder.get("album") or {}
+
+def entry_album(entry: dict) -> dict | None:
+    """The album an entry belongs to, or nothing if it has none."""
+    album = _holder(entry).get("album") or {}
     return album if album.get("id") else None
 
 
@@ -137,3 +138,44 @@ def to_listen(client, name: str = PLAYLIST_NAME) -> list[AlbumRef]:
             f"read {len(entries)} of {total} playlist entries; the paged read lost records"
         )
     return album_blocks(entries)
+
+
+def remove_from_playlist(client, album_id: str, name: str = PLAYLIST_NAME) -> int:
+    """Remove every track this album placed in the playlist.
+
+    An `AlbumRef` only carries the album id, and removal needs the playlist's
+    own track uris, so this re-walks the playlist live rather than trusting
+    anything cached. Returns how many tracks were removed, 0 if the album was
+    already gone.
+    """
+    playlist_id = find_playlist(client, name)
+    uris: list[str] = []
+    offset = 0
+    for _ in range(MAX_PAGES):
+        page = _call(
+            "read the playlist",
+            client.playlist_items,
+            playlist_id,
+            limit=PAGE_SIZE,
+            offset=offset,
+        )
+        items = page.get("items") or []
+        if not items:
+            break
+        for entry in items:
+            album = entry_album(entry)
+            if album is not None and album["id"] == album_id:
+                uri = _holder(entry).get("uri")
+                if uri:
+                    uris.append(uri)
+        offset += len(items)
+    else:
+        raise SpotifyError(f"stopped after {MAX_PAGES} pages of the playlist")
+    if uris:
+        _call(
+            "remove tracks from the playlist",
+            client.playlist_remove_all_occurrences_of_items,
+            playlist_id,
+            uris,
+        )
+    return len(uris)

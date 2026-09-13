@@ -5,29 +5,37 @@ import pytest
 from spotipy import SpotifyException
 
 from musictrack.errors import SpotifyError
-from musictrack.sources.spotify import album_blocks, entry_album, find_playlist, to_listen
+from musictrack.sources.spotify import (
+    album_blocks,
+    entry_album,
+    find_playlist,
+    remove_from_playlist,
+    to_listen,
+)
 
 
-def entry(album_id, name="An Album", artists=("An Artist",), key="item"):
-    return {
-        key: {
-            "name": "A Track",
-            "album": {
-                "id": album_id,
-                "name": name,
-                "album_type": "album",
-                "total_tracks": 3,
-                "artists": [{"name": a} for a in artists],
-                "external_urls": {"spotify": f"https://open.spotify.com/album/{album_id}"},
-            },
-        }
+def entry(album_id, name="An Album", artists=("An Artist",), key="item", uri=None):
+    holder = {
+        "name": "A Track",
+        "album": {
+            "id": album_id,
+            "name": name,
+            "album_type": "album",
+            "total_tracks": 3,
+            "artists": [{"name": a} for a in artists],
+            "external_urls": {"spotify": f"https://open.spotify.com/album/{album_id}"},
+        },
     }
+    if uri is not None:
+        holder["uri"] = uri
+    return {key: holder}
 
 
 class FakeSpotify:
     def __init__(self, playlists, items=()):
         self._playlists = playlists
         self._items = list(items)
+        self.removed: list[tuple[str, list[str]]] = []
 
     def current_user_playlists(self, limit=50):
         return {"items": self._playlists, "next": None}
@@ -38,6 +46,9 @@ class FakeSpotify:
 
     def next(self, result):
         return None
+
+    def playlist_remove_all_occurrences_of_items(self, playlist_id, items):
+        self.removed.append((playlist_id, list(items)))
 
 
 def test_the_entry_is_read_from_item_not_track():
@@ -212,3 +223,52 @@ def test_the_playlist_read_is_capped_rather_than_looping_forever():
     with pytest.raises(SpotifyError) as problem:
         to_listen(EndlessPlaylistItems())
     assert "stopped after" in str(problem.value)
+
+
+# --- removing one album's tracks from the playlist --------------------------
+
+
+def test_remove_from_playlist_deletes_only_the_matching_album():
+    client = FakeSpotify(
+        [{"id": "real", "name": "To Listen"}],
+        items=[
+            entry("a1", uri="spotify:track:t1"),
+            entry("a1", uri="spotify:track:t2"),
+            entry("a2", uri="spotify:track:t3"),
+        ],
+    )
+    removed = remove_from_playlist(client, "a1")
+    assert removed == 2
+    [(playlist_id, uris)] = client.removed
+    assert playlist_id == "real"
+    assert set(uris) == {"spotify:track:t1", "spotify:track:t2"}
+
+
+def test_remove_from_playlist_is_a_no_op_when_the_album_is_already_gone():
+    client = FakeSpotify(
+        [{"id": "real", "name": "To Listen"}],
+        items=[entry("a2", uri="spotify:track:t3")],
+    )
+    removed = remove_from_playlist(client, "a1")
+    assert removed == 0
+    assert client.removed == []
+
+
+def test_an_entry_with_no_uri_is_never_removed():
+    client = FakeSpotify([{"id": "real", "name": "To Listen"}], items=[entry("a1")])
+    removed = remove_from_playlist(client, "a1")
+    assert removed == 0
+    assert client.removed == []
+
+
+def test_a_refused_removal_is_wrapped_not_raised_raw():
+    class RefusingRemoval(FakeSpotify):
+        def playlist_remove_all_occurrences_of_items(self, playlist_id, items):
+            raise SpotifyException(403, -1, "no")
+
+    client = RefusingRemoval(
+        [{"id": "real", "name": "To Listen"}], items=[entry("a1", uri="spotify:track:t1")]
+    )
+    with pytest.raises(SpotifyError) as problem:
+        remove_from_playlist(client, "a1")
+    assert "403" in str(problem.value)
