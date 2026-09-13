@@ -106,11 +106,13 @@ recoverable in the Raindrop UI.
 ### reconcile
 
 Reads the Bandcamp wishlist, the Spotify "To Listen" playlist, Raindrop
-bookmarks, and the beets library, then prints what you want that you already
-own and what you bought that never made it into the library. Read-only
-against all four: nothing on Bandcamp, Spotify, Raindrop, or beets changes.
-`--wants` and `--backlog` each print one half of the report on their own;
-with neither, both print.
+bookmarks, and the beets library, then walks what you want that you already
+own and what you bought that never made it into the library, one row at a
+time: (S)kip leaves it for next time, (D)ismiss hides it from future
+reports, and a Raindrop-sourced row also offers (X) to delete the bookmark
+itself — the one write this command makes, against Raindrop only; Bandcamp,
+Spotify, and beets are never touched. `--wants` and `--backlog` each walk
+one half of the report on their own; with neither, both walk.
 
 The first run reads every source live and keeps a local copy. Later runs
 answer from that copy instead of reading the accounts again, so every report
@@ -153,10 +155,11 @@ turned out to be a matcher bug rather than a real absence: a title with no
 ASCII equivalent folds to the same empty key as a genuinely blank library
 title, so a symbol-only Bandcamp title was matching a library album with an
 untagged name. Fixed by refusing to match on an empty folded key; the same bug
-moved one Spotify row from "worth a look" to absent. `musictrack dismiss
-<source>:<ref> [--reason]` files a false absence away for good, using the id
-from the report's first column. `reconcile --include-dismissed` shows those
-rows again, marked with their reason.
+moved one Spotify row from "worth a look" to absent. (D)ismiss during the walk
+does what a separate `musictrack dismiss <source>:<ref> [--reason]` used to
+require as an extra step; that command still exists for fixing up a row after
+the fact. `reconcile --include-dismissed` shows dismissed rows again, marked
+with their reason, without walking them again.
 
 ## Development
 

@@ -1,7 +1,8 @@
 """What you want against what you have.
 
-Read-only against Bandcamp, Spotify, Raindrop, and beets: the comparison
-happens in memory, and nothing changes on any of those four. Reports are
+Read-only against Bandcamp, Spotify, and beets: the comparison happens in
+memory, and nothing changes on any of those three. The one exception is
+Raindrop, whose bookmarks can be deleted from the walk below. Reports are
 served from a local copy of each source, whose age is printed on every run,
 and refreshed on demand with `--refresh`.
 
@@ -29,9 +30,9 @@ from musictrack.commands.reconcile_views import (
     Row,
     backlog_table,
     possible_table,
-    row_table,
     wants_table,
 )
+from musictrack.commands.reconcile_walk import LazyRaindropClient, walk
 from musictrack.console import console
 from musictrack.errors import MissingToken, RaindropError, SourceError
 from musictrack.gather import Fetchers, UnknownSource, age_line, gather, keys_for, source_ages
@@ -67,25 +68,6 @@ def classify(
         else:
             report.possible.append((candidate, match))
     return report
-
-
-def _walk(
-    dismissals: Dismissals,
-    title: str,
-    rows: list[Row],
-    show_library: bool,
-    show_tier: bool = False,
-) -> None:
-    """Ask about each row on its own, offering an inline dismiss instead of a
-    separate `dismiss <source>:<ref>` call after the fact."""
-    for candidate, match in rows:
-        console.print(row_table(title, [(candidate, match)], show_library, show_tier))
-        if typer.confirm("Dismiss this?", default=False):
-            reason = typer.prompt("reason", default="", show_default=False)
-            dismissals.add(candidate.source, candidate.ref, reason)
-            console.print("[green]dismissed[/]")
-        else:
-            console.print("[dim]left alone[/]")
 
 
 def reconcile(
@@ -139,6 +121,7 @@ def reconcile(
     collection = gathered.rows.get("bandcamp-collection", [])
     listening = gathered.rows.get("spotify", [])
     raindrop_wants = gathered.rows.get("raindrop", [])
+    raindrop_client = LazyRaindropClient()
 
     if show_wants:
         report = classify([*wishlist, *listening, *raindrop_wants], index, hide)
@@ -147,8 +130,15 @@ def reconcile(
             console.print(wants_table(report.owned, mark))
             console.print(possible_table(report.possible, mark))
         else:
-            _walk(store, WANTS_TITLE, report.owned, show_library=True)
-            _walk(store, POSSIBLE_TITLE, report.possible, show_library=True, show_tier=True)
+            walk(store, raindrop_client, WANTS_TITLE, report.owned, show_library=True)
+            walk(
+                store,
+                raindrop_client,
+                POSSIBLE_TITLE,
+                report.possible,
+                show_library=True,
+                show_tier=True,
+            )
 
     if show_backlog:
         report = classify(collection, index, hide)
@@ -156,7 +146,7 @@ def reconcile(
         if include_dismissed:
             console.print(backlog_table(report.absent, mark))
         else:
-            _walk(store, BACKLOG_TITLE, report.absent, show_library=False)
+            walk(store, raindrop_client, BACKLOG_TITLE, report.absent, show_library=False)
         console.print(
             "[dim]a row here means no title matched, which is usually a naming "
             "difference rather than a missing record[/]"

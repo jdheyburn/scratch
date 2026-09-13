@@ -3,6 +3,7 @@
 from typer.testing import CliRunner
 
 import musictrack.commands.reconcile as reconcile_module
+import musictrack.commands.reconcile_walk as reconcile_walk_module
 import musictrack.gather as gather_module
 from musictrack.cache import SourceCache
 from musictrack.cli import app
@@ -73,8 +74,8 @@ class FakeDismissals:
         self.added.append((source, ref, reason))
 
 
-def _static_walk(dismissals, title, rows, show_library, show_tier=False):
-    """A `_walk` stand-in for tests that aren't about walking: prints the same
+def _static_walk(dismissals, raindrop, title, rows, show_library, show_tier=False):
+    """A `walk` stand-in for tests that aren't about walking: prints the same
     rows as a plain table instead of prompting, so the CLI stays runnable
     without feeding stdin input."""
     console.print(row_table(title, rows, show_library, show_tier))
@@ -119,7 +120,7 @@ def run(monkeypatch, tmp_path, *args, dismissed=None, raindrop_wants=None):
     monkeypatch.setattr(
         reconcile_module, "SourceCache", lambda: SourceCache(tmp_path / "db.sqlite")
     )
-    monkeypatch.setattr(reconcile_module, "_walk", _static_walk)
+    monkeypatch.setattr(reconcile_module, "walk", _static_walk)
     result = CliRunner().invoke(app, ["reconcile", *args], env={"COLUMNS": "200"})
     return result, client
 
@@ -375,8 +376,30 @@ def test_the_second_run_reports_the_cached_age_not_just_now(monkeypatch, tmp_pat
 # --- the walk: every row is a decision, not just a line in a table ----------
 
 
-def _run_walking(monkeypatch, tmp_path, *args, dismissed=None, input=None):
-    """Like `run`, but leaves the real `_walk` in place so a test can drive
+class FakeRaindropClient:
+    """Stands in for `RaindropClient` inside the walk: records deletes,
+    answers canned failures, touches no network."""
+
+    def __init__(self, fail=None):
+        self.deleted: list[int] = []
+        self._fail = fail
+
+    def delete(self, ids):
+        if self._fail is not None:
+            raise self._fail
+        self.deleted.extend(ids)
+
+
+def _run_walking(
+    monkeypatch,
+    tmp_path,
+    *args,
+    dismissed=None,
+    raindrop_wants=None,
+    raindrop_client=None,
+    input=None,
+):
+    """Like `run`, but leaves the real `walk` in place so a test can drive
     its prompts with `input`."""
     client = RecordingBandcamp()
     monkeypatch.setattr(gather_module, "load_bandcamp_cookie", lambda: "cookie")
@@ -388,38 +411,60 @@ def _run_walking(monkeypatch, tmp_path, *args, dismissed=None, input=None):
     monkeypatch.setattr(gather_module, "spotify_client", lambda: object())
     monkeypatch.setattr(gather_module, "to_listen", lambda *a, **k: [])
     monkeypatch.setattr(gather_module, "load_token", lambda: "token")
-    monkeypatch.setattr(gather_module, "raindrop_to_listen", lambda client: [])
+    monkeypatch.setattr(
+        gather_module, "raindrop_to_listen", lambda client: list(raindrop_wants or [])
+    )
     dismissals = FakeDismissals(dismissed)
     monkeypatch.setattr(reconcile_module, "Dismissals", lambda: dismissals)
     monkeypatch.setattr(
         reconcile_module, "SourceCache", lambda: SourceCache(tmp_path / "db.sqlite")
+    )
+    monkeypatch.setattr(reconcile_walk_module, "load_token", lambda: "raindrop-token")
+    monkeypatch.setattr(
+        reconcile_walk_module,
+        "RaindropClient",
+        lambda token: raindrop_client or FakeRaindropClient(),
     )
     result = CliRunner().invoke(app, ["reconcile", *args], input=input, env={"COLUMNS": "200"})
     return result, dismissals
 
 
 def test_confirming_a_row_dismisses_it_with_the_given_reason(monkeypatch, tmp_path):
-    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="y\nduplicate\n")
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="d\nduplicate\n")
     assert result.exit_code == 0
     assert dismissals.added == [("bandcamp-wishlist", "1", "duplicate")]
     assert "dismissed" in result.stdout
 
 
-def test_declining_a_row_leaves_it_alone(monkeypatch, tmp_path):
-    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="n\n")
+def test_skipping_a_row_leaves_it_alone(monkeypatch, tmp_path):
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="s\n")
     assert result.exit_code == 0
     assert dismissals.added == []
     assert "left alone" in result.stdout
 
 
-def test_a_reasonless_confirm_dismisses_with_an_empty_reason(monkeypatch, tmp_path):
-    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="y\n\n")
+def test_the_default_choice_is_skip(monkeypatch, tmp_path):
+    """Pressing enter with no letter must not silently dismiss or delete."""
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="\n")
+    assert result.exit_code == 0
+    assert dismissals.added == []
+    assert "left alone" in result.stdout
+
+
+def test_an_unrecognised_letter_is_reprompted(monkeypatch, tmp_path):
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="q\ns\n")
+    assert result.exit_code == 0
+    assert dismissals.added == []
+
+
+def test_a_reasonless_dismissal_still_dismisses(monkeypatch, tmp_path):
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="d\n\n")
     assert result.exit_code == 0
     assert dismissals.added == [("bandcamp-wishlist", "1", "")]
 
 
 def test_the_backlog_row_is_walked_too(monkeypatch, tmp_path):
-    result, dismissals = _run_walking(monkeypatch, tmp_path, "--backlog", input="y\ngot it\n")
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--backlog", input="d\ngot it\n")
     assert result.exit_code == 0
     assert dismissals.added == [("bandcamp-collection", "2", "got it")]
 
@@ -434,3 +479,47 @@ def test_include_dismissed_never_prompts(monkeypatch, tmp_path):
     assert result.exit_code == 0
     assert dismissals.added == []
     assert "own the digital, want the vinyl" in result.stdout
+
+
+# --- the walk's Raindrop-only option: delete the bookmark itself -----------
+
+
+def test_a_non_raindrop_row_is_never_offered_delete(monkeypatch, tmp_path):
+    result, _ = _run_walking(monkeypatch, tmp_path, "--wants", input="x\ns\n")
+    assert "delete" not in result.stdout.lower()
+
+
+def test_deleting_a_raindrop_bookmark_also_dismisses_it(monkeypatch, tmp_path):
+    raindrop_want = want("Theo Parrish", "Parallel Dimensions", ref="9", source="raindrop")
+    client = FakeRaindropClient()
+    result, dismissals = _run_walking(
+        monkeypatch,
+        tmp_path,
+        "--wants",
+        raindrop_wants=[raindrop_want],
+        raindrop_client=client,
+        input="s\nx\n",
+    )
+    assert result.exit_code == 0
+    assert client.deleted == [9]
+    assert dismissals.added == [("raindrop", "9", "deleted")]
+    assert "deleted" in result.stdout
+
+
+def test_a_failed_delete_leaves_the_row_alone(monkeypatch, tmp_path):
+    from musictrack.errors import RaindropError
+
+    raindrop_want = want("Theo Parrish", "Parallel Dimensions", ref="9", source="raindrop")
+    client = FakeRaindropClient(fail=RaindropError("Raindrop returned 503"))
+    result, dismissals = _run_walking(
+        monkeypatch,
+        tmp_path,
+        "--wants",
+        raindrop_wants=[raindrop_want],
+        raindrop_client=client,
+        input="s\nx\n",
+    )
+    assert result.exit_code == 0
+    assert dismissals.added == []
+    assert "503" in result.stdout
+    assert "left alone" in result.stdout
