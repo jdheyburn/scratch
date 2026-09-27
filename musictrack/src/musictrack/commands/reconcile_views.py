@@ -4,6 +4,7 @@ report, `row_listing` for one row at a time in the walk, beets-import style."""
 from __future__ import annotations
 
 from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 from rich.markup import escape
 from rich.style import Style
@@ -12,7 +13,9 @@ from rich.text import Text
 
 from musictrack.match import Match
 from musictrack.models import AlbumRef
-from musictrack.plexindex import PlexIndex
+
+if TYPE_CHECKING:
+    from musictrack.plexindex import PlexIndex
 
 Row = tuple[AlbumRef, Match]
 Dismissed = dict[tuple[str, str], str]

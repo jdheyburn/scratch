@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 import typer
 from rich.prompt import Prompt
@@ -17,11 +18,13 @@ from musictrack.config import load_token
 from musictrack.console import console
 from musictrack.errors import MissingToken, RaindropError, SpotifyError
 from musictrack.models import AlbumRef
-from musictrack.plexindex import PlexIndex
 from musictrack.raindrop import RaindropClient
 from musictrack.sources.spotify import remove_from_playlist
 from musictrack.sources.spotify import spotify_client as _spotify_client
 from musictrack.store import Dismissals
+
+if TYPE_CHECKING:
+    from musictrack.plexindex import PlexIndex
 
 SKIP = "[bold cyan]S[/bold cyan]kip"
 DISMISS = "[bold cyan]D[/bold cyan]ismiss"
