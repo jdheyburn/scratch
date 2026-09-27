@@ -28,8 +28,6 @@ class AlbumRef:
     `album` holds whatever that source calls the release. For a beets track it
     is the track title, because a single-track purchase imports as a singleton
     with no album at all, and the track title is the only name it has.
-    `appears_on` is the album a beets track sits on, empty for a singleton and
-    for every other source: without it a track hit cannot be found to check.
     """
 
     source: str
@@ -37,4 +35,3 @@ class AlbumRef:
     album: str
     ref: str
     url: str = ""
-    appears_on: str = ""

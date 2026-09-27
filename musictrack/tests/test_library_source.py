@@ -43,23 +43,9 @@ def test_a_title_containing_a_pipe_survives():
 
 def test_a_singleton_track_with_no_album_still_becomes_a_ref():
     """21 of 27 Bandcamp track purchases are singletons with an empty album."""
-    refs = track_refs(runner("Zorrovian@@BIOS@@\n"))
-    assert [(r.artist, r.album, r.appears_on) for r in refs] == [("Zorrovian", "BIOS", "")]
+    refs = track_refs(runner("Zorrovian@@BIOS\n"))
+    assert [(r.artist, r.album) for r in refs] == [("Zorrovian", "BIOS")]
     assert refs[0].source == "beets-track"
-
-
-def test_a_track_remembers_the_album_it_is_on():
-    """A track hit is only checkable if you can find the record it sits on."""
-    refs = track_refs(runner("Huerco S.@@[untitled]@@For Those of You Who Have Never\n"))
-    assert [(r.album, r.appears_on) for r in refs] == [
-        ("[untitled]", "For Those of You Who Have Never")
-    ]
-
-
-def test_the_track_query_asks_for_the_album_too():
-    run = runner("")
-    track_refs(run)
-    assert "$artist@@$title@@$album" in run.script
 
 
 def test_blank_and_malformed_lines_are_skipped():
