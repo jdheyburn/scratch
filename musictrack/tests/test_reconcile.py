@@ -632,7 +632,9 @@ def test_the_bandcamp_link_is_shown_up_front_not_only_after_choosing_delete(monk
 # --- Plex: a soft-failing extra source, linked onto library matches ---------
 
 
-PLEX_LINK = "https://app.plex.tv/desktop/#!/server/0000feed/details?key=%2Flibrary%2Fmetadata%2F42"
+PLEX_LINK = (
+    "https://plex.example/web/index.html#!/server/0000feed/details?key=%2Flibrary%2Fmetadata%2F42"
+)
 
 
 def _plex_album(artist, title, ref="42", url=PLEX_LINK):

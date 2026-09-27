@@ -2,7 +2,7 @@
 
 import pytest
 
-from musictrack.config import load_bandcamp_cookie, load_spotify_credentials
+from musictrack.config import load_bandcamp_cookie, load_plex_url, load_spotify_credentials
 from musictrack.errors import MissingToken
 
 
@@ -44,3 +44,23 @@ def test_no_credential_value_appears_in_the_error(tmp_path):
     with pytest.raises(MissingToken) as problem:
         load_spotify_credentials(tmp_path)
     assert "SUPERSECRETID" not in str(problem.value)
+
+
+def test_a_missing_plex_url_explains_how_to_set_one(tmp_path):
+    with pytest.raises(MissingToken) as problem:
+        load_plex_url(tmp_path / "url")
+    assert "url" in str(problem.value)
+    assert "/web/" not in str(problem.value)
+
+
+def test_an_empty_plex_url_is_treated_as_missing(tmp_path):
+    path = tmp_path / "url"
+    path.write_text("  \n")
+    with pytest.raises(MissingToken):
+        load_plex_url(path)
+
+
+def test_a_plex_url_is_read_and_stripped(tmp_path):
+    path = tmp_path / "url"
+    path.write_text("https://plex.example\n")
+    assert load_plex_url(path) == "https://plex.example"

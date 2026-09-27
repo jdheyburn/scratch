@@ -116,8 +116,10 @@ asks you to confirm you removed it there yourself. beets is never written
 to. `--wants` and `--backlog` each walk one half of the report on their
 own; with neither, both walk.
 
-Each library match also links to its album in Plex, opened in the Plex web
-app. A match on a single track links to the album that track is on, which is
+Each library match also links to its album in Plex, opened in the server's
+own web app at the address in `~/.config/plex/url` (just the scheme and host,
+e.g. `https://plex.example`). Without that file the run warns and shows no
+links. A match on a single track links to the album that track is on, which is
 how a generic title like "Untitled" matching an unrelated record shows
 itself. Plex is read from its own database on dee over SSH, read-only, with no
 token; if that read fails, the run warns and carries on without links. A newly

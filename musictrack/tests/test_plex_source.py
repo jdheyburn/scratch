@@ -2,11 +2,21 @@
 
 import pytest
 
-from musictrack.errors import PlexError
+import musictrack.sources.plex as plex_module
+from musictrack.errors import MissingToken, PlexError
 from musictrack.sources.plex import MUSIC_ROOT, album_refs, link, track_refs
 
 MACHINE = "0000feed"
-LINK_42 = "https://app.plex.tv/desktop/#!/server/0000feed/details?key=%2Flibrary%2Fmetadata%2F42"
+SERVER = "https://plex.example"
+LINK_42 = (
+    "https://plex.example/web/index.html#!/server/0000feed/details?key=%2Flibrary%2Fmetadata%2F42"
+)
+
+
+@pytest.fixture(autouse=True)
+def server_url(monkeypatch):
+    """The server's own address is per-account config, never in the repo."""
+    monkeypatch.setattr(plex_module, "load_plex_url", lambda: SERVER)
 
 
 class _Runner:
@@ -25,8 +35,21 @@ def dump(*lines):
     return _Runner("\n".join([f"machine@@{MACHINE}", *lines]) + "\n")
 
 
-def test_the_link_opens_the_album_in_the_plex_web_app():
-    assert link(MACHINE, "42") == LINK_42
+def test_the_link_opens_the_album_in_the_servers_own_web_app():
+    assert link(SERVER, MACHINE, "42") == LINK_42
+
+
+def test_a_trailing_slash_on_the_server_url_is_not_doubled():
+    assert link(SERVER + "/", MACHINE, "42") == LINK_42
+
+
+def test_no_server_url_is_a_plexerror_that_says_how_to_set_one(monkeypatch):
+    def missing():
+        raise MissingToken("No Plex server URL at ~/.config/plex/url.")
+
+    monkeypatch.setattr(plex_module, "load_plex_url", missing)
+    with pytest.raises(PlexError, match="config/plex/url"):
+        album_refs(dump("Theo Parrish@@Parallel Dimensions@@42"))
 
 
 def test_albums_are_parsed_into_refs_that_link_to_themselves():

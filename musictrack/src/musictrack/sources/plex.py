@@ -6,6 +6,10 @@ SSH access the beets dumps already use. The database is Plex's internal store,
 not a published interface, so a read that breaks costs a run its links and
 nothing else.
 
+Links open in the server's own web app, at the address in
+`~/.config/plex/url`. That address and the server's id stay out of the repo,
+which is public; the id is read from the server on each refresh.
+
 Only the Music section is read. The Mixes section has the same type, and
 reading it would let a library match link to a mix.
 """
@@ -16,7 +20,8 @@ from collections.abc import Callable
 
 from musiclib.remote import run_remote
 
-from musictrack.errors import PlexError
+from musictrack.config import load_plex_url
+from musictrack.errors import MissingToken, PlexError
 from musictrack.models import AlbumRef
 
 Runner = Callable[[str], str]
@@ -27,7 +32,7 @@ MUSIC_ROOT = "/mnt/nfs/media/music"
 DATABASE = (
     "/var/lib/plex/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db"
 )
-LINK = "https://app.plex.tv/desktop/#!/server/{machine}/details?key=%2Flibrary%2Fmetadata%2F{album}"
+LINK = "{server}/web/index.html#!/server/{machine}/details?key=%2Flibrary%2Fmetadata%2F{album}"
 
 ALBUM_QUERY = """
 select ar.title, al.title, al.id
@@ -51,9 +56,9 @@ where t.metadata_type = 10 and s.section_type = 8 and l.root_path = ?
 """
 
 
-def link(machine: str, album_id: str) -> str:
-    """The album's page in the Plex web app."""
-    return LINK.format(machine=machine, album=album_id)
+def link(server: str, machine: str, album_id: str) -> str:
+    """The album's page in the server's own web app."""
+    return LINK.format(server=server.rstrip("/"), machine=machine, album=album_id)
 
 
 def _script(query: str) -> str:
@@ -75,6 +80,11 @@ def _script(query: str) -> str:
 
 
 def _read(run: Runner, query: str, source: str) -> list[AlbumRef]:
+    # Before the SSH call: without an address there is no link to build.
+    try:
+        server = load_plex_url()
+    except MissingToken as problem:
+        raise PlexError(str(problem)) from problem
     try:
         output = run(_script(query))
     except Exception as problem:
@@ -95,7 +105,7 @@ def _read(run: Runner, query: str, source: str) -> list[AlbumRef]:
             artist=artist,
             album=title,
             ref=album_id,
-            url=link(machine, album_id),
+            url=link(server, machine, album_id),
         )
         for artist, title, album_id in rows
     ]

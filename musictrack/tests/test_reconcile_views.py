@@ -233,7 +233,9 @@ def test_a_bracketed_library_title_is_shown_literally_in_the_bulk_table():
 
 # --- Plex links -------------------------------------------------------------
 
-LINK = "https://app.plex.tv/desktop/#!/server/0000feed/details?key=%2Flibrary%2Fmetadata%2F42"
+LINK = (
+    "https://plex.example/web/index.html#!/server/0000feed/details?key=%2Flibrary%2Fmetadata%2F42"
+)
 
 
 def plex_index():
@@ -282,4 +284,4 @@ def test_the_bulk_table_is_unlinked_without_plex():
     report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
     console = Console(width=200, record=True, force_terminal=True)
     console.print(wants_table(report.owned))
-    assert "app.plex.tv" not in console.export_text(styles=True)
+    assert "plex.example" not in console.export_text(styles=True)
