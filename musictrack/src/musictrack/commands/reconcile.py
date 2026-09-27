@@ -5,7 +5,8 @@ other three sources can all be cleared from the walk below: Raindrop and
 Spotify for real, through their own APIs; Bandcamp has none, so its entry
 opens a link and takes the human's word for it once they've used it. Reports
 are served from a local copy of each source, whose age is printed on every
-run, and refreshed on demand with `--refresh`.
+run, and refreshed on demand with `--refresh`. Library matches link to their
+album in Plex, read the same way beets is.
 
 The three tables are not equally confident. Owned rows are statements: an exact
 title with an agreeing artist was right essentially every time across 338
@@ -43,9 +44,18 @@ from musictrack.commands.reconcile_walk import (
 )
 from musictrack.console import console
 from musictrack.errors import MissingToken, RaindropError, SourceError
-from musictrack.gather import Fetchers, UnknownSource, age_line, gather, keys_for, source_ages
+from musictrack.gather import (
+    PLEX,
+    Fetchers,
+    UnknownSource,
+    age_line,
+    gather,
+    keys_for,
+    source_ages,
+)
 from musictrack.match import ABSENT, OWNED, LibraryIndex
 from musictrack.models import AlbumRef
+from musictrack.plexindex import PlexIndex, load_plex
 from musictrack.store import DB_PATH, Dismissals
 
 
@@ -113,8 +123,12 @@ def reconcile(
         # first time a scope change invalidates the cached token — a static
         # line costs nothing and never blocks that.
         console.print("[dim]gathering sources…[/]")
-        gathered = gather(cache, Fetchers().as_map(), keys, refresh)
-        console.print(age_line(source_ages(cache, keys), datetime.now(UTC)))
+        fetchers = Fetchers().as_map()
+        gathered = gather(cache, fetchers, keys, refresh)
+        # Only the wants report shows library matches, so only it links them.
+        plex = load_plex(cache, fetchers, refresh) if show_wants else PlexIndex.empty()
+        used = (*keys, *PLEX) if show_wants else keys
+        console.print(age_line(source_ages(cache, used), datetime.now(UTC)))
     except UnknownSource as problem:
         console.print(f"[red]{problem}[/]")
         raise typer.Exit(1) from problem
@@ -143,10 +157,10 @@ def reconcile(
         report = classify([*wishlist, *listening, *raindrop_wants], index, hide)
         console.print(f"[dim]{len(wishlist) + len(listening) + len(raindrop_wants)} wants read[/]")
         if include_dismissed:
-            console.print(wants_table(report.owned, mark))
-            console.print(possible_table(report.possible, mark))
+            console.print(wants_table(report.owned, mark, plex))
+            console.print(possible_table(report.possible, mark, plex))
         else:
-            walk(store, deleters, WANTS_TITLE, report.owned, show_library=True)
+            walk(store, deleters, WANTS_TITLE, report.owned, show_library=True, plex=plex)
             walk(
                 store,
                 deleters,
@@ -154,6 +168,7 @@ def reconcile(
                 report.possible,
                 show_library=True,
                 show_tier=True,
+                plex=plex,
             )
 
     if show_backlog:

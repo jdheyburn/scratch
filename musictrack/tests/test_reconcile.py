@@ -1,5 +1,6 @@
 """Turning verdicts into a report."""
 
+import pytest
 from typer.testing import CliRunner
 
 import musictrack.commands.reconcile as reconcile_module
@@ -10,8 +11,17 @@ from musictrack.cli import app
 from musictrack.commands.reconcile import classify
 from musictrack.commands.reconcile_views import row_table
 from musictrack.console import console
+from musictrack.errors import PlexError
 from musictrack.match import LibraryIndex
 from musictrack.models import AlbumRef
+
+
+@pytest.fixture(autouse=True)
+def no_plex(monkeypatch):
+    """Every test here runs `reconcile`, which reads Plex over SSH unless the
+    readers are patched. Tests that care patch them again on top of this."""
+    monkeypatch.setattr(gather_module.plex, "album_refs", lambda: [])
+    monkeypatch.setattr(gather_module.plex, "track_refs", lambda: [])
 
 
 def album(artist, title):
@@ -74,7 +84,7 @@ class FakeDismissals:
         self.added.append((source, ref, reason))
 
 
-def _static_walk(dismissals, deleters, title, rows, show_library, show_tier=False):
+def _static_walk(dismissals, deleters, title, rows, show_library, show_tier=False, plex=None):
     """A `walk` stand-in for tests that aren't about walking: prints the same
     rows as a plain table instead of prompting, so the CLI stays runnable
     without feeding stdin input."""
@@ -617,3 +627,54 @@ def test_the_bandcamp_link_is_shown_up_front_not_only_after_choosing_delete(monk
     )
     assert result.exit_code == 0
     assert "https://artist.bandcamp.com/album/deep-rays" in result.stdout
+
+
+# --- Plex: a soft-failing extra source, linked onto library matches ---------
+
+
+PLEX_LINK = "https://app.plex.tv/desktop/#!/server/0000feed/details?key=%2Flibrary%2Fmetadata%2F42"
+
+
+def test_the_walk_shows_a_matchs_plex_link(monkeypatch, tmp_path):
+    monkeypatch.setattr(
+        gather_module.plex,
+        "album_refs",
+        lambda: [
+            AlbumRef(
+                source="plex-album",
+                artist="Theo Parrish",
+                album="Parallel Dimensions",
+                ref="42",
+                url=PLEX_LINK,
+            )
+        ],
+    )
+    result, _ = _run_walking(monkeypatch, tmp_path, "--wants", input="s\n")
+    assert result.exit_code == 0
+    assert f"plex: {PLEX_LINK}" in result.stdout
+
+
+def test_a_plex_failure_warns_and_the_walk_still_runs(monkeypatch, tmp_path):
+    def boom():
+        raise PlexError("could not read Plex: ssh: connect: host is down")
+
+    monkeypatch.setattr(gather_module.plex, "album_refs", boom)
+    result, dismissals = _run_walking(monkeypatch, tmp_path, "--wants", input="d\nseen\n")
+    assert result.exit_code == 0
+    assert "no Plex links this run" in result.stdout
+    assert dismissals.added == [("bandcamp-wishlist", "1", "seen")]
+
+
+def test_the_age_header_names_plex_on_a_wants_run(monkeypatch, tmp_path):
+    result, _ = run(monkeypatch, tmp_path, "--wants")
+    assert "plex" in result.stdout
+
+
+def test_a_backlog_run_never_reads_plex(monkeypatch, tmp_path):
+    def boom():
+        raise AssertionError("a backlog run read Plex")
+
+    monkeypatch.setattr(gather_module.plex, "album_refs", boom)
+    monkeypatch.setattr(gather_module.plex, "track_refs", boom)
+    result, _ = run(monkeypatch, tmp_path, "--backlog")
+    assert result.exit_code == 0

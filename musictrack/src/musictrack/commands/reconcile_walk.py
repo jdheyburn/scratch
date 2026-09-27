@@ -17,6 +17,7 @@ from musictrack.config import load_token
 from musictrack.console import console
 from musictrack.errors import MissingToken, RaindropError, SpotifyError
 from musictrack.models import AlbumRef
+from musictrack.plexindex import PlexIndex
 from musictrack.raindrop import RaindropClient
 from musictrack.sources.spotify import remove_from_playlist
 from musictrack.sources.spotify import spotify_client as _spotify_client
@@ -135,12 +136,14 @@ def walk(
     rows: list[Row],
     show_library: bool,
     show_tier: bool = False,
+    plex: PlexIndex | None = None,
 ) -> None:
     if not rows:
         return
     console.print(f"[bold underline]{title}[/bold underline]")
     for candidate, match in rows:
-        console.print(row_listing(candidate, match, show_library, show_tier))
+        links = plex.links(match.library) if plex is not None else []
+        console.print(row_listing(candidate, match, show_library, show_tier, links))
         deleter = deleters.get(candidate.source)
         prompt = f"{SKIP}, {DISMISS}"
         if deleter is not None:

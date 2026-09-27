@@ -7,6 +7,12 @@ reasoning can be checked rather than taken on faith.
 
 ## Shipped
 
+- **Plex album links** (2026-09-27). Every library match `reconcile` shows,
+  in the walk and in `--include-dismissed`, now links to its album in Plex,
+  read from Plex's own database on dee over SSH. A match on a single track
+  links to the album the track is on, since a track has no album page of its
+  own to open. A Plex read that fails only warns; the report still runs
+  without links.
 - **Raindrop dedupe** (PR #2, 2026-09-03). Exact-URL dedupe and filing into
   the `music` collection.
 - **reconcile + dismiss** (PR #3, 2026-09-07). Compares the Bandcamp
