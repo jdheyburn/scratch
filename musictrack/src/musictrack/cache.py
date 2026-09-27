@@ -36,7 +36,8 @@ SCHEMA = (
       artist TEXT NOT NULL,
       album  TEXT NOT NULL,
       ref    TEXT NOT NULL,
-      url    TEXT NOT NULL DEFAULT ''
+      url    TEXT NOT NULL DEFAULT '',
+      appears_on TEXT NOT NULL DEFAULT ''
     )
     """,
     "CREATE INDEX IF NOT EXISTS cached_ref_source ON cached_ref (source)",
@@ -82,6 +83,11 @@ class SourceCache:
         with sqlite3.connect(self._path) as db:
             for statement in SCHEMA:
                 db.execute(statement)
+            # A copy written before `appears_on` existed lacks the column.
+            # Its rows read back with it empty until the source is refreshed.
+            columns = {row[1] for row in db.execute("PRAGMA table_info(cached_ref)")}
+            if "appears_on" not in columns:
+                db.execute("ALTER TABLE cached_ref ADD COLUMN appears_on TEXT NOT NULL DEFAULT ''")
 
     def fetched_at(self, source: str) -> datetime | None:
         """When this source was last read, or nothing if it never has been."""
@@ -97,12 +103,13 @@ class SourceCache:
         """Every row stored for this source, in the order it was written."""
         with sqlite3.connect(self._path) as db:
             rows = db.execute(
-                "SELECT artist, album, ref, url FROM cached_ref WHERE source = ? ORDER BY rowid",
+                "SELECT artist, album, ref, url, appears_on FROM cached_ref "
+                "WHERE source = ? ORDER BY rowid",
                 (source,),
             ).fetchall()
         return [
-            AlbumRef(source=source, artist=artist, album=album, ref=ref, url=url)
-            for artist, album, ref, url in rows
+            AlbumRef(source=source, artist=artist, album=album, ref=ref, url=url, appears_on=on)
+            for artist, album, ref, url, on in rows
         ]
 
     def write(self, source: str, refs: Sequence[AlbumRef]) -> None:
@@ -116,8 +123,9 @@ class SourceCache:
         with sqlite3.connect(self._path) as db:
             db.execute("DELETE FROM cached_ref WHERE source = ?", (source,))
             db.executemany(
-                "INSERT INTO cached_ref (source, artist, album, ref, url) VALUES (?, ?, ?, ?, ?)",
-                [(source, r.artist, r.album, r.ref, r.url) for r in refs],
+                "INSERT INTO cached_ref (source, artist, album, ref, url, appears_on) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                [(source, r.artist, r.album, r.ref, r.url, r.appears_on) for r in refs],
             )
             db.execute(
                 "INSERT INTO cache_run (source, fetched, refs) VALUES (?, ?, ?) "

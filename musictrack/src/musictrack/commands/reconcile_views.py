@@ -18,6 +18,17 @@ POSSIBLE_TITLE = "worth a look: not a certain match, tier says why"
 BACKLOG_TITLE = "bought, not found in the library (check before importing)"
 
 
+def track_note(found: AlbumRef) -> str:
+    """Where a track hit lives, so it can be found and checked: a track title
+    alone ("[untitled]") says nothing about which record holds it. Empty for
+    an album hit."""
+    if found.source != "beets-track":
+        return ""
+    if found.appears_on:
+        return f"a track on: {found.appears_on}"
+    return "a singleton track, on no album"
+
+
 def row_table(
     title: str,
     rows: list[Row],
@@ -46,7 +57,9 @@ def row_table(
         ]
         if show_library:
             found = match.library
-            cells.append(Text(f"{found.artist} / {found.album}" if found else ""))
+            label = f"{found.artist} / {found.album}" if found else ""
+            note = track_note(found) if found else ""
+            cells.append(Text(f"{label} ({note})" if note else label))
         if show_tier:
             cells.append(Text(match.tier))
         if dismissed is not None:
@@ -74,6 +87,9 @@ def row_listing(
     if show_library and match.library is not None:
         found = match.library
         lines.append(f"  in the library as: {escape(found.artist)} / {escape(found.album)}")
+        note = track_note(found)
+        if note:
+            lines.append(f"    {escape(note)}")
     if show_tier:
         lines.append(f"  tier: {escape(match.tier)}")
     if candidate.url:

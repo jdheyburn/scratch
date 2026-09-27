@@ -27,7 +27,7 @@ Runner = Callable[[str], str]
 DELIMITER = "@@"
 
 ALBUM_FORMAT = f"$albumartist{DELIMITER}$album"
-TRACK_FORMAT = f"$artist{DELIMITER}$title"
+TRACK_FORMAT = f"$artist{DELIMITER}$title{DELIMITER}$album"
 
 
 def _lines(run: Runner, script: str) -> list[str]:
@@ -53,12 +53,16 @@ def track_refs(run: Runner = run_remote) -> list[AlbumRef]:
     """Every track beets holds, carried as its own release.
 
     `album` holds the track title, because for a singleton that is the only
-    name the record has.
+    name the record has. `appears_on` holds the album the track sits on, so a
+    track hit can be looked up and checked.
     """
     found = []
     for line in _lines(run, f"beet ls -f '{TRACK_FORMAT}'"):
         parts = line.split(DELIMITER)
-        if len(parts) != 2:
+        if len(parts) != 3:
             continue
-        found.append(AlbumRef(source="beets-track", artist=parts[0], album=parts[1], ref=""))
+        artist, title, on = parts
+        found.append(
+            AlbumRef(source="beets-track", artist=artist, album=title, ref="", appears_on=on)
+        )
     return found

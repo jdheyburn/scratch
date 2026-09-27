@@ -228,3 +228,43 @@ def test_a_bracketed_library_title_is_shown_literally_in_the_bulk_table():
     report = classify([want("Huerco S.", "Untitled")], lib, {})
     rendered = render(wants_table(report.owned))
     assert "[untitled]" in rendered
+
+
+# --- a track hit names the album the track is on ---------------------------
+
+
+def track_library(appears_on):
+    track = AlbumRef(
+        source="beets-track", artist="Huerco S.", album="[untitled]", ref="", appears_on=appears_on
+    )
+    return LibraryIndex(albums=[], tracks=[track])
+
+
+def test_a_track_match_names_the_album_it_is_on():
+    lib = track_library("For Those of You Who Have Never")
+    report = classify([want("Huerco S.", "Untitled")], lib, {})
+    [(candidate, match)] = report.owned
+    rendered = render(row_listing(candidate, match, show_library=True))
+    assert "a track on: For Those of You Who Have Never" in rendered
+
+
+def test_a_singleton_track_match_says_it_is_on_no_album():
+    report = classify([want("Huerco S.", "Untitled")], track_library(""), {})
+    [(candidate, match)] = report.owned
+    rendered = render(row_listing(candidate, match, show_library=True))
+    assert "a singleton track, on no album" in rendered
+
+
+def test_an_album_match_carries_no_track_line():
+    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
+    [(candidate, match)] = report.owned
+    rendered = render(row_listing(candidate, match, show_library=True))
+    assert "a track on" not in rendered
+    assert "singleton" not in rendered
+
+
+def test_the_bulk_table_names_a_track_match_album_too():
+    lib = track_library("For Those of You Who Have Never")
+    report = classify([want("Huerco S.", "Untitled")], lib, {})
+    rendered = render(wants_table(report.owned))
+    assert "For Those of You Who Have Never" in rendered

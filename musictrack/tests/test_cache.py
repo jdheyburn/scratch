@@ -1,5 +1,6 @@
 """A copy of what each source last said."""
 
+import sqlite3
 from datetime import UTC, datetime, timedelta
 
 import pytest
@@ -83,6 +84,27 @@ def test_a_read_row_carries_the_source_it_was_stored_under(tmp_path):
     cache = SourceCache(tmp_path / "db.sqlite")
     cache.write("beets-track", [AlbumRef(source="beets-track", artist="A", album="B", ref="")])
     assert cache.read("beets-track")[0].source == "beets-track"
+
+
+def test_a_track_row_keeps_the_album_it_is_on(tmp_path):
+    cache = SourceCache(tmp_path / "db.sqlite")
+    track = AlbumRef(source="beets-track", artist="A", album="B", ref="", appears_on="C")
+    cache.write("beets-track", [track])
+    assert cache.read("beets-track") == [track]
+
+
+def test_a_copy_written_before_appears_on_existed_still_reads(tmp_path):
+    """An older cache has no appears_on column. Opening it adds one, and the
+    rows it already holds come back with it empty until the next refresh."""
+    path = tmp_path / "db.sqlite"
+    with sqlite3.connect(path) as db:
+        db.execute(
+            "CREATE TABLE cached_ref (source TEXT NOT NULL, artist TEXT NOT NULL, "
+            "album TEXT NOT NULL, ref TEXT NOT NULL, url TEXT NOT NULL DEFAULT '')"
+        )
+        db.execute("INSERT INTO cached_ref VALUES ('beets-track', 'A', 'B', '', '')")
+    [restored] = SourceCache(path).read("beets-track")
+    assert restored.appears_on == ""
 
 
 def test_the_fetch_time_is_recorded_and_timezone_aware(tmp_path):
