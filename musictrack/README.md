@@ -106,16 +106,30 @@ recoverable in the Raindrop UI.
 ### reconcile
 
 Reads the Bandcamp wishlist, the Spotify "To Listen" playlist, Raindrop
-bookmarks, and the beets library, then prints what you want that you already
-own and what you bought that never made it into the library. Read-only
-against all four: nothing on Bandcamp, Spotify, Raindrop, or beets changes.
-`--wants` and `--backlog` each print one half of the report on their own;
-with neither, both print.
+bookmarks, and the beets library, then walks what you want that you already
+own and what you bought that never made it into the library, one row at a
+time: (S)kip leaves it for next time, (D)ismiss hides it from future
+reports, and every row also offers (X) to clear the entry itself — a
+Raindrop bookmark and a Spotify playlist entry are deleted for real, through
+their own APIs; Bandcamp has none, so its (X) prints the wishlist page and
+asks you to confirm you removed it there yourself. beets is never written
+to. `--wants` and `--backlog` each walk one half of the report on their
+own; with neither, both walk.
+
+Each library match also links to its album in Plex, opened in the server's
+own web app at the address in `~/.config/plex/url` (just the scheme and host,
+e.g. `https://plex.example`). Without that file the run warns and shows no
+links. A match on a single track links to the album that track is on, which is
+how a generic title like "Untitled" matching an unrelated record shows
+itself. Plex is read from its own database on dee over SSH, read-only, with no
+token; if that read fails, the run warns and carries on without links. A newly
+imported record gets no Plex link until `--refresh plex`, since `--refresh
+beets` leaves the Plex copy as it was.
 
 The first run reads every source live and keeps a local copy. Later runs
 answer from that copy instead of reading the accounts again, so every report
 opens with a line naming each source and how old its copy is. `--refresh
-all|beets|bandcamp|spotify|raindrop` refetches before reporting, either
+all|beets|bandcamp|spotify|raindrop|plex` refetches before reporting, either
 everything or just the one named source.
 
 The Raindrop token from [the token setup above](#the-token) is reused here.
@@ -129,7 +143,11 @@ Raindrop:
 - A Spotify client id and secret, at `~/.config/spotify/client_id` and
   `~/.config/spotify/client_secret`, both mode 600, from an app registered at
   the [Spotify developer dashboard](https://developer.spotify.com/dashboard)
-  with redirect URI `http://127.0.0.1:8888/callback`.
+  with redirect URI `http://127.0.0.1:8888/callback`. The playlist-modify
+  scope needed for (X) means the cached login no longer matches what's
+  requested, so the next run that touches Spotify at all re-triggers the
+  same one-time browser login as the very first run, not just a run that
+  deletes something.
 
 The two reports carry different weight. Owned rows are statements: an exact
 title with an agreeing artist was right in essentially every one of 338
@@ -153,10 +171,11 @@ turned out to be a matcher bug rather than a real absence: a title with no
 ASCII equivalent folds to the same empty key as a genuinely blank library
 title, so a symbol-only Bandcamp title was matching a library album with an
 untagged name. Fixed by refusing to match on an empty folded key; the same bug
-moved one Spotify row from "worth a look" to absent. `musictrack dismiss
-<source>:<ref> [--reason]` files a false absence away for good, using the id
-from the report's first column. `reconcile --include-dismissed` shows those
-rows again, marked with their reason.
+moved one Spotify row from "worth a look" to absent. (D)ismiss during the walk
+does what a separate `musictrack dismiss <source>:<ref> [--reason]` used to
+require as an extra step; that command still exists for fixing up a row after
+the fact. `reconcile --include-dismissed` shows dismissed rows again, marked
+with their reason, without walking them again.
 
 ## Development
 

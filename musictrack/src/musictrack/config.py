@@ -73,3 +73,24 @@ def load_spotify_credentials(directory: Path | None = None) -> tuple[str, str]:
             raise MissingToken(f"No Spotify {name} at {path}.\n{HOW_TO_GET_SPOTIFY_CREDENTIALS}")
         values.append(path.read_text().strip())
     return values[0], values[1]
+
+
+PLEX_URL_PATH = Path.home() / ".config" / "plex" / "url"
+
+HOW_TO_SET_A_PLEX_URL = (
+    f"No Plex server URL at {PLEX_URL_PATH}.\n"
+    "Write the address you open Plex at, with no path, e.g.:\n"
+    f"  mkdir -p ~/.config/plex && echo https://plex.example > {PLEX_URL_PATH}"
+)
+
+
+def load_plex_url(path: Path | None = None) -> str:
+    """The address of the Plex server's own web app. Kept out of the repo,
+    which is public, alongside the other per-account settings."""
+    path = path or PLEX_URL_PATH
+    if not path.is_file():
+        raise MissingToken(HOW_TO_SET_A_PLEX_URL)
+    url = path.read_text().strip()
+    if not url:
+        raise MissingToken(HOW_TO_SET_A_PLEX_URL)
+    return url

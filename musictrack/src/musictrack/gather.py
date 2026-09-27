@@ -1,9 +1,9 @@
 """Where a run's rows come from.
 
 Two vocabularies meet here. Rows are stored under the `AlbumRef.source` value
-that produced them, six of those. The user names sources the way they go
-stale, four of those: both beets dumps come from one SSH session, both
-Bandcamp lists from one authenticated client.
+that produced them, eight of those. The user names sources the way they go
+stale, five of those: both beets dumps come from one SSH session, both
+Bandcamp lists from one authenticated client, Plex is gathered separately.
 """
 
 from __future__ import annotations
@@ -19,6 +19,7 @@ from musictrack.config import load_bandcamp_cookie, load_token
 from musictrack.models import AlbumRef
 from musictrack.raindrop import RaindropClient
 from musictrack.sources import library as beets
+from musictrack.sources import plex
 from musictrack.sources.bandcamp import BandcampClient
 from musictrack.sources.raindrop import to_listen as raindrop_to_listen
 from musictrack.sources.spotify import spotify_client, to_listen
@@ -29,6 +30,7 @@ BEETS = ("beets", "beets-track")
 BANDCAMP = ("bandcamp-wishlist", "bandcamp-collection")
 SPOTIFY = ("spotify",)
 RAINDROP = ("raindrop",)
+PLEX = ("plex-album", "plex-track")
 
 # Ordered, because this is also the order the age header prints in.
 REFRESH_NAMES: dict[str, tuple[str, ...]] = {
@@ -36,6 +38,7 @@ REFRESH_NAMES: dict[str, tuple[str, ...]] = {
     "bandcamp": BANDCAMP,
     "spotify": SPOTIFY,
     "raindrop": RAINDROP,
+    "plex": PLEX,
 }
 
 WANTS_KEYS = (*BEETS, "bandcamp-wishlist", "spotify", "raindrop")
@@ -123,6 +126,8 @@ class Fetchers:
             "bandcamp-collection": lambda: self._client().collection(),
             "spotify": lambda: to_listen(spotify_client()),
             "raindrop": lambda: raindrop_to_listen(self._raindrop()),
+            "plex-album": plex.album_refs,
+            "plex-track": plex.track_refs,
         }
 
 

@@ -1,9 +1,12 @@
 """What you want against what you have.
 
-Read-only against Bandcamp, Spotify, Raindrop, and beets: the comparison
-happens in memory, and nothing changes on any of those four. Reports are
-served from a local copy of each source, whose age is printed on every run,
-and refreshed on demand with `--refresh`.
+Read-only against beets: nothing this tool does changes the library. The
+other three sources can all be cleared from the walk below: Raindrop and
+Spotify for real, through their own APIs; Bandcamp has none, so its entry
+opens a link and takes the human's word for it once they've used it. Reports
+are served from a local copy of each source, whose age is printed on every
+run, and refreshed on demand with `--refresh`. Library matches link to their
+album in Plex, read the same way beets is.
 
 The three tables are not equally confident. Owned rows are statements: an exact
 title with an agreeing artist was right essentially every time across 338
@@ -20,17 +23,40 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 
 import typer
-from rich.table import Table
 
 from musictrack.cache import SourceCache
+from musictrack.commands.reconcile_views import (
+    BACKLOG_TITLE,
+    POSSIBLE_TITLE,
+    WANTS_TITLE,
+    Row,
+    backlog_table,
+    possible_table,
+    wants_table,
+)
+from musictrack.commands.reconcile_walk import (
+    LazyRaindropClient,
+    LazySpotifyClient,
+    bandcamp_deleter,
+    raindrop_deleter,
+    spotify_deleter,
+    walk,
+)
 from musictrack.console import console
 from musictrack.errors import MissingToken, RaindropError, SourceError
-from musictrack.gather import Fetchers, UnknownSource, age_line, gather, keys_for, source_ages
-from musictrack.match import ABSENT, OWNED, LibraryIndex, Match
+from musictrack.gather import (
+    PLEX,
+    Fetchers,
+    UnknownSource,
+    age_line,
+    gather,
+    keys_for,
+    source_ages,
+)
+from musictrack.match import ABSENT, OWNED, LibraryIndex
 from musictrack.models import AlbumRef
+from musictrack.plexindex import PlexIndex, load_plex
 from musictrack.store import DB_PATH, Dismissals
-
-Row = tuple[AlbumRef, Match]
 
 
 @dataclass
@@ -62,67 +88,6 @@ def classify(
     return report
 
 
-Dismissed = dict[tuple[str, str], str]
-
-
-def _table(
-    title: str,
-    rows: list[Row],
-    show_library: bool,
-    show_tier: bool = False,
-    dismissed: Dismissed | None = None,
-) -> Table:
-    table = Table(title=title)
-    table.add_column("id", style="dim")
-    table.add_column("artist")
-    table.add_column("release")
-    if show_library:
-        table.add_column("in the library as")
-    if show_tier:
-        table.add_column("tier")
-    if dismissed is not None:
-        table.add_column("dismissed")
-    for candidate, match in rows:
-        cells = [f"{candidate.source}:{candidate.ref}", candidate.artist, candidate.album]
-        if show_library:
-            found = match.library
-            cells.append(f"{found.artist} / {found.album}" if found else "")
-        if show_tier:
-            cells.append(match.tier)
-        if dismissed is not None:
-            key = (candidate.source, candidate.ref)
-            if key in dismissed:
-                reason = dismissed[key]
-                cells.append(f"dismissed: {reason}" if reason else "dismissed")
-            else:
-                cells.append("")
-        table.add_row(*cells)
-    return table
-
-
-def wants_table(report: Report, dismissed: Dismissed | None = None) -> Table:
-    return _table("wants you already have", report.owned, show_library=True, dismissed=dismissed)
-
-
-def possible_table(report: Report, dismissed: Dismissed | None = None) -> Table:
-    return _table(
-        "worth a look: not a certain match, tier says why",
-        report.possible,
-        True,
-        show_tier=True,
-        dismissed=dismissed,
-    )
-
-
-def backlog_table(report: Report, dismissed: Dismissed | None = None) -> Table:
-    return _table(
-        "bought, not found in the library (check before importing)",
-        report.absent,
-        False,
-        dismissed=dismissed,
-    )
-
-
 def reconcile(
     wants: bool = typer.Option(False, "--wants", help="Only the wants report."),
     backlog: bool = typer.Option(False, "--backlog", help="Only the backlog report."),
@@ -135,7 +100,7 @@ def reconcile(
         None,
         "--refresh",
         metavar="SOURCE",
-        help="Refetch before reporting: all, beets, bandcamp, spotify, or raindrop.",
+        help="Refetch before reporting: all, beets, bandcamp, spotify, raindrop, or plex.",
     ),
 ) -> None:
     """Compare the Bandcamp wishlist, Spotify "To Listen", and Raindrop
@@ -144,17 +109,26 @@ def reconcile(
     show_backlog = backlog or not wants
 
     try:
-        dismissals = Dismissals().hidden()
+        store = Dismissals()
+        dismissed = store.hidden()
         # Hiding and marking are opposites of the same lookup: the default run
         # filters candidates out before they are classified, --include-dismissed
         # classifies everything and marks the dismissed ones instead.
-        hide = {} if include_dismissed else dismissals
-        mark = dismissals if include_dismissed else None
+        hide = {} if include_dismissed else dismissed
+        mark = dismissed if include_dismissed else None
         cache = SourceCache()
         keys = keys_for(show_wants, show_backlog)
-        with console.status("gathering sources"):
-            gathered = gather(cache, Fetchers().as_map(), keys, refresh)
-        console.print(age_line(source_ages(cache, keys), datetime.now(UTC)))
+        # A live spinner here would fight over the terminal with Spotify's own
+        # OAuth login prompt, which reads a pasted URL via a plain input() the
+        # first time a scope change invalidates the cached token — a static
+        # line costs nothing and never blocks that.
+        console.print("[dim]gathering sources…[/]")
+        fetchers = Fetchers().as_map()
+        gathered = gather(cache, fetchers, keys, refresh)
+        # Only the wants report shows library matches, so only it links them.
+        plex = load_plex(cache, fetchers, refresh) if show_wants else PlexIndex.empty()
+        used = (*keys, *PLEX) if show_wants else keys
+        console.print(age_line(source_ages(cache, used), datetime.now(UTC)))
     except UnknownSource as problem:
         console.print(f"[red]{problem}[/]")
         raise typer.Exit(1) from problem
@@ -173,17 +147,37 @@ def reconcile(
     collection = gathered.rows.get("bandcamp-collection", [])
     listening = gathered.rows.get("spotify", [])
     raindrop_wants = gathered.rows.get("raindrop", [])
+    deleters = {
+        "raindrop": raindrop_deleter(LazyRaindropClient()),
+        "spotify": spotify_deleter(LazySpotifyClient()),
+        "bandcamp-wishlist": bandcamp_deleter(),
+    }
 
     if show_wants:
         report = classify([*wishlist, *listening, *raindrop_wants], index, hide)
         console.print(f"[dim]{len(wishlist) + len(listening) + len(raindrop_wants)} wants read[/]")
-        console.print(wants_table(report, mark))
-        console.print(possible_table(report, mark))
+        if include_dismissed:
+            console.print(wants_table(report.owned, mark, plex))
+            console.print(possible_table(report.possible, mark, plex))
+        else:
+            walk(store, deleters, WANTS_TITLE, report.owned, show_library=True, plex=plex)
+            walk(
+                store,
+                deleters,
+                POSSIBLE_TITLE,
+                report.possible,
+                show_library=True,
+                show_tier=True,
+                plex=plex,
+            )
 
     if show_backlog:
         report = classify(collection, index, hide)
         console.print(f"[dim]{len(collection)} purchases read[/]")
-        console.print(backlog_table(report, mark))
+        if include_dismissed:
+            console.print(backlog_table(report.absent, mark))
+        else:
+            walk(store, deleters, BACKLOG_TITLE, report.absent, show_library=False)
         console.print(
             "[dim]a row here means no title matched, which is usually a naming "
             "difference rather than a missing record[/]"

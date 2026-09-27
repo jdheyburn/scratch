@@ -7,6 +7,12 @@ reasoning can be checked rather than taken on faith.
 
 ## Shipped
 
+- **Plex album links** (2026-09-27). Every library match `reconcile` shows,
+  in the walk and in `--include-dismissed`, now links to its album in Plex,
+  read from Plex's own database on dee over SSH. A match on a single track
+  links to the album the track is on, since a track has no album page of its
+  own to open. A Plex read that fails only warns; the report still runs
+  without links.
 - **Raindrop dedupe** (PR #2, 2026-09-03). Exact-URL dedupe and filing into
   the `music` collection.
 - **reconcile + dismiss** (PR #3, 2026-09-07). Compares the Bandcamp
@@ -47,6 +53,14 @@ reasoning can be checked rather than taken on faith.
   compared against beets and the Bandcamp collection the same way. Live-run
   on the real account: 83 Raindrop bookmarks correctly surfaced as already-
   owned wants.
+- **Interactive `reconcile`** (2026-09-13). Every row `reconcile` shows —
+  wants you already have, worth a look, and the backlog's not-found rows —
+  is now walked one at a time with an inline confirm-to-dismiss (optional
+  reason), the same pattern `dedupe` already used for duplicate groups.
+  Replaces the old flow of reading a static table and then running a
+  separate `dismiss <source>:<ref>` for anything wrong. `--include-dismissed`
+  keeps the old static table, since it's an audit view rather than a place
+  to make new decisions.
 
 ## Open
 
@@ -81,20 +95,6 @@ reasoning can be checked rather than taken on faith.
    per link is new I/O this tool has avoided so far) and for the Bandcamp
    lookup (search by parsed artist/album, confidence threshold, what happens
    on no match).
-
-### Reconcile
-
-1. **Make `reconcile`'s report interactive, the way `dedupe`'s per-group
-   confirm walk replaced its single bulk prompt.** Today `reconcile` prints
-   the whole table at once, and marking a row as a false absence means a
-   separate `musictrack dismiss <source>:<ref>` call after the fact —
-   two commands and a copy-pasted id instead of one pass. Walking the
-   uncertain rows one at a time (the "worth a look" tier at least; the
-   absent table plausibly too) and offering a dismiss right there would
-   fold review and dismissal into a single interactive pass. Not scoped:
-   whether the high-confidence "owned" rows need this at all, what unit
-   walks (per-row vs per-tier), and how `--include-dismissed` and
-   `--wants`/`--backlog` interact with a walk instead of a static table.
 
 ### Matching
 
@@ -137,6 +137,12 @@ reasoning can be checked rather than taken on faith.
    per-source progress.
 5. One command-level test name overstates what it actually asserts
    (`test_reconcile.py`).
+6. Plex rows whose artist or title contains a literal `@@` are dropped, so
+   the match gets no link (same trade-off as the beets dumps).
+7. The Plex queries use bare `metadata_type`/`section_type` numbers (9
+   album, 10 track, 8 music section).
+8. `PlexIndex.links()` treats any source other than `beets-track` as an
+   album hit.
 
 ## Deliberately out of scope
 

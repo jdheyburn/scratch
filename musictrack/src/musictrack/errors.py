@@ -26,3 +26,7 @@ class SpotifyError(SourceError):
 
 class LibraryError(SourceError):
     """The beets library on dee could not be read."""
+
+
+class PlexError(SourceError):
+    """Plex's database on dee could not be read."""
