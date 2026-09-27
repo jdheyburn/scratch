@@ -635,7 +635,37 @@ def test_the_bandcamp_link_is_shown_up_front_not_only_after_choosing_delete(monk
 PLEX_LINK = "https://app.plex.tv/desktop/#!/server/0000feed/details?key=%2Flibrary%2Fmetadata%2F42"
 
 
-def test_the_walk_shows_a_matchs_plex_link(monkeypatch, tmp_path):
+def _plex_album(artist, title, ref="42", url=PLEX_LINK):
+    return AlbumRef(source="plex-album", artist=artist, album=title, ref=ref, url=url)
+
+
+def test_include_dismissed_passes_the_plex_link_into_the_wants_table(monkeypatch, tmp_path):
+    """`--include-dismissed` prints the wants table straight from
+    `wants_table(...)`, with no walk in between. This proves `plex` is really
+    on that call by having a recording `wants_table` ask the real `PlexIndex`
+    it was handed for the link, rather than scraping styled output the
+    CliRunner would flatten to plain text anyway."""
+    from musictrack.commands.reconcile_views import wants_table as real_wants_table
+
+    monkeypatch.setattr(
+        gather_module.plex,
+        "album_refs",
+        lambda: [_plex_album("Theo Parrish", "Parallel Dimensions")],
+    )
+    seen_links = []
+
+    def recording_wants_table(rows, dismissed=None, plex=None):
+        found = rows[0][1].library
+        seen_links.append(plex.links(found) if plex is not None else [])
+        return real_wants_table(rows, dismissed, plex)
+
+    monkeypatch.setattr(reconcile_module, "wants_table", recording_wants_table)
+    result, _ = run(monkeypatch, tmp_path, "--wants", "--include-dismissed")
+    assert result.exit_code == 0
+    assert seen_links == [[PLEX_LINK]]
+
+
+def test_the_walk_shows_the_plex_link_of_a_match(monkeypatch, tmp_path):
     monkeypatch.setattr(
         gather_module.plex,
         "album_refs",
@@ -667,7 +697,7 @@ def test_a_plex_failure_warns_and_the_walk_still_runs(monkeypatch, tmp_path):
 
 def test_the_age_header_names_plex_on_a_wants_run(monkeypatch, tmp_path):
     result, _ = run(monkeypatch, tmp_path, "--wants")
-    assert "plex" in result.stdout
+    assert "plex just now" in result.stdout
 
 
 def test_a_backlog_run_never_reads_plex(monkeypatch, tmp_path):
