@@ -274,7 +274,7 @@ def test_the_bulk_table_links_the_library_cell_to_plex():
     report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
     console = Console(width=200, record=True, force_terminal=True)
     console.print(wants_table(report.owned, plex=plex_index()))
-    assert LINK in console.export_text(styles=True)
+    assert LINK in console.export_text(styles=True, clear=False)
     assert LINK not in console.export_text()
 
 
