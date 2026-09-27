@@ -120,3 +120,21 @@ def test_a_failed_plex_read_is_an_empty_index_and_a_warning(tmp_path, capsys):
     assert index.links(beets_album("Theo Parrish", "Parallel Dimensions")) == []
     assert "no Plex links" in capsys.readouterr().out
     assert not cache.has("plex-album")
+
+
+def test_a_partial_plex_failure_caches_the_successful_key(tmp_path, capsys):
+    """When plex-album succeeds but plex-track fails, only plex-album is cached."""
+
+    def boom():
+        raise PlexError("plex-track read failed")
+
+    cache = SourceCache(tmp_path / "db.sqlite")
+    fetchers = {
+        "plex-album": lambda: [plex_album("Theo Parrish", "Parallel Dimensions", "1")],
+        "plex-track": boom,
+    }
+    index = load_plex(cache, fetchers, None)
+    assert index.links(beets_album("Theo Parrish", "Parallel Dimensions")) == []
+    assert "no Plex links" in capsys.readouterr().out
+    assert cache.has("plex-album")
+    assert not cache.has("plex-track")

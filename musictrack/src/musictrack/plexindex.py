@@ -63,8 +63,9 @@ def load_plex(
     """This run's Plex links, or none.
 
     Gathered apart from the report's own sources: a link is a convenience,
-    never report data, so a Plex failure warns and the run carries on. Nothing
-    is cached on failure, so it never reads back later as an empty Plex.
+    never report data, so a Plex failure warns and the run carries on. A key
+    whose read failed is never cached, so a failure never reads back later as
+    an empty Plex.
     """
     try:
         rows = gather(cache, fetchers, PLEX, refresh).rows
