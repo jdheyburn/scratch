@@ -12,6 +12,7 @@ from musictrack.commands.reconcile_views import (
 )
 from musictrack.match import LibraryIndex
 from musictrack.models import AlbumRef
+from musictrack.plexindex import PlexIndex
 
 
 def album(artist, title):
@@ -228,3 +229,57 @@ def test_a_bracketed_library_title_is_shown_literally_in_the_bulk_table():
     report = classify([want("Huerco S.", "Untitled")], lib, {})
     rendered = render(wants_table(report.owned))
     assert "[untitled]" in rendered
+
+
+# --- Plex links -------------------------------------------------------------
+
+LINK = "https://app.plex.tv/desktop/#!/server/0000feed/details?key=%2Flibrary%2Fmetadata%2F42"
+
+
+def plex_index():
+    return PlexIndex(
+        [
+            AlbumRef(
+                source="plex-album",
+                artist="Theo Parrish",
+                album="Parallel Dimensions",
+                ref="42",
+                url=LINK,
+            )
+        ],
+        [],
+    )
+
+
+def test_the_listing_shows_each_plex_link():
+    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
+    [(candidate, match)] = report.owned
+    rendered = render(
+        row_listing(candidate, match, show_library=True, plex_links=[LINK, LINK + "0"])
+    )
+    assert f"plex: {LINK}\n" in rendered
+    assert f"plex: {LINK}0" in rendered
+
+
+def test_the_listing_has_no_plex_line_without_a_link():
+    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
+    [(candidate, match)] = report.owned
+    rendered = render(row_listing(candidate, match, show_library=True))
+    assert "plex:" not in rendered
+
+
+def test_the_bulk_table_links_the_library_cell_to_plex():
+    """No raw URL in the table, which would blow out the column; the cell
+    itself is the link. Only a styled render carries the hyperlink."""
+    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
+    console = Console(width=200, record=True, force_terminal=True)
+    console.print(wants_table(report.owned, plex=plex_index()))
+    assert LINK in console.export_text(styles=True)
+    assert LINK not in console.export_text()
+
+
+def test_the_bulk_table_is_unlinked_without_plex():
+    report = classify([want("Theo Parrish", "Parallel Dimensions")], library(), {})
+    console = Console(width=200, record=True, force_terminal=True)
+    console.print(wants_table(report.owned))
+    assert "app.plex.tv" not in console.export_text(styles=True)

@@ -3,12 +3,16 @@ report, `row_listing` for one row at a time in the walk, beets-import style."""
 
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 from rich.markup import escape
+from rich.style import Style
 from rich.table import Table
 from rich.text import Text
 
 from musictrack.match import Match
 from musictrack.models import AlbumRef
+from musictrack.plexindex import PlexIndex
 
 Row = tuple[AlbumRef, Match]
 Dismissed = dict[tuple[str, str], str]
@@ -24,6 +28,7 @@ def row_table(
     show_library: bool,
     show_tier: bool = False,
     dismissed: Dismissed | None = None,
+    plex: PlexIndex | None = None,
 ) -> Table:
     table = Table(title=title)
     table.add_column("id", style="dim")
@@ -46,7 +51,10 @@ def row_table(
         ]
         if show_library:
             found = match.library
-            cells.append(Text(f"{found.artist} / {found.album}" if found else ""))
+            label = f"{found.artist} / {found.album}" if found else ""
+            links = plex.links(found) if plex is not None else []
+            # The cell itself is the link: a raw URL would blow out the column.
+            cells.append(Text(label, style=Style(link=links[0]) if links else ""))
         if show_tier:
             cells.append(Text(match.tier))
         if dismissed is not None:
@@ -61,7 +69,11 @@ def row_table(
 
 
 def row_listing(
-    candidate: AlbumRef, match: Match, show_library: bool, show_tier: bool = False
+    candidate: AlbumRef,
+    match: Match,
+    show_library: bool,
+    show_tier: bool = False,
+    plex_links: Sequence[str] = (),
 ) -> str:
     """One row, beets-import style: a plain `Artist - Album` line with a few
     indented details underneath, rather than a bordered single-row table.
@@ -74,6 +86,9 @@ def row_listing(
     if show_library and match.library is not None:
         found = match.library
         lines.append(f"  in the library as: {escape(found.artist)} / {escape(found.album)}")
+        for plex_link in plex_links:
+            safe_link = escape(plex_link)
+            lines.append(f"  plex: [link={safe_link}]{safe_link}[/link]")
     if show_tier:
         lines.append(f"  tier: {escape(match.tier)}")
     if candidate.url:
@@ -83,12 +98,16 @@ def row_listing(
     return "\n".join(lines)
 
 
-def wants_table(rows: list[Row], dismissed: Dismissed | None = None) -> Table:
-    return row_table(WANTS_TITLE, rows, show_library=True, dismissed=dismissed)
+def wants_table(
+    rows: list[Row], dismissed: Dismissed | None = None, plex: PlexIndex | None = None
+) -> Table:
+    return row_table(WANTS_TITLE, rows, show_library=True, dismissed=dismissed, plex=plex)
 
 
-def possible_table(rows: list[Row], dismissed: Dismissed | None = None) -> Table:
-    return row_table(POSSIBLE_TITLE, rows, True, show_tier=True, dismissed=dismissed)
+def possible_table(
+    rows: list[Row], dismissed: Dismissed | None = None, plex: PlexIndex | None = None
+) -> Table:
+    return row_table(POSSIBLE_TITLE, rows, True, show_tier=True, dismissed=dismissed, plex=plex)
 
 
 def backlog_table(rows: list[Row], dismissed: Dismissed | None = None) -> Table:
