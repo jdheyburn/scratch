@@ -78,3 +78,20 @@ def test_the_track_query_prefers_the_track_artist():
     track_refs(run)
     assert "original_title" in run.script
     assert "metadata_type = 10" in run.script
+
+
+def test_a_null_column_is_never_printed_as_the_word_none():
+    """`str(None)` is the literal string "None", which would look like a real
+    title. The remote program must guard against that instead."""
+    run = dump()
+    album_refs(run)
+    assert "join(str(part) for part in row)" not in run.script
+    assert "is None else str(part)" in run.script
+
+
+def test_the_generated_remote_program_is_valid_python():
+    run = dump()
+    album_refs(run)
+    script = run.script
+    program = script.split("<<'PY'\n", 1)[1].rsplit("\nPY\n", 1)[0]
+    compile(program, "<plex-remote-script>", "exec")

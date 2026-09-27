@@ -61,13 +61,14 @@ def _script(query: str) -> str:
     first line it prints names the server; `/identity` needs no token."""
     program = "\n".join(
         [
-            "import sqlite3, urllib.request, xml.etree.ElementTree as tree",
+            "import pathlib, sqlite3, urllib.request, xml.etree.ElementTree as tree",
             "identity = urllib.request.urlopen('http://localhost:32400/identity', timeout=10)",
             "machine = tree.fromstring(identity.read()).get('machineIdentifier')",
             f"print({MACHINE!r} + {DELIMITER!r} + machine)",
-            f"db = sqlite3.connect('file:' + {DATABASE!r} + '?mode=ro', uri=True)",
+            f"uri = pathlib.Path({DATABASE!r}).as_uri() + '?mode=ro'",
+            "db = sqlite3.connect(uri, uri=True)",
             f"for row in db.execute({query!r}, ({MUSIC_ROOT!r},)):",
-            f"    print({DELIMITER!r}.join(str(part) for part in row))",
+            f"    print({DELIMITER!r}.join('' if part is None else str(part) for part in row))",
         ]
     )
     return f"python3 - <<'PY'\n{program}\nPY\n"
