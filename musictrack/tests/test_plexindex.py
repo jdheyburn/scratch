@@ -1,7 +1,9 @@
 """Which Plex album a library match is."""
 
+from musictrack.cache import SourceCache
+from musictrack.errors import PlexError
 from musictrack.models import AlbumRef
-from musictrack.plexindex import PlexIndex
+from musictrack.plexindex import PlexIndex, load_plex
 
 
 def beets_album(artist, title):
@@ -98,3 +100,23 @@ def test_a_title_that_folds_to_nothing_links_nowhere():
 
 def test_the_empty_index_links_nowhere():
     assert PlexIndex.empty().links(beets_album("Theo Parrish", "Parallel Dimensions")) == []
+
+
+def test_load_plex_builds_an_index_from_both_dumps(tmp_path):
+    fetchers = {
+        "plex-album": lambda: [plex_album("Theo Parrish", "Parallel Dimensions", "1")],
+        "plex-track": lambda: [plex_track("Huerco S.", "[untitled]", "9")],
+    }
+    index = load_plex(SourceCache(tmp_path / "db.sqlite"), fetchers, None)
+    assert index.links(beets_track("Huerco S.", "[untitled]")) == ["plex/9"]
+
+
+def test_a_failed_plex_read_is_an_empty_index_and_a_warning(tmp_path, capsys):
+    def boom():
+        raise PlexError("could not read Plex: ssh: connect: host is down")
+
+    cache = SourceCache(tmp_path / "db.sqlite")
+    index = load_plex(cache, {"plex-album": boom, "plex-track": boom}, None)
+    assert index.links(beets_album("Theo Parrish", "Parallel Dimensions")) == []
+    assert "no Plex links" in capsys.readouterr().out
+    assert not cache.has("plex-album")

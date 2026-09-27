@@ -7,6 +7,7 @@ import pytest
 from musictrack.cache import SourceCache
 from musictrack.gather import (
     ALL,
+    PLEX,
     UnknownSource,
     keys_for,
     keys_to_refresh,
@@ -61,7 +62,7 @@ def test_no_refresh_refreshes_nothing():
 
 
 def test_refreshing_all_covers_every_key():
-    assert keys_to_refresh(ALL) == EVERY_KEY
+    assert keys_to_refresh(ALL) == EVERY_KEY | set(PLEX)
 
 
 def test_refreshing_beets_covers_both_dumps():
@@ -80,6 +81,15 @@ def test_refreshing_raindrop_covers_only_raindrop():
     assert keys_to_refresh("raindrop") == {"raindrop"}
 
 
+def test_refreshing_plex_covers_both_plex_dumps():
+    assert keys_to_refresh("plex") == {"plex-album", "plex-track"}
+
+
+def test_the_default_run_does_not_gather_plex_with_the_other_sources():
+    """Plex is gathered on its own, so its failure can't stop the report."""
+    assert not set(PLEX) & set(keys_for(True, True))
+
+
 def test_an_unknown_name_is_an_error_that_names_the_valid_ones():
     """It must not fall back to refreshing everything. A full refetch is what
     someone who typed `--refresh bandacmp` would least expect to wait for."""
@@ -87,7 +97,7 @@ def test_an_unknown_name_is_an_error_that_names_the_valid_ones():
         keys_to_refresh("bandacmp")
     message = str(problem.value)
     assert "bandacmp" in message
-    for name in ("all", "beets", "bandcamp", "spotify", "raindrop"):
+    for name in ("all", "beets", "bandcamp", "spotify", "raindrop", "plex"):
         assert name in message
 
 
@@ -147,7 +157,7 @@ def test_the_row_a_source_age_describes_is_an_album_ref_source(tmp_path):
     from musictrack.gather import REFRESH_NAMES
 
     covered = {key for keys in REFRESH_NAMES.values() for key in keys}
-    assert covered == EVERY_KEY
+    assert covered == EVERY_KEY | set(PLEX)
 
 
 # --- read the cache, or the source -----------------------------------------
@@ -300,7 +310,7 @@ def test_the_fetchers_map_covers_every_storage_key():
     met it, which is the one moment the tool has to work."""
     from musictrack.gather import Fetchers
 
-    assert set(Fetchers().as_map()) == EVERY_KEY
+    assert set(Fetchers().as_map()) == EVERY_KEY | set(PLEX)
 
 
 def test_building_the_fetchers_reads_no_credentials(monkeypatch):

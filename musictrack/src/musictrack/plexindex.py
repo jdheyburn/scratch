@@ -9,9 +9,15 @@ title, and all but 2 share a title with one.
 from __future__ import annotations
 
 from collections import defaultdict
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
+
+from rich.markup import escape
 
 from musictrack.albumkey import agree, artists, key
+from musictrack.cache import SourceCache
+from musictrack.console import console
+from musictrack.errors import PlexError
+from musictrack.gather import PLEX, Fetcher, gather
 from musictrack.models import AlbumRef
 
 
@@ -49,3 +55,20 @@ class PlexIndex:
         if not hits and len(rows) == 1:
             hits = rows
         return list(dict.fromkeys(row.url for row in hits))
+
+
+def load_plex(
+    cache: SourceCache, fetchers: Mapping[str, Fetcher], refresh: str | None
+) -> PlexIndex:
+    """This run's Plex links, or none.
+
+    Gathered apart from the report's own sources: a link is a convenience,
+    never report data, so a Plex failure warns and the run carries on. Nothing
+    is cached on failure, so it never reads back later as an empty Plex.
+    """
+    try:
+        rows = gather(cache, fetchers, PLEX, refresh).rows
+    except PlexError as problem:
+        console.print(f"[yellow]no Plex links this run: {escape(str(problem))}[/]")
+        return PlexIndex.empty()
+    return PlexIndex(rows["plex-album"], rows["plex-track"])
