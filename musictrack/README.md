@@ -120,7 +120,9 @@ Each library match also links to its album in Plex, opened in the Plex web
 app. A match on a single track links to the album that track is on, which is
 how a generic title like "Untitled" matching an unrelated record shows
 itself. Plex is read from its own database on dee over SSH, read-only, with no
-token; if that read fails, the run warns and carries on without links.
+token; if that read fails, the run warns and carries on without links. A newly
+imported record gets no Plex link until `--refresh plex`, since `--refresh
+beets` leaves the Plex copy as it was.
 
 The first run reads every source live and keeps a local copy. Later runs
 answer from that copy instead of reading the accounts again, so every report

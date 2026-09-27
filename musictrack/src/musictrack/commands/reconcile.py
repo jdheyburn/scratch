@@ -100,7 +100,7 @@ def reconcile(
         None,
         "--refresh",
         metavar="SOURCE",
-        help="Refetch before reporting: all, beets, bandcamp, spotify, or raindrop.",
+        help="Refetch before reporting: all, beets, bandcamp, spotify, raindrop, or plex.",
     ),
 ) -> None:
     """Compare the Bandcamp wishlist, Spotify "To Listen", and Raindrop

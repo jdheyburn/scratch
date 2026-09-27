@@ -137,6 +137,12 @@ reasoning can be checked rather than taken on faith.
    per-source progress.
 5. One command-level test name overstates what it actually asserts
    (`test_reconcile.py`).
+6. Plex rows whose artist or title contains a literal `@@` are dropped, so
+   the match gets no link (same trade-off as the beets dumps).
+7. The Plex queries use bare `metadata_type`/`section_type` numbers (9
+   album, 10 track, 8 music section).
+8. `PlexIndex.links()` treats any source other than `beets-track` as an
+   album hit.
 
 ## Deliberately out of scope
 
