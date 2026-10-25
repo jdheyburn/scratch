@@ -4,4 +4,6 @@
 strays. See the design doc for why each rule is shaped the way it is.
 """
 
-__version__ = "0.1.0"
+from importlib.metadata import version
+
+__version__ = version("musictrack")
