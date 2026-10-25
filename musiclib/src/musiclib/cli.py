@@ -15,13 +15,25 @@ from musiclib.commands import done, gc, reconcile, sync
 app = typer.Typer(no_args_is_help=True, add_completion=False, help="Music library tooling.")
 
 
-@app.callback()
-def _root(
-    version: bool = typer.Option(False, "--version", is_eager=True, help="Print the version and exit."),
-) -> None:
-    if version:
+def _print_version(value: bool) -> None:
+    # Runs as the option is parsed, before Click checks that a subcommand was
+    # given. A check inside the callback body would run too late.
+    if value:
         typer.echo(f"musiclib {__version__}")
         raise typer.Exit()
+
+
+@app.callback()
+def _root(
+    version: bool = typer.Option(
+        False,
+        "--version",
+        callback=_print_version,
+        is_eager=True,
+        help="Print the version and exit.",
+    ),
+) -> None:
+    pass
 
 
 vinyl = typer.Typer(no_args_is_help=True, help="Digitised vinyl: sync, verify, archive.")

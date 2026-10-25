@@ -3,3 +3,7 @@
 `musictrack raindrop dedupe` removes duplicate music bookmarks and files the
 strays. See the design doc for why each rule is shaped the way it is.
 """
+
+from importlib.metadata import version
+
+__version__ = version("musictrack")
