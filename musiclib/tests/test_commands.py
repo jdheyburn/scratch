@@ -1,7 +1,7 @@
 import shlex
 from pathlib import Path
 
-from musiclib.remote import beet_import_command, rsync_command
+from musiclib.remote import beet_import_command, pending_albums, rsync_command
 from musiclib.tags import tags_for
 
 
@@ -65,20 +65,19 @@ def test_rsync_trailing_slashes_copy_contents_into_the_named_destination():
     assert remote == "/mnt/nfs/media/pending/vinyl/Daphni - Cherry (26241443)/"
 
 
-def test_the_import_command_quotes_directory_names_containing_spaces_and_parens():
-    remote = beet_import_command(["Daphni - Cherry (26241443)", "Mammo (1)"])[-1]
-    assert "'Daphni - Cherry (26241443)'" in remote
-    assert "'Mammo (1)'" in remote
-
-
 def test_the_import_command_asks_for_a_tty_because_beets_prompts():
-    assert "-t" in beet_import_command(["x"])
+    assert "-t" in beet_import_command([("x", 1)])
 
 
-def test_the_import_command_names_only_the_given_directories():
-    """Never a bare `.` — importing an album this run didn't sync is a surprise."""
-    remote = beet_import_command(["one", "two"])[-1]
-    assert remote.endswith("beet import one two")
+def test_import_all_reads_each_pending_album_and_its_release_id_from_the_listing():
+    """`--import-all` covers albums this run didn't capture, so their ids come
+    from the album.yaml that travelled with them. No id means a plain search."""
+    listing = "Pridi - Apricity (38024289)|38024289|4\nMammo (1)||2\nOld|null|3\n"
+    assert pending_albums(listing) == [
+        ("Pridi - Apricity (38024289)", "38024289"),
+        ("Mammo (1)", None),
+        ("Old", None),
+    ]
 
 
 def test_tags_include_everything_that_distinguishes_one_pressing_from_another(make_release):

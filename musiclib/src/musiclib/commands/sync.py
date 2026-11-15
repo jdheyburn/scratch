@@ -15,7 +15,14 @@ from musiclib.console import console, run
 from musiclib.discogs import discogs_token
 from musiclib.library import applied_album, gate_verdict, library_report
 from musiclib.preflight import destination_name, is_blocked, observe, preflight
-from musiclib.remote import HOST, beet_import_command, rsync_command
+from musiclib.remote import (
+    HOST,
+    beet_import_command,
+    pending_albums,
+    pending_listing_command,
+    rsync_command,
+    run_remote,
+)
 from musiclib.state import (
     DONE_DIRNAME,
     RETENTION_DAYS,
@@ -97,13 +104,15 @@ def sync(
             continue
         if not dry_run:
             update_state(root, d.name, synced_at=timestamp())
-        destinations.append(dest)
+        destinations.append((dest, discogs_id))
 
     if not destinations:
         raise typer.Exit(1)
 
+    if import_all:
+        destinations = pending_albums(run_remote(pending_listing_command()))
     console.print(f"\n[b]Import[/] — {len(destinations)} album(s) on {HOST}\n")
-    run(beet_import_command(["."] if import_all else destinations), dry_run)
+    run(beet_import_command(destinations), dry_run)
     if not dry_run:
         _record_imports(root, ready)
         console.print("\nWhen you're happy with the matches: [b]musiclib vinyl done[/]")
