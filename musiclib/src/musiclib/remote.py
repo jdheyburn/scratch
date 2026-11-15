@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import shlex
 import subprocess
+from collections.abc import Sequence
 from pathlib import Path
 
 from musiclib.errors import RemoteError
@@ -41,16 +42,30 @@ def rsync_command(source: Path, destination: str) -> list[str]:
     ]
 
 
-def beet_import_command(destinations: list[str]) -> list[str]:
-    """Hand off to beets on dee. -t because the import prompts."""
-    quoted = " ".join(shlex.quote(d) for d in destinations)
+def beet_import_command(
+    albums: Sequence[tuple[str, int | str | None]], directory: str = REMOTE_PENDING
+) -> list[str]:
+    """Hand off to beets on dee, one `beet import` per album. -t because the import prompts.
+
+    Each album is searched by its own release id. Letting beets search instead
+    loses the release you captured: the Discogs plugin returns its id as an int,
+    beets compares it against the string in MUSICBRAINZ_ALBUMID, and the
+    resulting id penalty lets Bandcamp and MusicBrainz copies outrank it.
+    `;` rather than `&&`, so skipping or failing one album still imports the rest.
+    """
+    imports = "; ".join(
+        "beet import "
+        + (f"--search-id {shlex.quote(str(discogs_id))} " if discogs_id else "")
+        + shlex.quote(destination)
+        for destination, discogs_id in albums
+    )
     return [
         "ssh",
         "-t",
         "-o",
         "RemoteCommand=none",
         HOST,
-        f"cd {shlex.quote(REMOTE_PENDING)} && beet import {quoted}",
+        f"cd {shlex.quote(directory)} && {imports}",
     ]
 
 
@@ -69,6 +84,16 @@ def pending_listing_command(directory: str = REMOTE_PENDING) -> str:
         ' n=$(find "$d" -maxdepth 1 -type f -name "*.flac" | wc -l | tr -d " ");'
         ' echo "$d|$id|$n"; done'
     )
+
+
+def pending_albums(listing: str) -> list[tuple[str, str | None]]:
+    """Parse `pending_listing_command` output into (destination, discogs_id) pairs."""
+    albums: list[tuple[str, str | None]] = []
+    for line in filter(None, listing.splitlines()):
+        name, discogs_id, _ = line.split("|")
+        discogs_id = discogs_id.strip()
+        albums.append((name, discogs_id if discogs_id and discogs_id != "null" else None))
+    return albums
 
 
 def archive_command(destination: str) -> str:

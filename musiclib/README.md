@@ -65,9 +65,11 @@ written until you've been through them all. Then you get one table and one decis
 Tag and transfer 1 album(s)? [y/n]:
 ```
 
-**3. Confirm the matches.** After transferring, it drops you at the beets prompt with your
-release proposed first. Confirm as usual, or skip an album to deal with later — anything you
-skip is offered again next run.
+**3. Confirm the matches.** After transferring, it runs one `beet import --search-id` per
+album, so each prompt offers only the release you captured. Confirm as usual, or skip an
+album to deal with later — anything you skip is offered again next run. To pick a different
+pressing, use "Enter search" or "enter Id" at the prompt. Skipping or aborting one album
+moves on to the next.
 
 **4. Archive, once you're happy.**
 
@@ -101,7 +103,12 @@ imported. Positional slugs narrow it.
 It runs in two passes. The first prompts for a Discogs release and a cover URL for each
 album, resolves them, and runs every check — nothing is written or transferred. You get one
 summary table and one confirmation. The second pass tags, transfers, and drops you at the
-beets prompt.
+beets prompt, one album at a time.
+
+Each album imports by its release id rather than letting beets search. When beets searches,
+the release you captured scores an id mismatch it shouldn't: the Discogs plugin returns the
+id as an int and beets compares it against the string tag. For a recent release that's also
+on Bandcamp or MusicBrainz, that penalty is enough to push yours down the list.
 
 Capture is resumable: it only prompts for albums missing an `album.yaml`, so an interrupted
 run loses nothing.
